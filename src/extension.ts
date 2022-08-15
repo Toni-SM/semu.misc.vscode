@@ -6,7 +6,7 @@ function executeCode(ip: string, port: number, outputChannel: vscode.OutputChann
 	// Get editor
 	const editor = vscode.window.activeTextEditor;
 	if (!editor) {
-		vscode.window.showWarningMessage('[Embedded Python for NVIDIA Omniverse] No active editor found');
+		vscode.window.showWarningMessage('[Embedded VS Code for NVIDIA Omniverse] No active editor found');
 		return;
 	}
 	let document = editor.document;
@@ -14,7 +14,7 @@ function executeCode(ip: string, port: number, outputChannel: vscode.OutputChann
 	// Get the document text
 	const documentText = document.getText();
 	if (documentText.length === 0) {
-		vscode.window.showWarningMessage('[Embedded Python for NVIDIA Omniverse] No text found');
+		vscode.window.showWarningMessage('[Embedded VS Code for NVIDIA Omniverse] No text found');
 		return;
 	}
 
@@ -55,33 +55,25 @@ function executeCode(ip: string, port: number, outputChannel: vscode.OutputChann
 		socket.destroy();
 	})
 	.on('close', () => {
-		console.log('embedded-python-for-nvidia-omniverse: disconnected');
+		console.log('embedded-vscode-for-nvidia-omniverse: disconnected');
 	}).on('error', (err) => {
-		vscode.window.showErrorMessage('[Embedded Python for NVIDIA Omniverse] Connection error: ' + err.message);
-		console.error('embedded-python-for-nvidia-omniverse: connection error: ' + err.message);
+		vscode.window.showErrorMessage('[Embedded VS Code for NVIDIA Omniverse] Connection error: ' + err.message);
+		console.error('embedded-vscode-for-nvidia-omniverse: connection error: ' + err.message);
 		socket.destroy();
 	}).on('timeout', () => {
-		console.log('embedded-python-for-nvidia-omniverse: timeout');
-	}).on('drain', () => {
-		console.log('embedded-python-for-nvidia-omniverse: drain');
-	}).on('end', () => {
-		console.log('embedded-python-for-nvidia-omniverse: end');
+		console.log('embedded-vscode-for-nvidia-omniverse: timeout');
 	});
 }
-
 
 // this method is called when your extension is activated
 // your extension is activated the very first time the command is executed
 export function activate(context: vscode.ExtensionContext) {
 	
-	// This line of code will only be executed once when your extension is activated
-	console.log('embedded-python-for-nvidia-omniverse: active');
-	
 	// Get OUTPUT pane
-	let outputChannel = vscode.window.createOutputChannel('Embedded Python for NVIDIA Omniverse');  //, 'python');
+	let outputChannel = vscode.window.createOutputChannel('Embedded VS Code for NVIDIA Omniverse');  //, 'python');
 	
 	// Local execution
-	let disposable_local = vscode.commands.registerCommand('embedded-python-for-nvidia-omniverse.run', () => {
+	let disposable_local = vscode.commands.registerCommand('embedded-vscode-for-nvidia-omniverse.run', () => {
 		// Get extension configuration
 		const config = vscode.workspace.getConfiguration();
 		const socketPort = config.get('localSocket', {"extensionPort": 8226}).extensionPort;
@@ -89,7 +81,7 @@ export function activate(context: vscode.ExtensionContext) {
 	});
 
 	// Remote execution
-	let disposable_remote = vscode.commands.registerCommand('embedded-python-for-nvidia-omniverse.runRemotely', () => {
+	let disposable_remote = vscode.commands.registerCommand('embedded-vscode-for-nvidia-omniverse.runRemotely', () => {
 		// Get extension configuration
 		const config = vscode.workspace.getConfiguration();
 		const socketIp = config.get('remoteSocket', {"extensionIp": "127.0.0.1"}).extensionIp;
@@ -103,7 +95,6 @@ export function activate(context: vscode.ExtensionContext) {
 
 // this method is called when your extension is deactivated
 export function deactivate() {
-	console.log('embedded-python-for-nvidia-omniverse: deactive');
 	// Release OUTPUT pane
-	vscode.window.createOutputChannel('Embedded Python for NVIDIA Omniverse').dispose();
+	vscode.window.createOutputChannel('Embedded VS Code for NVIDIA Omniverse').dispose();
 }

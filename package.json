@@ -1,10 +1,10 @@
 {
-  "name": "embedded-python-for-nvidia-omniverse",
-  "displayName": "Embedded Python for NVIDIA Omniverse",
+  "name": "embedded-vscode-for-nvidia-omniverse",
+  "displayName": "Embedded VS Code for NVIDIA Omniverse",
   "description": "Run python code embedded in the current NVIDIA Omniverse application scope",
   "version": "0.0.1",
   "publisher": "Toni-SM",
-  "repository": "https://github.com/Toni-SM/embedded-python-for-nvidia-omniverse",
+  "repository": "https://github.com/Toni-SM/embedded-vscode-for-nvidia-omniverse",
   "engines": {
     "vscode": "^1.70.0"
   },
@@ -12,27 +12,27 @@
     "Other"
   ],
   "activationEvents": [
-    "onCommand:embedded-python-for-nvidia-omniverse.run",
-    "onCommand:embedded-python-for-nvidia-omniverse.runRemotely"
+    "onCommand:embedded-vscode-for-nvidia-omniverse.run",
+    "onCommand:embedded-vscode-for-nvidia-omniverse.runRemotely"
   ],
   "main": "./out/extension.js",
   "contributes": {
     "commands": [
       {
-        "command": "embedded-python-for-nvidia-omniverse.run",
+        "command": "embedded-vscode-for-nvidia-omniverse.run",
         "title": "Run",
-        "category": "Embedded Python for NVIDIA Omniverse",
+        "category": "Embedded VS Code for NVIDIA Omniverse",
         "description": "Run python code embedded in the NVIDIA Omniverse application scope (running locally)"
       },
       {
-        "command": "embedded-python-for-nvidia-omniverse.runRemotely",
+        "command": "embedded-vscode-for-nvidia-omniverse.runRemotely",
         "title": "Run Remotely",
-        "category": "Embedded Python for NVIDIA Omniverse",
+        "category": "Embedded VS Code for NVIDIA Omniverse",
         "description": "Run python code embedded in the NVIDIA Omniverse application scope (running remotely)"
       }
     ],
     "configuration": {
-      "title": "Embedded Python for NVIDIA Omniverse",
+      "title": "Embedded VS Code for NVIDIA Omniverse",
       "properties": {
         "remoteSocket.extensionIp": {
           "type": "string",
