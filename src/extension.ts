@@ -49,7 +49,7 @@ function executeCode(ip: string, port: number, outputChannel: vscode.OutputChann
 				outputChannel.appendLine(reply.output);
 			}
 			outputChannel.appendLine('--------------------------------------------------');
-			outputChannel.appendLine(reply.traceback);
+			outputChannel.appendLine('Traceback (most recent call last) ' + reply.traceback);
 			outputChannel.appendLine('');
 		}
 		socket.destroy();
