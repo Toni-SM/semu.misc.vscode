@@ -32,22 +32,42 @@ export function activate(context: vscode.ExtensionContext) {
 			return;
 		}
 
+		// Get extension configuration
+		const config = vscode.workspace.getConfiguration();
+		console.log(config.toString());
+		const socketIp = config.get('socket', {"extensionIp": "127.0.0.1"}).extensionIp;
+		const socketPort = config.get('socket', {"extensionPort": 8226}).extensionPort;
+		const clearAfterRun = config.get('output', {"clearBeforeRun": true}).clearBeforeRun;
+
 		// Create TCP socket client
 		let socket: net.Socket = new net.Socket();
 		
 		// Connect to server, send text, and show output
-		socket.connect(8888, 'localhost', () => {
-			outputChannel.clear();
+		socket.connect(socketPort, socketIp, () => {
+			// Clear output if needed
+			if (clearAfterRun) {
+				outputChannel.clear();
+			}
+			outputChannel.appendLine(`[${new Date().toLocaleTimeString()}] executing...`);
+			// Send text to be executed
 			socket.write(documentText);
 		}).on('data', (data) => {
 			outputChannel.show();
 			let reply = JSON.parse(data.toString());
+			// Show successfull execution
 			if (reply.status === 'ok') {
-				outputChannel.appendLine(reply.output);
+				if (reply.output.length > 0) {
+					outputChannel.appendLine(reply.output);
+				}
 			}
+			// Show error during execution
 			else if (reply.status === 'error') {
-				outputChannel.appendLine(reply.output);
+				if (reply.output.length > 0) {
+					outputChannel.appendLine(reply.output);
+				}
+				outputChannel.appendLine('--------------------------------------------------');
 				outputChannel.appendLine(reply.traceback);
+				outputChannel.appendLine('');
 			}
 			socket.destroy();
 		})

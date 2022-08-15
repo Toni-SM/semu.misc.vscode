@@ -3,6 +3,8 @@
   "displayName": "Embedded Python for NVIDIA Omniverse",
   "description": "Run python code embedded in the current NVIDIA Omniverse application scope",
   "version": "0.0.1",
+  "publisher": "Toni-SM",
+  "repository": "https://github.com/Toni-SM/embedded-python-for-nvidia-omniverse",
   "engines": {
     "vscode": "^1.70.0"
   },
@@ -17,9 +19,36 @@
     "commands": [
       {
         "command": "embedded-python-for-nvidia-omniverse.run",
-        "title": "Embedded Python for NVIDIA Omniverse: Run"
+        "title": "Run",
+        "category": "Embedded Python for NVIDIA Omniverse",
+        "description": "Run python code embedded in the current NVIDIA Omniverse application scope",
+        "iconPath": {
+          "dark": "${workspaceRoot}/src/icons/icon-dark.png",
+          "light": "${workspaceRoot}/src/icons/icon-light.png"
+        }
       }
-    ]
+    ],
+    "configuration": {
+      "title": "Embedded Python for NVIDIA Omniverse",
+      "properties": {
+        "socket.extensionIp": {
+          "type": "string",
+          "format": "ipv4",
+          "default": "127.0.0.1",
+          "description": "IP address where the Omniverse application is running"
+        },
+        "socket.extensionPort": {
+          "type": "number",
+          "default": 8226,
+          "markdownDescription": "Port used by the *Embedded VS Code for NVIDIA Omniverse* extension in the Omniverse application"
+        },
+        "output.clearBeforeRun": {
+          "type": "boolean",
+          "default": true,
+          "markdownDescription": "Whether to clear the output before run the code. If unchecked (`false`), the output will be appended to the existing content"
+        }
+      }
+    }
   },
   "scripts": {
     "vscode:prepublish": "npm run compile",
