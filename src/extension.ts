@@ -69,7 +69,7 @@ function executeCode(ip: string, port: number, outputChannel: vscode.OutputChann
 // your extension is activated the very first time the command is executed
 export function activate(context: vscode.ExtensionContext) {
 	
-	// Get OUTPUT pane
+	// Get OUTPUT panel
 	let outputChannel = vscode.window.createOutputChannel('Embedded VS Code for NVIDIA Omniverse');  //, 'python');
 	
 	// Local execution
@@ -93,8 +93,5 @@ export function activate(context: vscode.ExtensionContext) {
 	context.subscriptions.push(disposable_remote);
 }
 
-// this method is called when your extension is deactivated
 export function deactivate() {
-	// Release OUTPUT pane
-	vscode.window.createOutputChannel('Embedded VS Code for NVIDIA Omniverse').dispose();
 }
