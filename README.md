@@ -4,13 +4,13 @@ This extension is the pair of the [*Embedded VS Code for NVIDIA Omniverse*](http
 
 <br>
 
-![preview](images/preview.png)
+![preview](https://github.com/Toni-SM/embedded-vscode-for-nvidia-omniverse/raw/main/images/preview.png)
 
 ## Overview
 
 <br>
 
-![preview1](images/preview1.png)
+![preview1](https://github.com/Toni-SM/embedded-vscode-for-nvidia-omniverse/raw/main/images/preview1.png)
 
 ## Available commands
 
