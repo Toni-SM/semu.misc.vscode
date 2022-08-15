@@ -1,0 +1,35 @@
+[core]
+reloadable = true
+order = 0
+
+[package]
+version = "0.0.1-beta"
+category = "Utility"
+feature = false
+app = false
+title = "Embedded VS Code"
+description = "VS Code version of Omniverse's script editor"
+authors = ["Toni-SM"]
+repository = "https://github.com/Toni-SM/semu.misc.vscode"
+keywords = ["vscode", "code", "editor"]
+changelog = "docs/CHANGELOG.md"
+readme = "docs/README.md"
+preview_image = "data/preview.png"
+icon = "data/icon.png"
+
+[package.target]
+config = ["release"]
+platform = ["linux-*", "windows-*"]
+python = ["*"]
+
+[dependencies]
+"omni.kit.test" = {}
+"omni.kit.uiapp" = {}
+"omni.kit.notification_manager" = {}
+
+[[python.module]]
+name = "semu.misc.vscode"
+
+[settings]
+exts."semu.misc.vscode".socket_ip = "0.0.0.0"
+exts."semu.misc.vscode".socket_port = 8226
