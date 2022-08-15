@@ -12,7 +12,8 @@
     "Other"
   ],
   "activationEvents": [
-    "onCommand:embedded-python-for-nvidia-omniverse.run"
+    "onCommand:embedded-python-for-nvidia-omniverse.run",
+    "onCommand:embedded-python-for-nvidia-omniverse.runRemotely"
   ],
   "main": "./out/extension.js",
   "contributes": {
@@ -21,26 +22,33 @@
         "command": "embedded-python-for-nvidia-omniverse.run",
         "title": "Run",
         "category": "Embedded Python for NVIDIA Omniverse",
-        "description": "Run python code embedded in the current NVIDIA Omniverse application scope",
-        "iconPath": {
-          "dark": "${workspaceRoot}/src/icons/icon-dark.png",
-          "light": "${workspaceRoot}/src/icons/icon-light.png"
-        }
+        "description": "Run python code embedded in the NVIDIA Omniverse application scope (running locally)",
+      },
+      {
+        "command": "embedded-python-for-nvidia-omniverse.runRemotely",
+        "title": "Run Remotely",
+        "category": "Embedded Python for NVIDIA Omniverse",
+        "description": "Run python code embedded in the NVIDIA Omniverse application scope (running remotely)",
       }
     ],
     "configuration": {
       "title": "Embedded Python for NVIDIA Omniverse",
       "properties": {
-        "socket.extensionIp": {
+        "remoteSocket.extensionIp": {
           "type": "string",
           "format": "ipv4",
           "default": "127.0.0.1",
-          "description": "IP address where the Omniverse application is running"
+          "description": "IP address where the remote Omniverse application is running"
         },
-        "socket.extensionPort": {
+        "remoteSocket.extensionPort": {
           "type": "number",
           "default": 8226,
-          "markdownDescription": "Port used by the *Embedded VS Code for NVIDIA Omniverse* extension in the Omniverse application"
+          "markdownDescription": "Port used by the *Embedded VS Code for NVIDIA Omniverse* extension in the remote Omniverse application"
+        },
+        "localSocket.extensionPort": {
+          "type": "number",
+          "default": 8226,
+          "markdownDescription": "Port used by the *Embedded VS Code for NVIDIA Omniverse* extension in the local Omniverse application"
         },
         "output.clearBeforeRun": {
           "type": "boolean",
