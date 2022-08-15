@@ -5,6 +5,14 @@
   "version": "0.0.1",
   "publisher": "Toni-SM",
   "repository": "https://github.com/Toni-SM/embedded-vscode-for-nvidia-omniverse",
+  "icon": "images/icon.png",
+  "keywords": [
+    "embedded",
+    "nvidia",
+    "omniverse",
+    "script",
+    "editor"
+  ],
   "engines": {
     "vscode": "^1.70.0"
   },
