@@ -22,13 +22,13 @@
         "command": "embedded-python-for-nvidia-omniverse.run",
         "title": "Run",
         "category": "Embedded Python for NVIDIA Omniverse",
-        "description": "Run python code embedded in the NVIDIA Omniverse application scope (running locally)",
+        "description": "Run python code embedded in the NVIDIA Omniverse application scope (running locally)"
       },
       {
         "command": "embedded-python-for-nvidia-omniverse.runRemotely",
         "title": "Run Remotely",
         "category": "Embedded Python for NVIDIA Omniverse",
-        "description": "Run python code embedded in the NVIDIA Omniverse application scope (running remotely)",
+        "description": "Run python code embedded in the NVIDIA Omniverse application scope (running remotely)"
       }
     ],
     "configuration": {
