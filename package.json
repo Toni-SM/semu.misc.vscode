@@ -60,7 +60,7 @@
         },
         "output.clearBeforeRun": {
           "type": "boolean",
-          "default": true,
+          "default": false,
           "markdownDescription": "Whether to clear the output before run the code. If unchecked (`false`), the output will be appended to the existing content"
         }
       }
