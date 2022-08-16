@@ -76,6 +76,7 @@ class Extension(omni.ext.IExt):
         self._settings = carb.settings.get_settings()
         self._socket_ip = self._settings.get("/exts/semu.misc.vscode/socket_ip")
         self._socket_port = self._settings.get("/exts/semu.misc.vscode/socket_port")
+        self._socket_last_error = ""
 
         # menu item
         self._editor_menu = omni.kit.ui.get_editor_menu()
@@ -88,7 +89,7 @@ class Extension(omni.ext.IExt):
     def on_shutdown(self):
         # clean up menu item
         if self._menu is not None:
-            self._editor_menu.remove_item(self._menu)
+            self._editor_menu.remove_item(Extension.MENU_PATH)
             self._menu = None
         # close the socket
         if self._server:
@@ -101,7 +102,7 @@ class Extension(omni.ext.IExt):
         """Show extension data in the notification area
         """
         if self._server is None:
-            notification = "Unable to start the socket server at {}:{}".format(self._socket_ip, self._socket_port)
+            notification = "Unable to start the socket server at {}:{}. {}".format(self._socket_ip, self._socket_port, self._socket_last_error)
             status=omni.kit.notification_manager.NotificationStatus.WARNING
         else:
             notification = "Embedded VS Code socket server is running at {}:{}".format(self._socket_ip, self._socket_port)
@@ -137,11 +138,18 @@ class Extension(omni.ext.IExt):
                                                  _get_event_loop())
 
         async def server_task():
-            self._server = await _get_event_loop().create_server(protocol_factory=lambda: ServerProtocol(self), 
-                                                                 host=self._socket_ip, 
-                                                                 port=self._socket_port,
-                                                                 family=socket.AF_INET,
-                                                                 reuse_port=None if sys.platform == 'win32' else True)
+            try:
+                self._server = await _get_event_loop().create_server(protocol_factory=lambda: ServerProtocol(self), 
+                                                                     host=self._socket_ip, 
+                                                                     port=self._socket_port,
+                                                                     family=socket.AF_INET,
+                                                                     reuse_port=None if sys.platform == 'win32' else True)
+            except Exception as e:
+                self._server = None
+                self._socket_last_error = str(e)
+                carb.log_error(str(e))
+                return
+            
             await self._server.start_serving()
 
         task = _get_event_loop().create_task(server_task())
@@ -193,6 +201,8 @@ class Extension(omni.ext.IExt):
 
         # add output to reply dictionary for printing
         reply["output"] = _stdout.getvalue()
+        if reply["output"].endswith('\n'):
+            reply["output"] = reply["output"][:-1]
 
         # send the reply to the client
         reply = json.dumps(reply)
