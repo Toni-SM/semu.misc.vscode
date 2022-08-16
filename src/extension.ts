@@ -47,7 +47,11 @@ function executeCode(ip: string, port: number, outputChannel: vscode.OutputChann
 		// Show successfull execution
 		if (reply.status === 'ok') {
 			if (reply.output.length > 0) {
+				outputChannel.appendLine(`[${new Date().toLocaleTimeString()}] executed with output:`);
 				outputChannel.appendLine(reply.output);
+			}
+			else {
+				outputChannel.appendLine(`[${new Date().toLocaleTimeString()}] executed without output`);
 			}
 		}
 		// Show error during execution
