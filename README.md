@@ -14,9 +14,17 @@ This extension is the pair of the [*Embedded VS Code for NVIDIA Omniverse*](http
 
 ## Available commands
 
+### Local execution
+
 * **Embedded VS Code for NVIDIA Omniverse: Run** - Execute the python code from the active editor in the local configured NVIDIA Omniverse application and display the results in the OUTPUT panel
 
+* **Embedded VS Code for NVIDIA Omniverse: Run Selected Text** - Execute the selected text in the active editor in the local configured NVIDIA Omniverse application and display the results in the OUTPUT panel
+
+### Remote execution
+
 * **Embedded VS Code for NVIDIA Omniverse: Run Remotely** - Execute the python code from the active editor in the remote configured NVIDIA Omniverse application and display the results in the OUTPUT panel
+
+* **Embedded VS Code for NVIDIA Omniverse: Run Selected Text Remotely** - Execute the selected text in the active editor in the remote configured NVIDIA Omniverse application and display the results in the OUTPUT panel
 
 ## Extension Settings
 
@@ -29,7 +37,9 @@ This extension contributes the following settings:
 
 ## Limitations
 
-- Printing, inside callbacks (such as events), is not displayed in the VS Code OUTPUT panel but in the Omniverse application terminal
+- Print output will only be available in the VS Code OUTPUT panel after complete execution of the entire or selected code
+
+- Print output, inside callbacks (such as events), is not displayed in the VS Code OUTPUT panel but in the Omniverse application terminal
 
 ## Release Notes
 
