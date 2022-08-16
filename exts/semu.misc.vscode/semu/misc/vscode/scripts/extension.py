@@ -107,7 +107,7 @@ class Extension(omni.ext.IExt):
             notification = "Unable to start the socket server at {}:{}".format(self._socket_ip, self._socket_port)
             status=omni.kit.notification_manager.NotificationStatus.WARNING
         else:
-            notification = "Socket server running at {}:{}".format(self._socket_ip, self._socket_port)
+            notification = "Embedded VS Code socket server is running at {}:{}".format(self._socket_ip, self._socket_port)
             status=omni.kit.notification_manager.NotificationStatus.INFO
 
         ok_button = omni.kit.notification_manager.NotificationButtonInfo("OK", on_complete=None)
@@ -123,7 +123,7 @@ class Extension(omni.ext.IExt):
     # internal socket methods
 
     def _create_socket(self) -> None:
-        """Create a socket server to listen for incoming connections from the IPython kernel
+        """Create a socket server to listen for incoming connections from the client
         """
         class ServerProtocol(asyncio.Protocol):
             def __init__(self, parent) -> None:
@@ -150,14 +150,14 @@ class Extension(omni.ext.IExt):
         task = _get_event_loop().create_task(server_task())
 
     async def _exec_code_async(self, statement: str, transport: asyncio.Transport) -> None:
-        """Execute the statement in the Omniverse scope and send the result to the IPython kernel
+        """Execute the statement in the Omniverse scope and send the result to the client
         
         :param statement: statement to execute
         :type statement: str
-        :param transport: transport to send the result to the IPython kernel
+        :param transport: transport to send the result to the client
         :type transport: asyncio.Transport
 
-        :return: reply dictionary as ipython notebook expects it
+        :return: reply dictionary as expected by the client
         :rtype: dict
         """
         _stdout = StringIO()
@@ -197,7 +197,7 @@ class Extension(omni.ext.IExt):
         # add output to reply dictionary for printing
         reply["output"] = _stdout.getvalue()
 
-        # send the reply to the IPython kernel
+        # send the reply to the client
         reply = json.dumps(reply)
         transport.write(reply.encode())
 
