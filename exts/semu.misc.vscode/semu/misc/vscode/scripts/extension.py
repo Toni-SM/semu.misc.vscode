@@ -89,7 +89,10 @@ class Extension(omni.ext.IExt):
     def on_shutdown(self):
         # clean up menu item
         if self._menu is not None:
-            self._editor_menu.remove_item(Extension.MENU_PATH)
+            try:
+                self._editor_menu.remove_item(self._menu)
+            except:
+                self._editor_menu.remove_item(Extension.MENU_PATH)
             self._menu = None
         # close the socket
         if self._server:
