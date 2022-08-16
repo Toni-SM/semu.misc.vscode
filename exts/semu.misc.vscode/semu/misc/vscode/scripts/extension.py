@@ -86,9 +86,6 @@ class Extension(omni.ext.IExt):
         self._create_socket()
         
     def on_shutdown(self):
-        # clean extension paths
-        if self._extension_path is not None:
-            self._extension_path = None
         # clean up menu item
         if self._menu is not None:
             self._editor_menu.remove_item(self._menu)
