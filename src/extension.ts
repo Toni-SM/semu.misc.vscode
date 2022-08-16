@@ -2,7 +2,7 @@ import * as vscode from 'vscode';
 import * as net from 'net';
 
 
-function executeCode(ip: string, port: number, outputChannel: vscode.OutputChannel) {
+function executeCode(ip: string, port: number, outputChannel: vscode.OutputChannel, selectedText: boolean) {
 	// Get editor
 	const editor = vscode.window.activeTextEditor;
 	if (!editor) {
@@ -12,9 +12,14 @@ function executeCode(ip: string, port: number, outputChannel: vscode.OutputChann
 	let document = editor.document;
 
 	// Get the document text
-	const documentText = document.getText();
-	if (documentText.length === 0) {
-		vscode.window.showWarningMessage('[Embedded VS Code for NVIDIA Omniverse] No text found');
+	let selection = undefined;
+	if (selectedText) {
+		selection = editor.selection;
+	}
+	const documentText = document.getText(selection);
+
+	if (documentText.length == 0) {
+		vscode.window.showWarningMessage('[Embedded VS Code for NVIDIA Omniverse] No text available or selected');
 		return;
 	}
 
@@ -31,7 +36,9 @@ function executeCode(ip: string, port: number, outputChannel: vscode.OutputChann
 		if (clearAfterRun) {
 			outputChannel.clear();
 		}
-		outputChannel.appendLine(`[${new Date().toLocaleTimeString()}] executing at ${ip}:${port}...`);
+		// Print info to output
+		const extraInfo = selectedText ? ' selected text' : '';
+		outputChannel.appendLine(`[${new Date().toLocaleTimeString()}] executing${extraInfo} at ${ip}:${port}...`);
 		// Send text to be executed
 		socket.write(documentText);
 	}).on('data', (data) => {
@@ -55,7 +62,6 @@ function executeCode(ip: string, port: number, outputChannel: vscode.OutputChann
 		socket.destroy();
 	})
 	.on('close', () => {
-		console.log('embedded-vscode-for-nvidia-omniverse: disconnected');
 	}).on('error', (err) => {
 		vscode.window.showErrorMessage('[Embedded VS Code for NVIDIA Omniverse] Connection error: ' + err.message);
 		console.error('embedded-vscode-for-nvidia-omniverse: connection error: ' + err.message);
@@ -77,7 +83,14 @@ export function activate(context: vscode.ExtensionContext) {
 		// Get extension configuration
 		const config = vscode.workspace.getConfiguration();
 		const socketPort = config.get('localSocket', {"extensionPort": 8226}).extensionPort;
-		executeCode('127.0.0.1', socketPort, outputChannel);
+		executeCode('127.0.0.1', socketPort, outputChannel, false);
+	});
+
+	let disposable_local_selected_text = vscode.commands.registerCommand('embedded-vscode-for-nvidia-omniverse.runSelectedText', () => {
+		// Get extension configuration
+		const config = vscode.workspace.getConfiguration();
+		const socketPort = config.get('localSocket', {"extensionPort": 8226}).extensionPort;
+		executeCode('127.0.0.1', socketPort, outputChannel, true);
 	});
 
 	// Remote execution
@@ -86,11 +99,21 @@ export function activate(context: vscode.ExtensionContext) {
 		const config = vscode.workspace.getConfiguration();
 		const socketIp = config.get('remoteSocket', {"extensionIp": "127.0.0.1"}).extensionIp;
 		const socketPort = config.get('remoteSocket', {"extensionPort": 8226}).extensionPort;
-		executeCode(socketIp, socketPort, outputChannel);
+		executeCode(socketIp, socketPort, outputChannel, false);
+	});
+
+	let disposable_remote_selected_text = vscode.commands.registerCommand('embedded-vscode-for-nvidia-omniverse.runSelectedTextRemotely', () => {
+		// Get extension configuration
+		const config = vscode.workspace.getConfiguration();
+		const socketIp = config.get('remoteSocket', {"extensionIp": "127.0.0.1"}).extensionIp;
+		const socketPort = config.get('remoteSocket', {"extensionPort": 8226}).extensionPort;
+		executeCode(socketIp, socketPort, outputChannel, true);
 	});
 
 	context.subscriptions.push(disposable_local);
+	context.subscriptions.push(disposable_local_selected_text);
 	context.subscriptions.push(disposable_remote);
+	context.subscriptions.push(disposable_remote_selected_text);
 }
 
 export function deactivate() {

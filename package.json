@@ -21,7 +21,9 @@
   ],
   "activationEvents": [
     "onCommand:embedded-vscode-for-nvidia-omniverse.run",
-    "onCommand:embedded-vscode-for-nvidia-omniverse.runRemotely"
+    "onCommand:embedded-vscode-for-nvidia-omniverse.runRemotely",
+    "onCommand:embedded-vscode-for-nvidia-omniverse.runSelectedText",
+    "onCommand:embedded-vscode-for-nvidia-omniverse.runSelectedTextRemotely"
   ],
   "main": "./out/extension.js",
   "contributes": {
@@ -37,6 +39,18 @@
         "title": "Run Remotely",
         "category": "Embedded VS Code for NVIDIA Omniverse",
         "description": "Run python code embedded in the NVIDIA Omniverse application scope (running remotely)"
+      },
+      {
+        "command": "embedded-vscode-for-nvidia-omniverse.runSelectedText",
+        "title": "Run Selected Text",
+        "category": "Embedded VS Code for NVIDIA Omniverse",
+        "description": "Run python code embedded in the NVIDIA Omniverse application scope (running locally) from the selected text"
+      },
+      {
+        "command": "embedded-vscode-for-nvidia-omniverse.runSelectedTextRemotely",
+        "title": "Run Selected Text Remotely",
+        "category": "Embedded VS Code for NVIDIA Omniverse",
+        "description": "Run python code embedded in the NVIDIA Omniverse application scope (running remotely) from the selected text"
       }
     ],
     "configuration": {
