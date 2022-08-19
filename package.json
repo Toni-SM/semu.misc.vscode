@@ -4,7 +4,7 @@
   "description": "Run python code embedded in the current NVIDIA Omniverse application scope",
   "version": "0.0.2",
   "publisher": "Toni-SM",
-  "repository": "https://github.com/Toni-SM/embedded-vscode-for-nvidia-omniverse",
+  "repository": "https://github.com/Toni-SM/semu.misc.vscode",
   "icon": "images/icon.png",
   "keywords": [
     "embedded",
