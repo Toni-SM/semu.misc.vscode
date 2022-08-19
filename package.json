@@ -2,7 +2,7 @@
   "name": "embedded-vscode-for-nvidia-omniverse",
   "displayName": "Embedded VS Code for NVIDIA Omniverse",
   "description": "Run python code embedded in the current NVIDIA Omniverse application scope",
-  "version": "0.0.1",
+  "version": "0.0.2",
   "publisher": "Toni-SM",
   "repository": "https://github.com/Toni-SM/embedded-vscode-for-nvidia-omniverse",
   "icon": "images/icon.png",
@@ -20,6 +20,7 @@
     "Other"
   ],
   "activationEvents": [
+    "onStartupFinished",
     "onCommand:embedded-vscode-for-nvidia-omniverse.run",
     "onCommand:embedded-vscode-for-nvidia-omniverse.runRemotely",
     "onCommand:embedded-vscode-for-nvidia-omniverse.runSelectedText",
@@ -76,6 +77,11 @@
           "type": "boolean",
           "default": false,
           "markdownDescription": "Whether to clear the output before run the code. If unchecked (`false`), the output will be appended to the existing content"
+        },
+        "output.carbLogging": {
+          "type": "boolean",
+          "default": true,
+          "markdownDescription": "Whether to enable carb logging to be displayed in the *Embedded VS Code for NVIDIA Omniverse (carb logging)* output panel. Changes will take effect after reloading the window"
         }
       }
     }
