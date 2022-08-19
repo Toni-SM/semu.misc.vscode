@@ -4,6 +4,10 @@ All notable changes to the "embedded-vscode-for-nvidia-omniverse" extension will
 
 Check [Keep a Changelog](http://keepachangelog.com/) for recommendations on how to structure this file.
 
+## [0.0.2]
+
+- Send carb logging Python calls to the VS Code extension
+
 ## [0.0.1]
 
 - Initial release
