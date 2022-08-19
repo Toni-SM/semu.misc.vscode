@@ -2,6 +2,7 @@ import __future__
 
 import sys
 import json
+import time
 import types
 import socket
 import asyncio
@@ -121,8 +122,8 @@ class Extension(omni.ext.IExt):
         # carb logging to VS Code
         if self._carb_logging:
             # create UDP socket
-            self._udp_server = None
-            self._create_udp_socket()
+            self._udp_server_running = False
+            threading.Thread(target=self._create_udp_socket).start()
 
             # checkpoint carb log functions
             self._carb_log_info = types.FunctionType(carb.log_info.__code__, 
@@ -180,8 +181,9 @@ class Extension(omni.ext.IExt):
         if self._carb_logging:
             _udp_server = None
             _udp_clients = []
-            if self._udp_server:
-                self._udp_server.close()
+            # wait for the UDP socket to close
+            while self._udp_server_running:
+                time.sleep(0.1)
 
     # extension ui methods
 
@@ -212,38 +214,35 @@ class Extension(omni.ext.IExt):
         """Create the UDP socket for broadcasting carb logging
         """
         global _udp_server, _udp_clients
-        try:
-            self._udp_server = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
-            self._udp_server.setsockopt(socket.SOL_SOCKET, socket.SO_REUSEADDR, 1)
-            self._udp_server.bind((self._socket_ip, self._socket_port))
-            self._udp_server.setblocking(False)
-            self._udp_server.settimeout(0.1)
-        except Exception as e:
-            self._udp_server = None
-            _udp_server = None
-            _udp_clients = []
-            carb.log_error(str(e))
-            return
 
-        _udp_server = self._udp_server
-        _udp_clients = []
-
-        threading.Thread(target=self._udp_server_thread).start()
-
-    def _udp_server_thread(self) -> None:
-        """Thread to receive UDP packets and broadcast them to all clients
-        """
-        global _udp_server, _udp_clients
-        while _udp_server is not None:
+        self._udp_server_running = True
+        with socket.socket(socket.AF_INET, socket.SOCK_DGRAM) as _server:
             try:
-                _, addr = self._udp_server.recvfrom(1024)
-                if addr not in _udp_clients:
-                    _udp_clients.append(addr)
-            except socket.timeout:
-                pass
+                _server.setsockopt(socket.SOL_SOCKET, socket.SO_REUSEADDR, 1)
+                _server.bind((self._socket_ip, self._socket_port))
+                _server.setblocking(False)
+                _server.settimeout(0.1)
             except Exception as e:
-                carb.log_error("UDP server error: {}".format(e))
-                break
+                _udp_server = None
+                _udp_clients = []
+                carb.log_error(str(e))
+                self._udp_server_running = False
+                return
+
+            _udp_server = _server
+            _udp_clients = []
+
+            while _udp_server is not None:
+                try:
+                    _, addr = _server.recvfrom(1024)
+                    if addr not in _udp_clients:
+                        _udp_clients.append(addr)
+                except socket.timeout:
+                    pass
+                except Exception as e:
+                    carb.log_error("UDP server error: {}".format(e))
+                    break
+        self._udp_server_running = False
 
     def _create_socket(self) -> None:
         """Create a socket server to listen for incoming connections from the client
@@ -255,7 +254,6 @@ class Extension(omni.ext.IExt):
 
             def connection_made(self, transport):
                 peername = transport.get_extra_info('peername')
-                carb.log_info('Connection from {}'.format(peername))
                 self.transport = transport
 
             def data_received(self, data):
