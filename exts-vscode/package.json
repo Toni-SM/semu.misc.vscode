@@ -1,0 +1,110 @@
+{
+  "name": "embedded-vscode-for-nvidia-omniverse",
+  "displayName": "Embedded VS Code for NVIDIA Omniverse",
+  "description": "Run python code embedded in the current NVIDIA Omniverse application scope",
+  "version": "0.0.2",
+  "publisher": "Toni-SM",
+  "repository": "https://github.com/Toni-SM/semu.misc.vscode",
+  "icon": "images/icon.png",
+  "keywords": [
+    "embedded",
+    "nvidia",
+    "omniverse",
+    "script",
+    "editor"
+  ],
+  "engines": {
+    "vscode": "^1.70.0"
+  },
+  "categories": [
+    "Other"
+  ],
+  "activationEvents": [
+    "onStartupFinished",
+    "onCommand:embedded-vscode-for-nvidia-omniverse.run",
+    "onCommand:embedded-vscode-for-nvidia-omniverse.runRemotely",
+    "onCommand:embedded-vscode-for-nvidia-omniverse.runSelectedText",
+    "onCommand:embedded-vscode-for-nvidia-omniverse.runSelectedTextRemotely"
+  ],
+  "main": "./out/extension.js",
+  "contributes": {
+    "commands": [
+      {
+        "command": "embedded-vscode-for-nvidia-omniverse.run",
+        "title": "Run",
+        "category": "Embedded VS Code for NVIDIA Omniverse",
+        "description": "Run python code embedded in the NVIDIA Omniverse application scope (running locally)"
+      },
+      {
+        "command": "embedded-vscode-for-nvidia-omniverse.runRemotely",
+        "title": "Run Remotely",
+        "category": "Embedded VS Code for NVIDIA Omniverse",
+        "description": "Run python code embedded in the NVIDIA Omniverse application scope (running remotely)"
+      },
+      {
+        "command": "embedded-vscode-for-nvidia-omniverse.runSelectedText",
+        "title": "Run Selected Text",
+        "category": "Embedded VS Code for NVIDIA Omniverse",
+        "description": "Run python code embedded in the NVIDIA Omniverse application scope (running locally) from the selected text"
+      },
+      {
+        "command": "embedded-vscode-for-nvidia-omniverse.runSelectedTextRemotely",
+        "title": "Run Selected Text Remotely",
+        "category": "Embedded VS Code for NVIDIA Omniverse",
+        "description": "Run python code embedded in the NVIDIA Omniverse application scope (running remotely) from the selected text"
+      }
+    ],
+    "configuration": {
+      "title": "Embedded VS Code for NVIDIA Omniverse",
+      "properties": {
+        "remoteSocket.extensionIp": {
+          "type": "string",
+          "format": "ipv4",
+          "default": "127.0.0.1",
+          "description": "IP address where the remote Omniverse application is running"
+        },
+        "remoteSocket.extensionPort": {
+          "type": "number",
+          "default": 8226,
+          "markdownDescription": "Port used by the *Embedded VS Code for NVIDIA Omniverse* extension in the remote Omniverse application"
+        },
+        "localSocket.extensionPort": {
+          "type": "number",
+          "default": 8226,
+          "markdownDescription": "Port used by the *Embedded VS Code for NVIDIA Omniverse* extension in the local Omniverse application"
+        },
+        "output.clearBeforeRun": {
+          "type": "boolean",
+          "default": false,
+          "markdownDescription": "Whether to clear the output before run the code. If unchecked (`false`), the output will be appended to the existing content"
+        },
+        "output.carbLogging": {
+          "type": "boolean",
+          "default": true,
+          "markdownDescription": "Whether to enable carb logging to be displayed in the *Embedded VS Code for NVIDIA Omniverse (carb logging)* output panel. Changes will take effect after reloading the window"
+        }
+      }
+    }
+  },
+  "scripts": {
+    "vscode:prepublish": "npm run compile",
+    "compile": "tsc -p ./",
+    "watch": "tsc -watch -p ./",
+    "pretest": "npm run compile && npm run lint",
+    "lint": "eslint src --ext ts",
+    "test": "node ./out/test/runTest.js"
+  },
+  "devDependencies": {
+    "@types/vscode": "^1.70.0",
+    "@types/glob": "^7.2.0",
+    "@types/mocha": "^9.1.1",
+    "@types/node": "16.x",
+    "@typescript-eslint/eslint-plugin": "^5.31.0",
+    "@typescript-eslint/parser": "^5.31.0",
+    "eslint": "^8.20.0",
+    "glob": "^8.0.3",
+    "mocha": "^10.0.0",
+    "typescript": "^4.7.4",
+    "@vscode/test-electron": "^2.1.5"
+  }
+}
