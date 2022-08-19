@@ -2,8 +2,10 @@ import __future__
 
 import sys
 import json
+import types
 import socket
 import asyncio
+import threading
 import traceback
 import contextlib
 from io import StringIO
@@ -16,6 +18,36 @@ except ImportError:
 import carb
 import omni.ext
 
+
+_udp_server = None
+_udp_clients = []
+
+def _log_info(msg):
+    # carb logging
+    file, lno, func, mod = carb._get_caller_info()
+    carb.log(mod, carb.logging.LEVEL_INFO, file, func, lno, msg)
+    # send the message to all connected clients
+    if _udp_server is not None:
+        for client in _udp_clients:
+            _udp_server.sendto(f"[Info][{mod}] {msg}".encode(), client)
+
+def _log_warn(msg):
+    # carb logging
+    file, lno, func, mod = carb._get_caller_info()
+    carb.log(mod, carb.logging.LEVEL_WARN, file, func, lno, msg)
+    # send the message to all connected clients
+    if _udp_server is not None:
+        for client in _udp_clients:
+            _udp_server.sendto(f"[Warning][{mod}] {msg}".encode(), client)
+
+def _log_error(msg):
+    # carb logging
+    file, lno, func, mod = carb._get_caller_info()
+    carb.log(mod, carb.logging.LEVEL_ERROR, file, func, lno, msg)
+    # send the message to all connected clients
+    if _udp_server is not None:
+        for client in _udp_clients:
+            _udp_server.sendto(f"[Error][{mod}] {msg}".encode(), client)
 
 def _get_coroutine_flag() -> int:
     """Get the coroutine flag for the current Python version
@@ -70,12 +102,11 @@ class Extension(omni.ext.IExt):
         self._globals = {**globals()}
         self._locals = self._globals
 
-        self._server = None
-
         # get extension settings
         self._settings = carb.settings.get_settings()
         self._socket_ip = self._settings.get("/exts/semu.misc.vscode/socket_ip")
         self._socket_port = self._settings.get("/exts/semu.misc.vscode/socket_port")
+        self._carb_logging = self._settings.get("/exts/semu.misc.vscode/carb_logging")
         self._socket_last_error = ""
 
         # menu item
@@ -84,9 +115,56 @@ class Extension(omni.ext.IExt):
             self._menu = self._editor_menu.add_item(Extension.MENU_PATH, self._show_notification, toggle=False, value=False)
         
         # create socket
+        self._server = None
         self._create_socket()
+
+        # carb logging to VS Code
+        if self._carb_logging:
+            # create UDP socket
+            self._udp_server = None
+            self._create_udp_socket()
+
+            # checkpoint carb log functions
+            self._carb_log_info = types.FunctionType(carb.log_info.__code__, 
+                                                     carb.log_info.__globals__, 
+                                                     carb.log_info.__name__, 
+                                                     carb.log_info.__defaults__, 
+                                                     carb.log_info.__closure__)
+            self._carb_log_warn = types.FunctionType(carb.log_warn.__code__,
+                                                     carb.log_warn.__globals__,
+                                                     carb.log_warn.__name__,
+                                                     carb.log_warn.__defaults__,
+                                                     carb.log_warn.__closure__)
+            self._carb_log_error = types.FunctionType(carb.log_error.__code__,
+                                                     carb.log_error.__globals__,
+                                                     carb.log_error.__name__,
+                                                     carb.log_error.__defaults__,
+                                                     carb.log_error.__closure__)
+        
+            # override carb log functions
+            carb.log_info = types.FunctionType(_log_info.__code__, 
+                                               _log_info.__globals__, 
+                                               _log_info.__name__, 
+                                               _log_info.__defaults__, 
+                                               _log_info.__closure__)
+            carb.log_warn = types.FunctionType(_log_warn.__code__,
+                                               _log_warn.__globals__,
+                                               _log_warn.__name__,
+                                               _log_warn.__defaults__,
+                                               _log_warn.__closure__)
+            carb.log_error = types.FunctionType(_log_error.__code__,
+                                                _log_error.__globals__,
+                                                _log_error.__name__,
+                                                _log_error.__defaults__,
+                                                _log_error.__closure__)
         
     def on_shutdown(self):
+        global _udp_server, _udp_clients
+        # restore carb log functions
+        if self._carb_logging:
+            carb.log_info = self._carb_log_info
+            carb.log_warn = self._carb_log_warn
+            carb.log_error = self._carb_log_error
         # clean up menu item
         if self._menu is not None:
             try:
@@ -98,6 +176,12 @@ class Extension(omni.ext.IExt):
         if self._server:
             self._server.close()
             _get_event_loop().run_until_complete(self._server.wait_closed())
+        # close the UDP socket
+        if self._carb_logging:
+            _udp_server = None
+            _udp_clients = []
+            if self._udp_server:
+                self._udp_server.close()
 
     # extension ui methods
 
@@ -108,7 +192,8 @@ class Extension(omni.ext.IExt):
             notification = "Unable to start the socket server at {}:{}. {}".format(self._socket_ip, self._socket_port, self._socket_last_error)
             status=omni.kit.notification_manager.NotificationStatus.WARNING
         else:
-            notification = "Embedded VS Code socket server is running at {}:{}".format(self._socket_ip, self._socket_port)
+            notification = "Embedded VS Code socket server is running at {}:{}.\nUDP socket server for carb logging is {}"\
+                .format(self._socket_ip, self._socket_port, "enabled" if self._carb_logging else "disabled")
             status=omni.kit.notification_manager.NotificationStatus.INFO
 
         ok_button = omni.kit.notification_manager.NotificationButtonInfo("OK", on_complete=None)
@@ -122,6 +207,43 @@ class Extension(omni.ext.IExt):
         carb.log_info(notification)
 
     # internal socket methods
+
+    def _create_udp_socket(self) -> None:
+        """Create the UDP socket for broadcasting carb logging
+        """
+        global _udp_server, _udp_clients
+        try:
+            self._udp_server = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
+            self._udp_server.setsockopt(socket.SOL_SOCKET, socket.SO_REUSEADDR, 1)
+            self._udp_server.bind((self._socket_ip, self._socket_port))
+            self._udp_server.setblocking(False)
+            self._udp_server.settimeout(0.1)
+        except Exception as e:
+            self._udp_server = None
+            _udp_server = None
+            _udp_clients = []
+            carb.log_error(str(e))
+            return
+
+        _udp_server = self._udp_server
+        _udp_clients = []
+
+        threading.Thread(target=self._udp_server_thread).start()
+
+    def _udp_server_thread(self) -> None:
+        """Thread to receive UDP packets and broadcast them to all clients
+        """
+        global _udp_server, _udp_clients
+        while _udp_server is not None:
+            try:
+                _, addr = self._udp_server.recvfrom(1024)
+                if addr not in _udp_clients:
+                    _udp_clients.append(addr)
+            except socket.timeout:
+                pass
+            except Exception as e:
+                carb.log_error("UDP server error: {}".format(e))
+                break
 
     def _create_socket(self) -> None:
         """Create a socket server to listen for incoming connections from the client
