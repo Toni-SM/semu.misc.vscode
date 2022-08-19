@@ -3,7 +3,7 @@ reloadable = true
 order = 0
 
 [package]
-version = "0.0.1-beta"
+version = "0.0.2-beta"
 category = "Utility"
 feature = false
 app = false
@@ -33,3 +33,4 @@ name = "semu.misc.vscode"
 [settings]
 exts."semu.misc.vscode".socket_ip = "0.0.0.0"
 exts."semu.misc.vscode".socket_port = 8226
+exts."semu.misc.vscode".carb_logging = true
