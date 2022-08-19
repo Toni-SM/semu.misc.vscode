@@ -111,7 +111,9 @@ export function activate(context: vscode.ExtensionContext) {
 		
 		// UDP clients for carb.log_*
 		logCarb('127.0.0.1', localSocketPort, outputChannelCarb);
-		logCarb(remoteSocketIp, localSocketPort, outputChannelCarb);
+		if (remoteSocketIp != '127.0.0.1' && remoteSocketIp != 'localhost') {
+			logCarb(remoteSocketIp, localSocketPort, outputChannelCarb);
+		}
 	}
 
 	// Local execution
