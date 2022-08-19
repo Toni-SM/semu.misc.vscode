@@ -46,6 +46,10 @@ This extension contributes the following settings:
 
 ## Release Notes
 
+### 0.0.3
+
+- Fix duplicated carb log display due to local/remote socket issue
+
 ### 0.0.2
 
 - Send carb logging Python calls to the VS Code extension
