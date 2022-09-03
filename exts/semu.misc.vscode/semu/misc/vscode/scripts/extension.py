@@ -9,6 +9,7 @@ import asyncio
 import threading
 import traceback
 import contextlib
+import subprocess
 from io import StringIO
 from dis import COMPILER_FLAG_NAMES
 try:
@@ -108,14 +109,34 @@ class Extension(omni.ext.IExt):
         self._socket_ip = self._settings.get("/exts/semu.misc.vscode/socket_ip")
         self._socket_port = self._settings.get("/exts/semu.misc.vscode/socket_port")
         self._carb_logging = self._settings.get("/exts/semu.misc.vscode/carb_logging")
-        self._socket_last_error = ""
+        kill_processes_with_port_in_use = self._settings.get("/exts/semu.misc.vscode/kill_processes_with_port_in_use")
 
         # menu item
         self._editor_menu = omni.kit.ui.get_editor_menu()
         if self._editor_menu:
             self._menu = self._editor_menu.add_item(Extension.MENU_PATH, self._show_notification, toggle=False, value=False)
         
+        # shutdown stream
+        self.shutdown_stream_ebent = omni.kit.app.get_app().get_shutdown_event_stream() \
+            .create_subscription_to_pop(self._on_shutdown_event, name="semu.misc.vscode", order=0)
+
+        # ensure port is free
+        if kill_processes_with_port_in_use:
+            if sys.platform == "win32":
+                pids = []
+                cmd = ["netstat", "-ano"]
+                p = subprocess.Popen(cmd, stdout=subprocess.PIPE)
+                for line in p.stdout:
+                    if str(self._socket_port).encode() in line:
+                        pids.append(line.strip().split(b" ")[-1].decode())
+                p.wait()
+                for pid in pids:
+                    carb.log_warn(f"Forced process shutdown with PID {pid}")
+                    cmd = ["taskkill", "/PID", pid, "/F"]
+                    subprocess.Popen(cmd).wait()
+
         # create socket
+        self._socket_last_error = ""
         self._server = None
         self._create_socket()
 
@@ -186,6 +207,10 @@ class Extension(omni.ext.IExt):
                 time.sleep(0.1)
 
     # extension ui methods
+
+    def _on_shutdown_event(self, event):
+        if event.type == omni.kit.app.POST_QUIT_EVENT_TYPE:
+            self.on_shutdown()
 
     def _show_notification(self, *args, **kwargs) -> None:
         """Show extension data in the notification area

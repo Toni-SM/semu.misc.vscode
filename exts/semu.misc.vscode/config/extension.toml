@@ -34,3 +34,4 @@ name = "semu.misc.vscode"
 exts."semu.misc.vscode".socket_ip = "0.0.0.0"
 exts."semu.misc.vscode".socket_port = 8226
 exts."semu.misc.vscode".carb_logging = true
+exts."semu.misc.vscode".kill_processes_with_port_in_use = true
