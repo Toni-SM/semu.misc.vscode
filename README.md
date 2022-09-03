@@ -1,6 +1,6 @@
 ## Embedded VS Code for NVIDIA Omniverse
 
-> This extension can be described as the [VS Code](https://code.visualstudio.com/) version of Omniverse's [Script Editor](https://docs.omniverse.nvidia.com/prod_extensions/prod_extensions/ext_script-editor.html). It allows to execute python code, embedded in the current NVIDIA Omniverse application scope, from the VS Code editor and display the results in the OUTPUT panel (under *Embedded VS Code for NVIDIA Omniverse*) of the VS Code editor
+> This extension can be described as the [VS Code](https://code.visualstudio.com/) version of Omniverse's [Script Editor](https://docs.omniverse.nvidia.com/prod_extensions/prod_extensions/ext_script-editor.html). It allows to execute Python code, embedded in the current NVIDIA Omniverse application scope, from the VS Code editor and displays the results in the OUTPUT panel (under *Embedded VS Code for NVIDIA Omniverse*) of the VS Code editor
 
 <br>
 
