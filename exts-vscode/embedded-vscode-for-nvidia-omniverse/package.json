@@ -84,6 +84,23 @@
           "markdownDescription": "Whether to enable carb logging to be displayed in the *Embedded VS Code for NVIDIA Omniverse (carb logging)* output panel. Changes will take effect after reloading the window"
         }
       }
+    },
+    "viewsContainers": {
+      "activitybar": [
+        {
+          "id": "embedded-vscode-for-nvidia-omniverse-views",
+          "title": "Embedded VS Code for NVIDIA Omniverse",
+          "icon": "images/view.svg"
+        }
+      ]
+    },
+    "views": {
+      "embedded-vscode-for-nvidia-omniverse-views": [
+        {
+          "id": "embedded-vscode-for-nvidia-omniverse-views-commands",
+          "name": "Commands"
+        }
+      ]
     }
   },
   "scripts": {

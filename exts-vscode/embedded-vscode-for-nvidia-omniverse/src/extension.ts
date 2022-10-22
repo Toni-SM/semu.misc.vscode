@@ -2,6 +2,8 @@ import * as vscode from 'vscode';
 import * as net from 'net';
 import * as dgram from 'dgram';
 
+import {CommandTreeView} from './extensionViews';
+
 
 function logCarb(ip: string, port: number, outputChannel: vscode.OutputChannel) {
 	let socket: dgram.Socket = dgram.createSocket('udp4');
@@ -96,6 +98,9 @@ function executeCode(ip: string, port: number, outputChannel: vscode.OutputChann
 // your extension is activated the very first time the command is executed
 export function activate(context: vscode.ExtensionContext) {
 	
+	// create/register TreeDataProvider
+	const commandTreeView = new CommandTreeView();
+
 	// Get configuration
 	const config = vscode.workspace.getConfiguration();
 	const localSocketPort = config.get('localSocket', {"extensionPort": 8226}).extensionPort;
