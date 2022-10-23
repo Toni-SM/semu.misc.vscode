@@ -25,7 +25,8 @@
     "onCommand:embedded-vscode-for-nvidia-omniverse.runRemotely",
     "onCommand:embedded-vscode-for-nvidia-omniverse.runSelectedText",
     "onCommand:embedded-vscode-for-nvidia-omniverse.runSelectedTextRemotely",
-    "onCommand:embedded-vscode-for-nvidia-omniverse.insertSnippet"
+    "onCommand:embedded-vscode-for-nvidia-omniverse.insertSnippet",
+    "onCommand:embedded-vscode-for-nvidia-omniverse.openResource"
   ],
   "main": "./out/extension.js",
   "contributes": {
@@ -57,6 +58,11 @@
       {
         "command": "embedded-vscode-for-nvidia-omniverse.insertSnippet",
         "title": "Insert snippet",
+        "category": "Embedded VS Code for NVIDIA Omniverse"
+      },
+      {
+        "command": "embedded-vscode-for-nvidia-omniverse.openResource",
+        "title": "Open resource internally or externally",
         "category": "Embedded VS Code for NVIDIA Omniverse"
       }
     ],
@@ -109,6 +115,10 @@
         {
           "id": "embedded-vscode-for-nvidia-omniverse-views-snippets",
           "name": "Snippets"
+        },
+        {
+          "id": "embedded-vscode-for-nvidia-omniverse-views-resources",
+          "name": "Resources"
         }
       ]
     }

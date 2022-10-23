@@ -25,6 +25,17 @@ export class SnippetTreeView {
 }
 
 
+export class ResourceTreeView {
+    private readonly resourceTreeViewProvider: ResourceTreeViewProvider
+
+    constructor() {
+        this.resourceTreeViewProvider = new ResourceTreeViewProvider()
+        vscode.window.createTreeView('embedded-vscode-for-nvidia-omniverse-views-resources', 
+                                     {treeDataProvider: this.resourceTreeViewProvider, showCollapseAll: true});
+    }
+}
+
+
 class CommandTreeViewProvider implements vscode.TreeDataProvider<Command> {
     private commands: Command[] = []
 
@@ -112,6 +123,50 @@ class SnippetTreeViewProvider implements vscode.TreeDataProvider<Snippet> {
 }
 
 
+class ResourceTreeViewProvider implements vscode.TreeDataProvider<Resource> {
+    private resources: Resource[] = []
+
+    constructor() {
+        this.resources.push(this.buildSubtree("Application docs", "applications.json"));
+        this.resources.push(this.buildSubtree("Developer", "developer.json"));
+    }
+
+    getTreeItem(element: Resource): vscode.TreeItem {
+        return element;
+    }
+
+    getChildren(element?: Resource): Resource[] {
+        if (!element)
+            return this.resources
+        return element.children
+    }
+
+    getParent(element: Resource) {
+        return element.parent
+    }
+
+    private buildSubtree(treeName: string, jsonFile: string) {
+        let children: Resource[] = [];
+        
+        const currentExtension = vscode.extensions.getExtension("Toni-SM.embedded-vscode-for-nvidia-omniverse");
+        if (currentExtension){
+            const rawResources = JSON.parse(readFileSync(path.join(currentExtension.extensionPath, 'resources', jsonFile), { encoding: 'utf8' }));
+            for (var val of rawResources.resources) {
+                children.push(new Resource(val.title, {command: 'embedded-vscode-for-nvidia-omniverse.openResource', arguments: [val.title, val.url, val.internal]}, val.description));
+            }
+        }
+        
+        const parent = new Resource(treeName, {command: ''});
+        if (children.length > 0) {
+            parent.collapsibleState = vscode.TreeItemCollapsibleState.Collapsed
+            parent.children = children
+            children.forEach((c) => c.parent = parent)
+        }
+        return parent
+    }
+}
+
+
 class Command extends vscode.TreeItem {
     public readonly command: vscode.Command | undefined
 
@@ -129,6 +184,23 @@ class Command extends vscode.TreeItem {
 class Snippet extends vscode.TreeItem {
     public children: Snippet[] = []
     public parent: Snippet | undefined = undefined
+
+    public readonly command: vscode.Command | undefined
+
+    constructor(public label: string,
+                command: {command: string, arguments?: string[], tooltip?: string},
+                public tooltip?: string | undefined) {
+        super(label, vscode.TreeItemCollapsibleState.None);
+        this.command = {...command, title: ''};
+        if (tooltip)
+            this.tooltip = tooltip;
+    }
+}
+
+
+class Resource extends vscode.TreeItem {
+    public children: Resource[] = []
+    public parent: Resource | undefined = undefined
 
     public readonly command: vscode.Command | undefined
 

@@ -2,7 +2,7 @@ import * as vscode from 'vscode';
 import * as net from 'net';
 import * as dgram from 'dgram';
 
-import {CommandTreeView, SnippetTreeView} from './extensionViews';
+import {CommandTreeView, SnippetTreeView, ResourceTreeView} from './extensionViews';
 
 
 function logCarb(ip: string, port: number, outputChannel: vscode.OutputChannel) {
@@ -94,6 +94,31 @@ function executeCode(ip: string, port: number, outputChannel: vscode.OutputChann
 	});
 }
 
+function getWebviewContent(resourceUrl: string) {
+	return `<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<style>
+		html, body {
+			margin: 0;
+			padding: 0;
+			width: 100%;
+			height: 100%;
+			min-height: 100%;
+		}
+		body > iframe {
+			border: 0;
+		}
+	</style>
+</head>
+<body>
+	<iframe width="100%" height="100%" frameBorder="0" src="${resourceUrl}"></iframe>
+</body>
+</html>`;
+}
+
 // this method is called when your extension is activated
 // your extension is activated the very first time the command is executed
 export function activate(context: vscode.ExtensionContext) {
@@ -101,6 +126,7 @@ export function activate(context: vscode.ExtensionContext) {
 	// create/register TreeDataProvider
 	const commandTreeView = new CommandTreeView();
 	const snippetTreeView = new SnippetTreeView();
+	const resourceTreeView = new ResourceTreeView();
 
 	// Get configuration
 	const config = vscode.workspace.getConfiguration();
@@ -152,12 +178,31 @@ export function activate(context: vscode.ExtensionContext) {
 			err => { vscode.window.showWarningMessage(`[Embedded VS Code for NVIDIA Omniverse] Unable to insert snippet: ${err}`); }
 		);
 	});
-
+		
+	// Open resource
+	let disposable_open_resource = vscode.commands.registerCommand('embedded-vscode-for-nvidia-omniverse.openResource', (title, args, openInternal) => {
+		// internal view
+		if (openInternal) {
+			const panel = vscode.window.createWebviewPanel(
+				'resource', // type of the webview panel
+				title, // panel title
+				vscode.ViewColumn.Beside, // editor column to show the panel in
+				{enableScripts: true} // Webview options
+			);
+			panel.webview.html = getWebviewContent(args);
+		}
+		// external view
+		else {
+			vscode.env.openExternal(vscode.Uri.parse(args));
+		}
+	});
+	
 	context.subscriptions.push(disposable_local);
 	context.subscriptions.push(disposable_local_selected_text);
 	context.subscriptions.push(disposable_remote);
 	context.subscriptions.push(disposable_remote_selected_text);
 	context.subscriptions.push(disposable_insert_snippet);
+	context.subscriptions.push(disposable_open_resource);
 }
 
 export function deactivate() {
