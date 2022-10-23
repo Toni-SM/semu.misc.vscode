@@ -1,0 +1,29 @@
+{
+    "snippets": [
+        {
+            "title": "Common import",
+            "description": "Carb import statements",
+            "snippet": "import carb\n"
+        },
+        {
+            "title": "Get settings",
+            "description": "Get Omniverse application/extension settings",
+            "snippet": "settings = carb.settings.get_settings()\n\n# Omniverse application settings (e.g. extension folders: \"/app/exts/folders\")\n# Extension extension.toml (e.g. docUrl in omni.kit.window.extensions: \"/exts/omni.kit.window.extensions/docUrl\")\nvalue = settings.get(\"${1:setting_path}\")\n"
+        },
+        {
+            "title": "Log info",
+            "description": "Log an info message",
+            "snippet": "carb.log_info(\"${1:message}\")\n"
+        },
+        {
+            "title": "Log warning",
+            "description": "Log a warning message",
+            "snippet": "carb.log_warn(\"${1:message}\")\n"
+        },
+        {
+            "title": "Log error",
+            "description": "Log an error message",
+            "snippet": "carb.log_error(\"${1:message}\")\n"
+        }
+    ]
+}

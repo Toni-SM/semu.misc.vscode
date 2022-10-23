@@ -1,0 +1,44 @@
+{
+    "snippets": [
+        {
+            "title": "Common import",
+            "description": "Most common USD import statements",
+            "snippet": "import omni.usd\nfrom pxr import Sdf, Gf, Tf\nfrom pxr import Usd, UsdGeom, UsdPhysics\n"
+        },
+        {
+            "title": "Get Stage",
+            "description": "Get the current stage",
+            "snippet": "stage = omni.usd.get_context().get_stage()\n"
+        },
+        {
+            "title": "Get stage unit",
+            "description": "Get the current stage units (e.g. centimeters: 0.01, meters: 1.0)",
+            "snippet": "stage_unit = UsdGeom.GetStageMetersPerUnit(stage)\n"
+        },
+        {
+            "title": "Traverse the prims on the stage",
+            "description": "Traverse the active, loaded, defined, non-abstract prims on this stage depth-first",
+            "snippet": "for prim in stage.Traverse():\n    prim\n"
+        },
+        {
+            "title": "Get prim at path",
+            "description": "Return the prim at path, or an invalid prim if none exists",
+            "snippet": "prim = stage.GetPrimAtPath(${1:prim_path})\n"
+        },
+        {
+            "title": "Get prim attribute",
+            "description": "Return the attribute value of a prim given its name",
+            "snippet": "value = prim.GetAttribute(\"${1:attribute_name}\").Get()\n"
+        },
+        {
+            "title": "Set prim attribute",
+            "description": "Set the attribute value of a prim given its name",
+            "snippet": "prim.GetAttribute(\"${1:attribute_name}\").Set(${2:value})\n"
+        },
+        {
+            "title": "Compute prim world-space transform",
+            "description": "Compute the transformation matrix for a prim at the given time",
+            "snippet": "# compute world-space transform\ntransform = Gf.Transform()\ntransform.SetMatrix(UsdGeom.Xformable(prim).ComputeLocalToWorldTransform(Usd.TimeCode.Default()))\n\n# get position and orientation\nposition = transform.GetTranslation()\nrotation = transform.GetRotation().GetQuat()\n"
+        }        
+    ]
+}
