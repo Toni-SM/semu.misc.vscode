@@ -24,7 +24,8 @@
     "onCommand:embedded-vscode-for-nvidia-omniverse.run",
     "onCommand:embedded-vscode-for-nvidia-omniverse.runRemotely",
     "onCommand:embedded-vscode-for-nvidia-omniverse.runSelectedText",
-    "onCommand:embedded-vscode-for-nvidia-omniverse.runSelectedTextRemotely"
+    "onCommand:embedded-vscode-for-nvidia-omniverse.runSelectedTextRemotely",
+    "onCommand:embedded-vscode-for-nvidia-omniverse.insertSnippet"
   ],
   "main": "./out/extension.js",
   "contributes": {
@@ -52,6 +53,11 @@
         "title": "Run Selected Text Remotely",
         "category": "Embedded VS Code for NVIDIA Omniverse",
         "description": "Run python code embedded in the NVIDIA Omniverse application scope (running remotely) from the selected text"
+      },
+      {
+        "command": "embedded-vscode-for-nvidia-omniverse.insertSnippet",
+        "title": "Insert snippet",
+        "category": "Embedded VS Code for NVIDIA Omniverse"
       }
     ],
     "configuration": {
@@ -99,6 +105,10 @@
         {
           "id": "embedded-vscode-for-nvidia-omniverse-views-commands",
           "name": "Commands"
+        },
+        {
+          "id": "embedded-vscode-for-nvidia-omniverse-views-snippets",
+          "name": "Snippets"
         }
       ]
     }

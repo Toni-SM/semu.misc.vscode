@@ -2,7 +2,7 @@ import * as vscode from 'vscode';
 import * as net from 'net';
 import * as dgram from 'dgram';
 
-import {CommandTreeView} from './extensionViews';
+import {CommandTreeView, SnippetTreeView} from './extensionViews';
 
 
 function logCarb(ip: string, port: number, outputChannel: vscode.OutputChannel) {
@@ -100,6 +100,7 @@ export function activate(context: vscode.ExtensionContext) {
 	
 	// create/register TreeDataProvider
 	const commandTreeView = new CommandTreeView();
+	const snippetTreeView = new SnippetTreeView();
 
 	// Get configuration
 	const config = vscode.workspace.getConfiguration();
@@ -139,10 +140,24 @@ export function activate(context: vscode.ExtensionContext) {
 		executeCode(remoteSocketIp, remoteSocketPort, outputChannel, true);
 	});
 
+	// Snippet
+	let disposable_insert_snippet = vscode.commands.registerCommand('embedded-vscode-for-nvidia-omniverse.insertSnippet', (args) => {
+		const editor = vscode.window.activeTextEditor;
+		if (!editor) {
+			vscode.window.showWarningMessage('[Embedded VS Code for NVIDIA Omniverse] No active editor found');
+			return;
+		}
+		editor.insertSnippet(new vscode.SnippetString(args)).then(
+			() => {},
+			err => { vscode.window.showWarningMessage(`[Embedded VS Code for NVIDIA Omniverse] Unable to insert snippet: ${err}`); }
+		);
+	});
+
 	context.subscriptions.push(disposable_local);
 	context.subscriptions.push(disposable_local_selected_text);
 	context.subscriptions.push(disposable_remote);
 	context.subscriptions.push(disposable_remote_selected_text);
+	context.subscriptions.push(disposable_insert_snippet);
 }
 
 export function deactivate() {
