@@ -1,0 +1,34 @@
+{
+    "resources": [
+        {
+            "internal": true,
+            "title": "Kit Programming Manual",
+            "description": "Kit Programming Manual",
+            "url": "https://docs.omniverse.nvidia.com/py/kit/index.html"
+        },
+        {
+            "internal": true,
+            "title": "Extensions",
+            "description": "Extensions",
+            "url": "https://docs.omniverse.nvidia.com/py/kit/docs/guide/get_started_extensions.html"
+        },
+        {
+            "internal": true,
+            "title": "OmniGraph",
+            "description": "OmniGraph framework",
+            "url": "https://docs.omniverse.nvidia.com/py/kit/source/extensions/omni.graph.core/docs/index.html"
+        },
+        {
+            "internal": true,
+            "title": "SceneUI",
+            "description": "SceneUI helps build great-looking 3d manipulators and 3d helpers",
+            "url": "https://docs.omniverse.nvidia.com/py/kit/source/extensions/omni.ui.scene/docs/Overview.html"
+        },
+        {
+            "internal": true,
+            "title": "Omni UI",
+            "description": "Omniverse's UI toolkit for creating beautiful and flexible graphical user interfaces",
+            "url": "https://docs.omniverse.nvidia.com/py/kit/source/extensions/omni.ui/docs/index.html"
+        }
+    ]
+}
