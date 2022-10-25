@@ -1,0 +1,175 @@
+{
+    "resources": [
+        {
+            "internal": true,
+            "title": "Platform Overview",
+            "description": "A high level review of the platform",
+            "url": "https://docs.omniverse.nvidia.com/platform/index.html"
+        },
+        {
+            "title": "Apps",
+            "resources": [
+                {
+                    "internal": true,
+                    "title": "Audio2Face",
+                    "description": "Audio driven face and lip sync",
+                    "url": "https://docs.omniverse.nvidia.com/audio2face/index.html"
+                },
+                {
+                    "internal": true,
+                    "title": "Code",
+                    "description": "A developer focused Omniverse App",
+                    "url": "https://docs.omniverse.nvidia.com/code/index.html"
+                },
+                {
+                    "internal": true,
+                    "title": "Create",
+                    "description": "Developing and rendering 3D worlds",
+                    "url": "https://docs.omniverse.nvidia.com/create/index.html"
+                },
+                {
+                    "internal": true,
+                    "title": "Farm",
+                    "description": "Distribute your tasks over multiple computers",
+                    "url": "https://docs.omniverse.nvidia.com/farm/index.html"
+                },
+                {
+                    "internal": true,
+                    "title": "Isaac Sim",
+                    "description": "Simulation tools for tomorrow's solutions",
+                    "url": "https://docs.omniverse.nvidia.com/isaacsim/index.html"
+                },
+                {
+                    "internal": true,
+                    "title": "Kaolin",
+                    "description": "Powerful 3D accelerated deep learning",
+                    "url": "https://docs.omniverse.nvidia.com/kaolin/index.html"
+                },
+                {
+                    "internal": true,
+                    "title": "Machinima",
+                    "description": "Tell your story",
+                    "url": "https://docs.omniverse.nvidia.com/machinima/index.html"
+                },
+                {
+                    "internal": true,
+                    "title": "Navigator",
+                    "description": "Convenient Nucleus Content Management",
+                    "url": "https://docs.omniverse.nvidia.com/navigator/index.html"
+                },
+                {
+                    "internal": true,
+                    "title": "Omniverse Streaming Client",
+                    "description": "Remote access for KIT-based Apps",
+                    "url": "https://docs.omniverse.nvidia.com/streaming-client/index.html"
+                },
+                {
+                    "internal": true,
+                    "title": "Showroom",
+                    "description": "Explore what's possible",
+                    "url": "https://docs.omniverse.nvidia.com/showroom/index.html"
+                },
+                {
+                    "internal": true,
+                    "title": "USDView",
+                    "description": "View and introspect USD stages",
+                    "url": "https://docs.omniverse.nvidia.com/usdview/index.html"
+                },
+                {
+                    "internal": true,
+                    "title": "View",
+                    "description": "World class architectural visualization",
+                    "url": "https://docs.omniverse.nvidia.com/view/index.html"
+                },
+                {
+                    "internal": true,
+                    "title": "XR",
+                    "description": "Step inside the Omniverse",
+                    "url": "https://docs.omniverse.nvidia.com/xr/index.html"
+                }
+            ]
+        },
+        {
+            "title": "Platform",
+            "resources": [
+                {
+                    "internal": true,
+                    "title": "Connectors",
+                    "description": "Connect your favorite applications to the Omniverse",
+                    "url": "https://docs.omniverse.nvidia.com/connect/index.html"
+                },
+                {
+                    "internal": true,
+                    "title": "Extensions",
+                    "description": "Extended capabilities for Omniverse Apps",
+                    "url": "https://docs.omniverse.nvidia.com/extensions/index.html"
+                },
+                {
+                    "internal": true,
+                    "title": "Kit",
+                    "description": "The primary building block of all Omniverse Apps",
+                    "url": "https://docs.omniverse.nvidia.com/kit/index.html"
+                },
+                {
+                    "internal": true,
+                    "title": "Materials and Rendering",
+                    "description": "Make the most of your visuals",
+                    "url": "https://docs.omniverse.nvidia.com/rtx/index.html"
+                },
+                {
+                    "internal": true,
+                    "title": "Nucleus",
+                    "description": "The core of an Omniverse network",
+                    "url": "https://docs.omniverse.nvidia.com/nucleus/index.html"
+                },
+                {
+                    "internal": true,
+                    "title": "USD",
+                    "description": "Learn about the Universal Scene Description",
+                    "url": "https://docs.omniverse.nvidia.com/usd/index.html"
+                }
+            ]
+        },
+        {
+            "title": "Additional resources",
+            "resources": [
+                {
+                    "internal": true,
+                    "title": "Omniverse Developer Documentation",
+                    "description": "API Documentation for Omniverse KIT",
+                    "url": "https://docs.omniverse.nvidia.com/py/kit/index.html"
+                },
+                {
+                    "internal": true,
+                    "title": "Omniverse Digital Twins",
+                    "description": "Replicate your factory",
+                    "url": "https://docs.omniverse.nvidia.com/digital-twins/index.html"
+                },
+                {
+                    "internal": true,
+                    "title": "Omniverse Services",
+                    "description": "Extend Omniverse using its microservice framework",
+                    "url": "https://docs.omniverse.nvidia.com/services/index.html"
+                },
+                {
+                    "internal": true,
+                    "title": "Omniverse SimReady",
+                    "description": "Specification for creating simulation-ready assets",
+                    "url": "https://docs.omniverse.nvidia.com/simready/index.html"
+                },
+                {
+                    "internal": true,
+                    "title": "Omniverse Utilities",
+                    "description": "Helpful utilities in the Omniverse",
+                    "url": "https://docs.omniverse.nvidia.com/utilities/index.html"
+                },
+                {
+                    "internal": true,
+                    "title": "Omniverse Workflows",
+                    "description": "Objective based tutorials using Omniverse",
+                    "url": "https://docs.omniverse.nvidia.com/workflows/index.html"
+                }
+            ]
+        }
+    ]
+}

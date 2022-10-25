@@ -1,0 +1,141 @@
+{
+    "resources": [
+        {
+            "internal": false,
+            "title": "[Omniverse]",
+            "description": "Omniverse announcements and discussions",
+            "url": "https://forums.developer.nvidia.com/c/omniverse/300"
+        },
+        {
+            "internal": false,
+            "title": "Announcements",
+            "description": "Look for Omniverse announcements and updates here",
+            "url": "https://forums.developer.nvidia.com/c/omniverse/announcements/302"
+        },
+        {
+            "title": "Apps",
+            "resources": [
+                {
+                    "internal": false,
+                    "title": "Audio2Face",
+                    "description": "Audio2Face is a combination of AI based technologies that generates facial motion and lip sync that is derived entirely from an audio source",
+                    "url": "https://forums.developer.nvidia.com/c/omniverse/apps/audio2face/404"
+                },
+                {
+                    "internal": false,
+                    "title": "Code",
+                    "description": "Omniverse Code is an Omniverse App that serves as an integrated development environment (IDE) for developers and power users to easily build their Omniverse extensions, apps, or microservices",
+                    "url": "https://forums.developer.nvidia.com/c/omniverse/apps/code/519"
+                },
+                {
+                    "internal": false,
+                    "title": "Create",
+                    "description": "NVIDIA Omniverse Create is an Omniverse app for world-building that allows users to assemble, light, simulate and render large scale scenes",
+                    "url": "https://forums.developer.nvidia.com/c/omniverse/apps/create/405"
+                },
+                {
+                    "internal": false,
+                    "title": "Kaolin",
+                    "description": "Omniverse Kaolin is an interactive application for researchers working on 3D Deep Learning. This application leverages the Omniverse platform, USD format and RTX rendering to provide interactive tools that allow visualizing 3D outputs of any Deep Learning model as it is training, inspecting 3D datas…",
+                    "url": "https://forums.developer.nvidia.com/c/omniverse/apps/kaolin/406"
+                },
+                {
+                    "internal": false,
+                    "title": "Machinima",
+                    "description": "NVIDIA Omniverse Machinima gives you the power to remix, recreate, and redefine animated video game storytelling. Powered by NVIDIA RTX and your imagination",
+                    "url": "https://forums.developer.nvidia.com/c/omniverse/apps/machinima/407"
+                },
+                {
+                    "internal": false,
+                    "title": "Nucleus Navigator",
+                    "description": "Nucleus Navigator is an Omniverse app that gives you the ability to manage files and folders on your local workstation, Omniverse Enterprise Servers, and Nucleus Cloud environments",
+                    "url": "https://forums.developer.nvidia.com/c/omniverse/apps/nucleus-navigator/633"
+                },
+                {
+                    "internal": false,
+                    "title": "Omniverse Drive",
+                    "description": "The Omniverse Drive software mounts the whole Omniverse server repo to your Windows system, such that you can manipulate server files the same way as your local files",
+                    "url": "https://forums.developer.nvidia.com/c/omniverse/apps/drive/381"
+                },
+                {
+                    "internal": false,
+                    "title": "Omniverse Isaac Sim",
+                    "description": "Discussions, news and information about the NVIDIA Isaac Sim",
+                    "url": "https://forums.developer.nvidia.com/c/agx-autonomous-machines/isaac/simulation/69"
+                },
+                {
+                    "internal": false,
+                    "title": "Omniverse XR",
+                    "description": "Omniverse Create XR is a spatial computing app that enables users to interactively and immersively assemble, light, and navigate Omniverse scenes in real-time - alone, or collaboratively",
+                    "url": "https://forums.developer.nvidia.com/c/omniverse/apps/omniverse-xr/587"
+                },
+                {
+                    "internal": false,
+                    "title": "Showroom",
+                    "description": "We are excited to share more news about Omniverse Showroom, which was recently added to the Launcher and will updated with more tech demos regularly",
+                    "url": "https://forums.developer.nvidia.com/c/omniverse/apps/omniverse-showroom/510"
+                },
+                {
+                    "internal": false,
+                    "title": "View",
+                    "description": "NVIDIA Omniverse View is an Omniverse App that offers a simple, yet powerful toolkit designed to visualize architectural and engineering projects with stunning, physically accurate rendering output",
+                    "url": "https://forums.developer.nvidia.com/c/omniverse/apps/view/408"
+                }
+            ]
+        },
+        {
+            "internal": false,
+            "title": "Connectors",
+            "description": "NVIDIA has built extensions and additional software layers on top of the open-source USD distribution that allow DCC tools and compute services to communicate easily with each other through the Omniverse Nucleus DB",
+            "url": "https://forums.developer.nvidia.com/c/omniverse/connectors/380"
+        },
+        {
+            "internal": false,
+            "title": "Developer",
+            "description": "Discussions around extension, kit, scripting and customization",
+            "url": "https://forums.developer.nvidia.com/c/omniverse/developer/330"
+        },
+        {
+            "internal": false,
+            "title": "Digital Humans",
+            "description": "Digital human models represent variations of body shapes for the target end-user population. They can simulate human motions, evaluate workloads, and are utilized to assess safety and usability of products and environments in a virtual space with computer-aided design",
+            "url": "https://forums.developer.nvidia.com/c/omniverse/digital-humans/485"
+        },
+        {
+            "internal": false,
+            "title": "Extension Exchange",
+            "description": "Create and Share your Extensions with the Omniverse Community!",
+            "url": "https://forums.developer.nvidia.com/c/omniverse/extension/399"
+        },
+        {
+            "internal": false,
+            "title": "General Discussion",
+            "description": "Discussions for all aspects of the Omniverse Platform",
+            "url": "https://forums.developer.nvidia.com/c/omniverse/general-discussion/329"
+        },
+        {
+            "internal": false,
+            "title": "Platform",
+            "description": "NVIDIA Omniverse is a powerful, multi-GPU, real-time simulation and collaboration platform for 3D production pipelines based on Pixar's Universal Scene Description and NVIDIA RTX",
+            "url": "https://forums.developer.nvidia.com/c/omniverse/platform/397"
+        },
+        {
+            "internal": false,
+            "title": "Services",
+            "description": "A forum area to discuss Omniverse platform services",
+            "url": "https://forums.developer.nvidia.com/c/omniverse/services/608"
+        },
+        {
+            "internal": false,
+            "title": "Showcase",
+            "description": "Share your creations with the community",
+            "url": "https://forums.developer.nvidia.com/c/omniverse/showcase/362"
+        },
+        {
+            "internal": false,
+            "title": "Synthetic Data Generation (SDG)",
+            "description": "Omniverse replicator is in beta and ready for experimentation",
+            "url": "https://forums.developer.nvidia.com/c/omniverse/synthetic-data-generation-sdg/595"
+        }
+    ]
+}
