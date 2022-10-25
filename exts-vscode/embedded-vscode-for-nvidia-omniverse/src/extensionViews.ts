@@ -81,10 +81,10 @@ class SnippetTreeViewProvider implements vscode.TreeDataProvider<Snippet> {
     private snippets: Snippet[] = []
 
     constructor() {
-        this.snippets.push(this.buildSubtree("USD", "usd.json"));
-        this.snippets.push(this.buildSubtree("Events", "events.json"));
-        this.snippets.push(this.buildSubtree("Carb", "carb.json"));
-        this.snippets.push(this.buildSubtree("UI", "ui.json"));
+        this.snippets.push(this.buildSubtree("USD", this.parseJSON("usd.json")));
+        this.snippets.push(this.buildSubtree("Events", this.parseJSON("events.json")));
+        this.snippets.push(this.buildSubtree("Carb", this.parseJSON("carb.json")));
+        this.snippets.push(this.buildSubtree("UI", this.parseJSON("ui.json")));
     }
 
     getTreeItem(element: Snippet): vscode.TreeItem {
@@ -101,15 +101,14 @@ class SnippetTreeViewProvider implements vscode.TreeDataProvider<Snippet> {
         return element.parent
     }
 
-    private buildSubtree(treeName: string, jsonFile: string) {
+    private buildSubtree(treeName: string, snippets: {title: string, snippets: [], url: string, snippet: string, description: string}[]): Snippet {
         let children: Snippet[] = [];
         
-        const currentExtension = vscode.extensions.getExtension("Toni-SM.embedded-vscode-for-nvidia-omniverse");
-        if (currentExtension){
-            const rawSnippets = JSON.parse(readFileSync(path.join(currentExtension.extensionPath, 'snippets', jsonFile), { encoding: 'utf8' }));
-            for (var val of rawSnippets.snippets) {
+        for (var val of snippets) {
+            if( val.hasOwnProperty("snippets"))
+                children.push(this.buildSubtree(val.title, val.snippets));
+            else
                 children.push(new Snippet(val.title, {command: 'embedded-vscode-for-nvidia-omniverse.insertSnippet', arguments: [val.snippet]}, val.description));
-            }
         }
         
         const parent = new Snippet(treeName, {command: ''});
@@ -120,6 +119,15 @@ class SnippetTreeViewProvider implements vscode.TreeDataProvider<Snippet> {
         }
         return parent
     }
+
+    private parseJSON(jsonFile: string): [] {
+        const currentExtension = vscode.extensions.getExtension("Toni-SM.embedded-vscode-for-nvidia-omniverse");
+        if (currentExtension){
+            const rawSnippets = JSON.parse(readFileSync(path.join(currentExtension.extensionPath, 'snippets', jsonFile), { encoding: 'utf8' }));
+            return rawSnippets.snippets;
+        }
+        return [];
+    }
 }
 
 
@@ -127,8 +135,10 @@ class ResourceTreeViewProvider implements vscode.TreeDataProvider<Resource> {
     private resources: Resource[] = []
 
     constructor() {
-        this.resources.push(this.buildSubtree("Application docs", "applications.json"));
-        this.resources.push(this.buildSubtree("Developer", "developer.json"));
+        this.resources.push(this.buildSubtree("Documentation", this.parseJSON("documentation.json")));
+        this.resources.push(this.buildSubtree("Developer", this.parseJSON("developer.json")));
+        this.resources.push(this.buildSubtree("Forum (external)", this.parseJSON("forums.json")));
+        this.resources.push(this.buildSubtree("Isaac Sim: Extensions API", this.parseJSON("isaac-sim_extensions.json")));
     }
 
     getTreeItem(element: Resource): vscode.TreeItem {
@@ -145,15 +155,14 @@ class ResourceTreeViewProvider implements vscode.TreeDataProvider<Resource> {
         return element.parent
     }
 
-    private buildSubtree(treeName: string, jsonFile: string) {
+    private buildSubtree(treeName: string, resources: {title: string, resources: [], url: string, internal: string, description: string}[]): Resource {
         let children: Resource[] = [];
         
-        const currentExtension = vscode.extensions.getExtension("Toni-SM.embedded-vscode-for-nvidia-omniverse");
-        if (currentExtension){
-            const rawResources = JSON.parse(readFileSync(path.join(currentExtension.extensionPath, 'resources', jsonFile), { encoding: 'utf8' }));
-            for (var val of rawResources.resources) {
+        for (var val of resources) {
+            if( val.hasOwnProperty("resources"))
+                children.push(this.buildSubtree(val.title, val.resources));
+            else
                 children.push(new Resource(val.title, {command: 'embedded-vscode-for-nvidia-omniverse.openResource', arguments: [val.title, val.url, val.internal]}, val.description));
-            }
         }
         
         const parent = new Resource(treeName, {command: ''});
@@ -163,6 +172,15 @@ class ResourceTreeViewProvider implements vscode.TreeDataProvider<Resource> {
             children.forEach((c) => c.parent = parent)
         }
         return parent
+    }
+
+    private parseJSON(jsonFile: string): [] {
+        const currentExtension = vscode.extensions.getExtension("Toni-SM.embedded-vscode-for-nvidia-omniverse");
+        if (currentExtension){
+            const rawResources = JSON.parse(readFileSync(path.join(currentExtension.extensionPath, 'resources', jsonFile), { encoding: 'utf8' }));
+            return rawResources.resources;
+        }
+        return [];
     }
 }
 
