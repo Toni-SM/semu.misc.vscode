@@ -42,7 +42,7 @@ class CommandTreeViewProvider implements vscode.TreeDataProvider<Command> {
     constructor() {
         // codicon: https://microsoft.github.io/vscode-codicons/dist/codicon.html
 
-        let icon1, icon2, icon3, icon4: vscode.Uri | undefined;
+        // let icon1, icon2, icon3, icon4: vscode.Uri | undefined;
         // const currentExtension = vscode.extensions.getExtension("Toni-SM.embedded-vscode-for-nvidia-omniverse");
 
         // if (currentExtension){
@@ -54,17 +54,21 @@ class CommandTreeViewProvider implements vscode.TreeDataProvider<Command> {
 
         this.commands.push(new Command("Run", 
                                        {command: "embedded-vscode-for-nvidia-omniverse.run"}, 
-                                       icon1 || new vscode.ThemeIcon("play")));
-        this.commands.push(new Command("Run Selected Text", 
-                                          {command: "embedded-vscode-for-nvidia-omniverse.runSelectedText"}, 
-                                          icon2 || new vscode.ThemeIcon("play")));
-        this.commands.push(new Command("---------------------------", {command: ""}));
-        this.commands.push(new Command("Run Remotely", 
+                                       new vscode.ThemeIcon("play")));
+        this.commands.push(new Command("Run selected text", 
+                                       {command: "embedded-vscode-for-nvidia-omniverse.runSelectedText"}, 
+                                       new vscode.ThemeIcon("play")));
+        this.commands.push(new Command("---", {command: ""}));
+        this.commands.push(new Command("Run remotely", 
                                        {command: "embedded-vscode-for-nvidia-omniverse.runRemotely"}, 
-                                       icon3 || new vscode.ThemeIcon("run-all")));
-        this.commands.push(new Command("Run Selected Text Remotely", 
-                                         {command: "embedded-vscode-for-nvidia-omniverse.runSelectedTextRemotely"}, 
-                                          icon4 || new vscode.ThemeIcon("run-all")));
+                                       new vscode.ThemeIcon("run-all")));
+        this.commands.push(new Command("Run selected text remotely", 
+                                       {command: "embedded-vscode-for-nvidia-omniverse.runSelectedTextRemotely"}, 
+                                       new vscode.ThemeIcon("run-all")));
+        this.commands.push(new Command("---", {command: ""}));
+        this.commands.push(new Command("Clear output", 
+                                       {command: "workbench.output.action.clearOutput"}, 
+                                       new vscode.ThemeIcon("clear-all")));
     }
 
     getTreeItem(element: Command): vscode.TreeItem {
@@ -81,9 +85,9 @@ class SnippetTreeViewProvider implements vscode.TreeDataProvider<Snippet> {
     private snippets: Snippet[] = []
 
     constructor() {
+        this.snippets.push(this.buildSubtree("Kit", this.parseJSON("kit.json")));
+        this.snippets.push(this.buildSubtree("Kit commands", this.parseJSON("kit-commands.json")));
         this.snippets.push(this.buildSubtree("USD", this.parseJSON("usd.json")));
-        this.snippets.push(this.buildSubtree("Events", this.parseJSON("events.json")));
-        this.snippets.push(this.buildSubtree("Carb", this.parseJSON("carb.json")));
         this.snippets.push(this.buildSubtree("UI", this.parseJSON("ui.json")));
     }
 
@@ -135,10 +139,9 @@ class ResourceTreeViewProvider implements vscode.TreeDataProvider<Resource> {
     private resources: Resource[] = []
 
     constructor() {
-        this.resources.push(this.buildSubtree("Documentation", this.parseJSON("documentation.json")));
         this.resources.push(this.buildSubtree("Developer", this.parseJSON("developer.json")));
+        this.resources.push(this.buildSubtree("Documentation", this.parseJSON("documentation.json")));
         this.resources.push(this.buildSubtree("Forum (external)", this.parseJSON("forums.json")));
-        this.resources.push(this.buildSubtree("Isaac Sim: Extensions API", this.parseJSON("isaac-sim_extensions.json")));
     }
 
     getTreeItem(element: Resource): vscode.TreeItem {
