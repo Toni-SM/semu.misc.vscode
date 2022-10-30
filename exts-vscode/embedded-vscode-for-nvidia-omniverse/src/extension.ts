@@ -25,7 +25,7 @@ function executeCode(ip: string, port: number, outputChannel: vscode.OutputChann
 	// Get editor
 	const editor = vscode.window.activeTextEditor;
 	if (!editor) {
-		vscode.window.showWarningMessage('[Embedded VS Code for NVIDIA Omniverse] No active editor found');
+		vscode.window.showWarningMessage('No active editor found');
 		return;
 	}
 	let document = editor.document;
@@ -38,7 +38,7 @@ function executeCode(ip: string, port: number, outputChannel: vscode.OutputChann
 	const documentText = document.getText(selection);
 
 	if (documentText.length == 0) {
-		vscode.window.showWarningMessage('[Embedded VS Code for NVIDIA Omniverse] No text available or selected');
+		vscode.window.showWarningMessage('No text available or selected');
 		return;
 	}
 
@@ -86,7 +86,7 @@ function executeCode(ip: string, port: number, outputChannel: vscode.OutputChann
 	})
 	.on('close', () => {
 	}).on('error', (err) => {
-		vscode.window.showErrorMessage('[Embedded VS Code for NVIDIA Omniverse] Connection error: ' + err.message);
+		vscode.window.showErrorMessage('Connection error: ' + err.message);
 		console.error('embedded-vscode-for-nvidia-omniverse: TCP connection error: ' + err.message);
 		socket.destroy();
 	}).on('timeout', () => {
@@ -170,12 +170,12 @@ export function activate(context: vscode.ExtensionContext) {
 	let disposable_insert_snippet = vscode.commands.registerCommand('embedded-vscode-for-nvidia-omniverse.insertSnippet', (args) => {
 		const editor = vscode.window.activeTextEditor;
 		if (!editor) {
-			vscode.window.showWarningMessage('[Embedded VS Code for NVIDIA Omniverse] No active editor found');
+			vscode.window.showWarningMessage('No active editor found');
 			return;
 		}
 		editor.insertSnippet(new vscode.SnippetString(args)).then(
 			() => {},
-			err => { vscode.window.showWarningMessage(`[Embedded VS Code for NVIDIA Omniverse] Unable to insert snippet: ${err}`); }
+			err => { vscode.window.showWarningMessage(`Unable to insert snippet: ${err}`); }
 		);
 	});
 		
