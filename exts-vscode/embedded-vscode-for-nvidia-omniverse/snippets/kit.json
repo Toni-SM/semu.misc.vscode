@@ -1,0 +1,209 @@
+{
+    "snippets": [
+        {
+            "title": "Carb",
+            "snippets": [
+                {
+                    "title": "Common import",
+                    "description": "Common import statements",
+                    "snippet": "import carb\n"
+                },
+                {
+                    "title": "Get settings",
+                    "description": "Get Omniverse application/extension settings",
+                    "snippet": "settings = carb.settings.get_settings()\n\n# setting path: application: \"/app/key\", extension: \"/exts/the.ext.name/key\"\nvalue = settings.get(\"${1:setting_path}\")\n"
+                },
+                {
+                    "title": "Set settings (persistent or not)",
+                    "description": "Set Omniverse application/extension settings",
+                    "snippet": "settings = carb.settings.get_settings()\n\n# setting path: application: \"/app/key\", extension \"/exts/the.ext.name/key\")\n# value types: int: 23, float: 3.14, bool: False, str: \"summer\", array: [9,13,17], dict: {\"a\": 2, \"b\": \"winter\"}\n# all settings stored under \"/persistent\" (e.g \"/persistent/exts/the.ext.name/key\") are saved between sessions\n# - location of the persistent settings file: settings.get(\"/app/userConfigPath\")\nsettings.set(\"${1:setting_path}\", ${2:value})\n"
+                },
+                {
+                    "title": "Log info",
+                    "description": "Log an info message",
+                    "snippet": "carb.log_info(\"${1:message}\")\n"
+                },
+                {
+                    "title": "Log warning",
+                    "description": "Log a warning message",
+                    "snippet": "carb.log_warn(\"${1:message}\")\n"
+                },
+                {
+                    "title": "Log error",
+                    "description": "Log an error message",
+                    "snippet": "carb.log_error(\"${1:message}\")\n"
+                }
+            ]
+        },
+        {
+            "title": "Events",
+            "snippets": [
+                {
+                    "title": "Custom events",
+                    "description": "Create and subscribe/unsubscribe to custom events",
+                    "snippet": "import carb.events\nimport omni.kit.app\n\n# event is unique integer id (create it from string by hashing, using helper function)\n# [ext name].[event name] is the recommended naming convention\nMY_CUSTOM_EVENT = carb.events.type_from_string(\"${1:omni.my.extension.MY_CUSTOM_EVENT}\")\n\n# common event bus (event queue which is popped every update (frame))\nbus = omni.kit.app.get_app().get_message_bus_event_stream()\n\n# callback\ndef on_custom_event(event):\n    print(event.type, event.type == MY_CUSTOM_EVENT, event.payload)\n\n# subscription (keep subscription objects alive for subscription to work)\n# - push to queue is called immediately when pushed\n# - pop is called on next update\ncustom_event_push_sub = bus.create_subscription_to_push_by_type(MY_CUSTOM_EVENT, on_custom_event)\ncustom_event_pop_sub = bus.create_subscription_to_pop_by_type(MY_CUSTOM_EVENT, on_custom_event)\n\n# push event the bus with custom payload\nbus.push(MY_CUSTOM_EVENT, payload={\"data\": 2, \"x\": \"y\"})\n\n# unsubscription\ncustom_event_push_sub = None\ncustom_event_pop_sub = None\n"
+                },        
+                {
+                    "title": "Keyboard input event",
+                    "description": "Subscribe/unsubscribe to keyboard input events",
+                    "snippet": "import carb.input\nimport omni.appwindow\n\n# callback\ndef on_keyboard_event(event):\n    print(f\"Input event: {event.device} {event.input} {event.keyboard} {event.modifiers} {event.type}\")\n    # e.g. key A pressed/released\n    if event.input == carb.input.KeyboardInput.A:\n        if event.type == carb.input.KeyboardEventType.KEY_PRESS:\n            print(\"Key A pressed\")\n        elif event.type == carb.input.KeyboardEventType.KEY_RELEASE:\n            print(\"Key A released\")\n\n# get keyboard\nkeyboard = omni.appwindow.get_default_app_window().get_keyboard()\n\n# subscription\nkeyboard_event_sub = (carb.input.acquire_input_interface()\n                      .subscribe_to_keyboard_events(keyboard, on_keyboard_event))\n\n# unsubscription\ncarb.input.acquire_input_interface().unsubscribe_to_keyboard_events(keyboard, keyboard_event_sub)\n"
+                },
+                {
+                    "title": "Physics event",
+                    "description": "Subscribe/unsubscribe to physics events",
+                    "snippet": "import carb.events\nimport omni.physx\n\n# callback\ndef on_physics_event(dt):\n    print(f\"Physics event: {dt}\")\n\n# subscription\nphysics_event_sub = (omni.physx.acquire_physx_interface()\n                     .subscribe_physics_step_events(on_physics_event))\n\n# unsubscription\nphysics_event_sub = None\n"
+                },
+                {
+                    "title": "Setting changes",
+                    "description": "Subscribe/unsubscribe to setting changes",
+                    "snippet": "import omni.kit.app\nimport carb.settings\n\nsettings = carb.settings.get_settings()\n\n# callback\ndef on_setting_changes(value, change_type):\n    # change_type: carb.settings.ChangeEventType.CHANGED, carb.settings.ChangeEventType.DESTROYED\n    print(value, change_type)\n\n# subscription\nsetting_changes_sub = omni.kit.app.SettingChangeSubscription(\"${1:/exts/the.ext.name/key}\", on_setting_changes)\n\n# e.g. modify value\nsettings.set(\"/exts/the.ext.name/key\", 23)\n\n# unsubscription\nsetting_changes_sub = None\n"
+                },
+                {
+                    "title": "Shutdown event",
+                    "description": "Subscribe/unsubscribe to shutdown events",
+                    "snippet": "import carb.events\nimport omni.kit.app\n\n# callback\ndef on_shutdown_event(event):\n    if event.type == omni.kit.app.POST_QUIT_EVENT_TYPE:\n        print(\"We are about to shutdown\")\n\n# subscription\nshutdown_event_sub = (omni.kit.app.get_app().get_shutdown_event_stream()\n                      .create_subscription_to_pop(on_shutdown_event, name=\"name for debugging\", order=0))\n\n# unsubscription\nshutdown_event_sub = None\n"
+                },        
+                {
+                    "title": "Stage event",
+                    "description": "Subscribe/unsubscribe to stage events",
+                    "snippet": "import carb.events\nimport omni.usd\n\n# callback\ndef on_stage_event(event):\n    print(f\"Stage event: {event.type} {event.sender} {event.payload}\")\n    if event.type == int(omni.usd.StageEventType.SAVED):\n        pass\n    elif event.type == int(omni.usd.StageEventType.SAVE_FAILED):\n        pass\n    elif event.type == int(omni.usd.StageEventType.OPENING):\n        pass\n    elif event.type == int(omni.usd.StageEventType.OPENED):\n        pass\n    elif event.type == int(omni.usd.StageEventType.OPEN_FAILED):\n        pass\n    elif event.type == int(omni.usd.StageEventType.CLOSING):\n        pass\n    elif event.type == int(omni.usd.StageEventType.CLOSED):\n        pass\n    elif event.type == int(omni.usd.StageEventType.SELECTION_CHANGED):\n        pass\n    elif event.type == int(omni.usd.StageEventType.ASSETS_LOADED):\n        pass\n    elif event.type == int(omni.usd.StageEventType.ASSETS_LOAD_ABORTED):\n        pass\n    elif event.type == int(omni.usd.StageEventType.GIZMO_TRACKING_CHANGED):\n        pass\n    elif event.type == int(omni.usd.StageEventType.MDL_PARAM_LOADED):\n        pass\n    elif event.type == int(omni.usd.StageEventType.SETTINGS_LOADED):\n        pass\n    elif event.type == int(omni.usd.StageEventType.SETTINGS_SAVING):\n        pass\n    elif event.type == int(omni.usd.StageEventType.OMNIGRAPH_START_PLAY):\n        pass\n    elif event.type == int(omni.usd.StageEventType.OMNIGRAPH_STOP_PLAY):\n        pass\n    elif event.type == int(omni.usd.StageEventType.SIMULATION_START_PLAY):\n        pass\n    elif event.type == int(omni.usd.StageEventType.SIMULATION_STOP_PLAY):\n        pass\n    elif event.type == int(omni.usd.StageEventType.ANIMATION_START_PLAY):\n        pass\n    elif event.type == int(omni.usd.StageEventType.ANIMATION_STOP_PLAY):\n        pass\n    elif event.type == int(omni.usd.StageEventType.DIRTY_STATE_CHANGED):\n        pass\n\n# subscription \nstage_event_sub = (omni.usd.get_context()\n                   .get_stage_event_stream()\n                   .create_subscription_to_pop(on_stage_event, name=\"subscription name\"))\n\n# unsubscription\nstage_event_sub = None\n"
+                },
+                {
+                    "title": "Timeline event",
+                    "description": "Subscribe/unsubscribe to timeline events",
+                    "snippet": "import carb.events\nimport omni.timeline\n\n# callback\ndef on_timeline_event(event):\n    print(f\"Timeline event: {event.type} {event.sender} {event.payload}\")\n    if event.type == int(omni.timeline.TimelineEventType.PLAY):\n        pass\n    elif event.type == int(omni.timeline.TimelineEventType.PAUSE):\n        pass\n    elif event.type == int(omni.timeline.TimelineEventType.STOP):\n        pass\n    elif event.type == int(omni.timeline.TimelineEventType.CURRENT_TIME_CHANGED):\n        pass\n    elif event.type == int(omni.timeline.TimelineEventType.CURRENT_TIME_TICKED):\n        pass\n    elif event.type == int(omni.timeline.TimelineEventType.LOOP_MODE_CHANGED):\n        pass\n    elif event.type == int(omni.timeline.TimelineEventType.START_TIME_CHANGED):\n        pass\n    elif event.type == int(omni.timeline.TimelineEventType.END_TIME_CHANGED):\n        pass\n    elif event.type == int(omni.timeline.TimelineEventType.TIME_CODE_PER_SECOND_CHANGED):\n        pass\n    elif event.type == int(omni.timeline.TimelineEventType.AUTO_UPDATE_CHANGED):\n        pass\n    elif event.type == int(omni.timeline.TimelineEventType.PREROLLING_CHANGED):\n        pass\n\n# subscription\ntimeline_event_sub = (omni.timeline.get_timeline_interface()\n                      .get_timeline_event_stream()\n                      .create_subscription_to_pop(on_timeline_event, name=\"subscription Name\"))\n\n# unsubscription\ntimeline_event_sub = None\n"
+                },
+                {
+                    "title": "Update event",
+                    "description": "Subscribe/unsubscribe to update events",
+                    "snippet": "import carb.events\nimport omni.kit.app\n\n# callback\ndef on_update_event(event):\n    print(f\"Update event: {event.type} {event.sender} {event.payload}\")\n\n# subscription\nupdate_event_sub = (omni.kit.app.get_app()\n                    .get_update_event_stream()\n                    .create_subscription_to_pop(on_update_event, name=\"subscription Name\"))\n\n# unsubscription\nupdate_event_sub = None\n"
+                }
+            ]
+        },
+        {
+            "title": "Extensions",
+            "snippets": [
+                {
+                    "title": "Common import",
+                    "description": "Common import statements",
+                    "snippet": "import omni.kit.app\n"
+                },
+                {
+                    "title": "Enable an extension",
+                    "description": "Enable an extension immediately or non-immediate",
+                    "snippet": "extension_manager = omni.kit.app.get_app().get_extension_manager()\n\n# enable immediately\nextension_manager.set_extension_enabled_immediate(\"${1:omni.kit.window.about}\", True)\n# enable non-immediate (executed on the next update)\nextension_manager.set_extension_enabled(\"${1:omni.kit.window.about}\", True)\n"
+                },
+                {
+                    "title": "Check if an extension is enabled",
+                    "description": "Check if an extension is enabled",
+                    "snippet": "extension_enabled = extension_manager.is_extension_enabled(\"${1:omni.kit.window.about}\")\nprint(extension_enabled)\n"
+                },
+                {
+                    "title": "Get extension config",
+                    "description": "Get the config for an extension",
+                    "snippet": "manager = omni.kit.app.get_app().get_extension_manager()\n\n# there could be multiple extensions with same name, but different version\n# many functions accept extension id: [ext name]-[ext version].\next_id = manager.get_enabled_extension_id(\"${1:omni.kit.window.script_editor}\")\ndata = manager.get_extension_dict(ext_id)\n\n# extension dict contains whole extension.toml as well as some runtime data:\nprint(data[\"package\"])  # package section\nprint(data[\"state/enabled\"])  # is the extension enabled\nprint(data[\"state/dependencies\"])  # resolved runtime dependencies\nprint(data[\"state/startupTime\"])  # time it took to start it (ms)\n\n# it can be converted to python dict for convenience and to prolong lifetime\ndata = data.get_dict()\nprint(type(data))\n"
+                },
+                {
+                    "title": "Get extension file path",
+                    "description": "Get the file path to an extension (e.g. to refer to assets included with the extension)",
+                    "snippet": "manager = omni.kit.app.get_app().get_extension_manager()\n\n# there could be multiple extensions with same name, but different version\n# many functions accept extension id: [ext name]-[ext version].\n# you can get the extension by name or by python module name:\next_id = manager.get_enabled_extension_id(\"${1:omni.kit.window.script_editor}\")\n# or\next_id = manager.get_extension_id_by_module(\"${1:omni.kit.window.script_editor}\")\n\n# there are few ways to get file path to a extension:\nprint(manager.get_extension_path(ext_id))\nprint(manager.get_extension_dict(ext_id)[\"path\"])\nprint(manager.get_extension_path_by_module(\"${1:omni.kit.window.script_editor}\"))\n"
+                },
+                {
+                    "title": "Get all registered extensions",
+                    "description": "Get all the registered local and remote extensions",
+                    "snippet": "manager = omni.kit.app.get_app().get_extension_manager()\n\n# there are a lot of extensions, print only first N entries in each loop\nPRINT_ONLY_N = 10\n\n# get all registered local extensions (enabled and disabled)\nmanager = omni.kit.app.get_app().get_extension_manager()\nfor ext in manager.get_extensions()[:PRINT_ONLY_N]:\n    print(ext[\"id\"], ext[\"package_id\"], ext[\"name\"], ext[\"version\"], ext[\"path\"], ext[\"enabled\"])\n\n# get all registered non-local extensions (from the registry)\n# this call blocks to download registry (slow).\n# you need to call it at least once, or use refresh_registry() for non-blocking.\nmanager.sync_registry()\nfor ext in manager.get_registry_extensions()[:PRINT_ONLY_N]:\n    print(ext[\"id\"], ext[\"package_id\"], ext[\"name\"], ext[\"version\"], ext[\"path\"], ext[\"enabled\"])\n\n# functions above print all versions of each extension. There is other API to get them grouped by name (like in ext manager UI).\n# \"enabled_version\" and \"latest_version\" contains the same dict as returned by functions above, e.g. with \"id\", \"name\", etc.\nfor summary in manager.fetch_extension_summaries()[:PRINT_ONLY_N]:\n    print(summary[\"fullname\"], summary[\"flags\"], summary[\"enabled_version\"][\"id\"], summary[\"latest_version\"][\"id\"])\n\n# get all versions for particular extension\nfor ext in manager.fetch_extension_versions(\"omni.kit.window.script_editor\"):\n    print(ext[\"id\"])\n"
+                }
+            ]
+        },
+        {
+            "title": "Python",
+            "snippets": [
+                {
+                    "title": "Install from PyPI",
+                    "description": "Install a Python package from PyPI",
+                    "snippet": "import omni.kit.pipapi\n\nomni.kit.pipapi.install(package=\"${1:packaging}\",\n                        version=\"${2:21.3}\",\n                        module=\"${1:packaging}\", # sometimes module is different from package name\n                        ignore_import_check=False,  # module is used for import check\n                        ignore_cache=False,\n                        use_online_index=True,\n                        surpress_output=False,\n                        extra_args=[])\n\n# use the newly installed package\nimport ${1:packaging}\n"
+                },
+                {
+                    "title": "Logger instance",
+                    "description": "Create a logger instance",
+                    "snippet": "import logging\n\nlogger = logging.getLogger(__name__)\n"
+                },
+                {
+                    "title": "Log info",
+                    "description": "Log an info message",
+                    "snippet": "logger.info(\"${1:message}\")\n"
+                },
+                {
+                    "title": "Log warning",
+                    "description": "Log a warning message",
+                    "snippet": "logger.warning(\"${1:message}\")\n"
+                },
+                {
+                    "title": "Log error",
+                    "description": "Log an error message",
+                    "snippet": "logger.error(\"${1:message}\")\n"
+                }
+            ]
+        },
+        {
+            "title": "UI",
+            "snippets": [
+                {
+                    "title": "Common import",
+                    "description": "Common import statements",
+                    "snippet": "import omni.kit\nimport omni.ui as ui\nimport omni.kit.notification_manager as nm\n"
+                },
+                {
+                    "title": "Create window",
+                    "description": "Create window",
+                    "snippet": "# flags: https://docs.omniverse.nvidia.com/py/kit/source/extensions/omni.ui/docs/index.html?omni.ui.add_to_namespace\n# dock: https://docs.omniverse.nvidia.com/py/kit/source/extensions/omni.ui/docs/index.html?#omni.ui.DockPreference\nwindow_flags = ui.WINDOW_FLAGS_NONE\n\nwindow = ui.Window(\"${1:window_name}\", \n                   width=640, height=480, \n                   flags=window_flags,\n                   dockPreference=ui.DockPreference.DISABLED, \n                   visible=True)\n"
+                },
+                {
+                    "title": "File export dialog",
+                    "description": "Basic file export dialog",
+                    "snippet": "def export_handler(filename, dirname, extension=\"\", selections=[]):\n    print(f\"Export As '{filename}{extension}' to '{dirname}' with additional selections '{selections}'\")\n\nfile_exporter = omni.kit.window.file_importer.get_file_exporter()\nfile_exporter.show_window(title=\"${1:Title}\",\n                          export_button_label=\"${2:Save}\",\n                          export_handler=export_handler,  # callback called after the user has selected an export location\n                          filename_url=\"${3:omniverse://localhost/foo}\")\n"
+                },
+                {
+                    "title": "File import dialog",
+                    "description": "Basic file import dialog",
+                    "snippet": "def import_handler(filename, dirname, selections=[]):\n    print(f\"Import '{filename}' from '{dirname}' or selected files '{selections}'\")\n\nfile_importer = omni.kit.window.file_importer.get_file_importer()\nfile_importer.show_window(title=\"${1:Title}\",\n                          import_handler=import_handler)  # callback called after the user has selected a file\n"
+                },
+                {
+                    "title": "Popup notification",
+                    "description": "Create a viewport popup notification without buttons",
+                    "snippet": "# notification status: INFO, WARNING\nnm.post_notification(\"${1:Message}\", duration=${2:5}, status=nm.NotificationStatus.${3:INFO})\n"
+                },
+                {
+                    "title": "Popup notification (with buttons)",
+                    "description": "Create a viewport popup notification with buttons",
+                    "snippet": "def clicked_ok():\n    print(\"Clicked ok\")\n\ndef clicked_cancel():\n    print(\"Clicked cancel\")\n\nok_button = nm.NotificationButtonInfo(\"OK\", on_complete=clicked_ok)\ncancel_button = nm.NotificationButtonInfo(\"CANCEL\", on_complete=clicked_cancel)\n\nnotification_info = nm.post_notification(\"${1:Message}\",\n                                         duration=0,\n                                         hide_after_timeout=False,\n                                         status=nm.NotificationStatus.${2:INFO},  # notification status: INFO, WARNING\n                                         button_infos=[ok_button, cancel_button])\n"
+                }
+            ]
+        },
+        {
+            "title": "Viewport",
+            "snippets": [
+                {
+                    "title": "Common import",
+                    "description": "Common import statements",
+                    "snippet": "import omni.usd\nfrom omni.kit.viewport.utility import get_active_viewport, get_active_viewport_window, frame_viewport_selection\n"
+                },
+                {
+                    "title": "Change active camera",
+                    "description": "Change the Viewport's active camera",
+                    "snippet": "viewport = get_active_viewport()\nif not viewport:\n    raise RuntimeError(\"No active viewport\")\n\n# set the viewport's active camera\nviewport.camera_path = \"${1:/World/Camera}\"\n"
+                },
+                {
+                    "title": "Get active viewport window",
+                    "description": "Get the active viewport window",
+                    "snippet": "# set window_name to None to get the default viewport window\nviewport_window = get_active_viewport_window(window_name=\"${1:window_name}\")\n"
+                },
+                {
+                    "title": "Frame a prim",
+                    "description": "Frame a prim. Use the FramePrimsCommand for more advanced options",
+                    "snippet": "ctx = omni.usd.get_context()\nctx.get_selection().set_selected_prim_paths([\"${1:/World/Prim}\"], True)  # second arg is unused\nframe_viewport_selection(active_viewport)\n"
+                }
+            ]
+        }
+    ]
+}

@@ -3,42 +3,207 @@
         {
             "title": "Common import",
             "description": "Most common USD import statements",
-            "snippet": "import omni.usd\nfrom pxr import Sdf, Gf, Tf\nfrom pxr import Usd, UsdGeom, UsdPhysics\n"
+            "snippet": "import omni.usd\nfrom pxr import Sdf, Gf, Tf\nfrom pxr import Usd, UsdGeom, UsdPhysics, UsdShade\n"
         },
         {
-            "title": "Get Stage",
-            "description": "Get the current stage",
-            "snippet": "stage = omni.usd.get_context().get_stage()\n"
+            "title": "Stage",
+            "snippets": [
+                {
+                    "title": "Get stage",
+                    "description": "Get the current stage",
+                    "snippet": "stage = omni.usd.get_context().get_stage()\n"
+                },
+                {
+                    "title": "Get prim at path",
+                    "description": "Return the prim at path, or an invalid prim if none exists",
+                    "snippet": "prim = stage.GetPrimAtPath(${1:prim_path})\n"
+                },
+                {
+                    "title": "Get stage linear units",
+                    "description": "Get the stage linear units (e.g. centimeters: 0.01, meters: 1.0)",
+                    "snippet": "stage_unit = UsdGeom.GetStageMetersPerUnit(stage)\n"
+                },
+                {
+                    "title": "Get stage up axis",
+                    "description": "Get the stage up axis (\"Y\" or \"Z\")",
+                    "snippet": "UsdGeom.GetStageUpAxis(stage)  # returns \"Y\" or \"Z\"\n"
+                },
+                {
+                    "title": "Set default prim",
+                    "description": "Set the default prim if the stage's root layer may be used as a reference or payload",
+                    "snippet": "stage.SetDefaultPrim(prim)  # the prim should be a top-level Usd.Prim object\n"
+                },
+                {
+                    "title": "Set stage linear units",
+                    "description": "Set the stage linear units (e.g. centimeters, meters, etc.)",
+                    "snippet": "# available units: https://graphics.pixar.com/usd/release/api/class_usd_geom_linear_units.html\nUsdGeom.SetStageMetersPerUnit(stage, UsdGeom.LinearUnits.${1:meters})\n"
+                },
+                {
+                    "title": "Set stage up axis",
+                    "description": "Set the stage up axis (y or z)",
+                    "snippet": "UsdGeom.SetStageUpAxis(stage, UsdGeom.Tokens.${1:z})\n"
+                },
+                {
+                    "title": "Traverse prims on the stage",
+                    "description": "Traverse the active, loaded, defined, non-abstract prims on this stage depth-first",
+                    "snippet": "for prim in stage.Traverse():\n    prim\n"
+                },
+                {
+                    "title": "Find prims by name",
+                    "description": "Find all of the prims with the same name",
+                    "snippet": "prims = [x for x in stage.Traverse() if x.GetName() == \"${1:prim_name}\"]\n"
+                },
+                {
+                    "title": "Find prims by type",
+                    "description": "Find all of the prims with a certain type",
+                    "snippet": "prims = [x for x in stage.Traverse() if x.IsA(${1:UsdGeom.Mesh})]\n"
+                },
+                {
+                    "title": "Add subLayer",
+                    "description": "Add a subLayer (composition arc used to build layer stacks)",
+                    "snippet": "root_layer = stage.GetRootLayer()\nsub_layer = Sdf.Layer.CreateNew(\"${1:path/to/sublayer.usd}\")\n\n# you can use standard python list.insert to add the subLayer to any position in the list\nroot_layer.subLayerPaths.append(sub_layer.identifier)\n"
+                }
+            ]
         },
         {
-            "title": "Get stage unit",
-            "description": "Get the current stage units (e.g. centimeters: 0.01, meters: 1.0)",
-            "snippet": "stage_unit = UsdGeom.GetStageMetersPerUnit(stage)\n"
+            "title": "Prims",
+            "snippets": [
+                {
+                    "title": "Check if a prim is valid (exists)",
+                    "description": "Check if a prim exists",
+                    "snippet": "if prim.IsValid():  # also, if prim:\n    print(\"Prim exists!\")\n"
+                },
+                {
+                    "title": "Get child prim by name",
+                    "description": "Get the prim's direct child named name if it has one, otherwise return an invalid prim",
+                    "snippet": "child_prim = prim.GetChild(\"${1:child_name}\")\n"
+                },
+                {
+                    "title": "Get active children",
+                    "description": "Return the prim's active, loaded, defined, non-abstract children",
+                    "snippet": "children = prim.GetChildren()\n"
+                },
+                {
+                    "title": "Get all prim children",
+                    "description": "Return all the prim's children",
+                    "snippet": "children = prim.GetAllChildren()\n"
+                },
+                {
+                    "title": "Add inherit",
+                    "description": "Add an inherit (composition arc that enables a prim to contain all of the scene description contained in the base prim it inherits)",
+                    "snippet": "# the base prim typically uses the \"class\" specifier to designate that it \n# is meant to be inherited and skipped in standard stage traversals\nbase_prim = stage.CreateClassPrim(\"${1:/_class_name}\")\ninherits = prim.GetInherits()\ninherits.AddInherit(base_prim.GetPath())\n"
+                },
+                {
+                    "title": "Add payload",
+                    "description": "Add a payload (composition arc to enable users to aggregate layers or assets onto a stage)",
+                    "snippet": "payloads = prim.GetPayloads()\npayloads.AddPayload(assetPath=\"${1:path/to/file.usd}\",\n                    primPath=\"${2:/World/target}\")  # OPTIONAL: Uses a specific target prim. Otherwise, uses the payload layer's defaultPrim\n"
+                },
+                {
+                    "title": "Add reference",
+                    "description": "Add a reference (composition arc that enables users to aggregate layers or assets onto a stage)",
+                    "snippet": "references = prim.GetReferences()\nreferences.AddReference(assetPath=\"${1:path/to/file.usd}\",\n                        primPath=\"${2:/World/target}\")  # OPTIONAL: Reference a specific target prim. Otherwise, uses the referenced layer's defaultPrim.\n"
+                },
+                {
+                    "title": "Add specialize",
+                    "description": "Add a specialize (composition arc that enables a prim to contain all of the scene description contained in the base prim it specializes)",
+                    "snippet": "specializes = prim.GetSpecializes()\nspecializes.AddSpecialize(base_prim.GetPath())\n"
+                },
+                {
+                    "title": "Compute world-space transform",
+                    "description": "Compute the transformation matrix for a prim at the given time",
+                    "snippet": "# compute world-space transform\ntransform = Gf.Transform()\ntransform.SetMatrix(UsdGeom.Xformable(prim).ComputeLocalToWorldTransform(Usd.TimeCode.Default()))\n\n# get translation, rotation and scale\ntranslation = transform.GetTranslation()\nrotation = transform.GetRotation().GetQuat()\nscale = transform.GetScale()\n"
+                },
+                {
+                    "title": "Compute local-space transform",
+                    "description": "Computes the fully-combined, local-to-parent transformation for a prim",
+                    "snippet": "# compute local-space transform\ntransform = Gf.Transform()\ntransform.SetMatrix(UsdGeom.Xformable(prim).GetLocalTransformation()\n\n# get translation, rotation and scale\ntranslation = transform.GetTranslation()\nrotation = transform.GetRotation().GetQuat()\nscale = transform.GetScale()\n"
+                },
+                {
+                    "title": "Compute bounding box",
+                    "description": "Compute the bounding box for a prim and all of its descendants",
+                    "snippet": "bound = UsdGeom.Imageable(prim).ComputeWorldBound(Usd.TimeCode.Default(), UsdGeom.Tokens.default_)\nbound_range = bound.ComputeAlignedBox()\n"
+                }
+            ]
         },
         {
-            "title": "Traverse the prims on the stage",
-            "description": "Traverse the active, loaded, defined, non-abstract prims on this stage depth-first",
-            "snippet": "for prim in stage.Traverse():\n    prim\n"
+            "title": "Prim properties",
+            "snippets": [
+                {
+                    "title": "Check if a property is valid (exists)",
+                    "description": "Check if a property exists. Properties consist of Usd.Attribute and Usd.Relationship",
+                    "snippet": "attribute = prim.GetAttribute(\"${1:attribute_name}\")\nif attribute.IsValid():\n    print(\"Attribute exists!\")\n"
+                },
+                {
+                    "title": "Create attribute",
+                    "description": "Create a prim attribute",
+                    "snippet": "# USD data types: https://docs.omniverse.nvidia.com/prod_usd/prod_usd/quick-start/usd-types.html\nattribute = prim.CreateAttribute(${1:attribute_name}, Sdf.ValueTypeNames.${2:Float})\n"
+                },
+                {
+                    "title": "Get prim attribute",
+                    "description": "Return the attribute value of a prim given its name",
+                    "snippet": "value = prim.GetAttribute(\"${1:attribute_name}\").Get()\n"
+                },
+                {
+                    "title": "Set prim attribute",
+                    "description": "Set the attribute value of a prim given its name",
+                    "snippet": "prim.GetAttribute(\"${1:attribute_name}\").Set(${2:value})\n"
+                },
+                {
+                    "title": "Create relationship",
+                    "description": "Create a relationship",
+                    "snippet": "relationship = prim.CreateRelationship(\"${1:relationship_name}\")\n"
+                },
+                {
+                    "title": "Add relationship target",
+                    "description": "Add relationship target",
+                    "snippet": "relationship.AddTarget(\"${1:/World/Target}\")\n"
+                },
+                {
+                    "title": "Set relationship targets",
+                    "description": "Set relationship targets",
+                    "snippet": "relationship.SetTargets([\"${1:/World/Target}\"])\n"
+                },
+                {
+                    "title": "Get relationship targets",
+                    "description": "Get relationship targets",
+                    "snippet": "proxy_prim_rel = UsdGeom.Imageable(prim).GetProxyPrimRel()\ntargets = proxy_prim_rel.GetForwardedTargets()\n"
+                }
+            ]
         },
         {
-            "title": "Get prim at path",
-            "description": "Return the prim at path, or an invalid prim if none exists",
-            "snippet": "prim = stage.GetPrimAtPath(${1:prim_path})\n"
+            "title": "Cameras",
+            "snippets": [
+                {
+                    "title": "Create orthographic camera",
+                    "description": "Create an orthographic camera",
+                    "snippet": "camera_path = Sdf.Path(\"${1:/World/OrthographicCamera}\")\nusd_camera = UsdGeom.Camera.Define(stage, camera_path)\nusd_camera.CreateProjectionAttr().Set(UsdGeom.Tokens.orthographic)\n"
+                },
+                {
+                    "title": "Create perspective camera",
+                    "description": "Create an perspective camera",
+                    "snippet": "camera_path = Sdf.Path(\"${1:/World/PerspectiveCamera}\")\nusd_camera = UsdGeom.Camera.Define(stage, camera_path)\nusd_camera.CreateProjectionAttr().Set(UsdGeom.Tokens.perspective)\n\n# set some other common attributes on the camera\nusd_camera.CreateFocalLengthAttr().Set(35)\nusd_camera.CreateHorizontalApertureAttr().Set(20.955)\nusd_camera.CreateVerticalApertureAttr().Set(15.2908)\nusd_camera.CreateClippingRangeAttr().Set((0.1,100000))\n"
+                }
+            ]
         },
         {
-            "title": "Get prim attribute",
-            "description": "Return the attribute value of a prim given its name",
-            "snippet": "value = prim.GetAttribute(\"${1:attribute_name}\").Get()\n"
-        },
-        {
-            "title": "Set prim attribute",
-            "description": "Set the attribute value of a prim given its name",
-            "snippet": "prim.GetAttribute(\"${1:attribute_name}\").Set(${2:value})\n"
-        },
-        {
-            "title": "Compute prim world-space transform",
-            "description": "Compute the transformation matrix for a prim at the given time",
-            "snippet": "# compute world-space transform\ntransform = Gf.Transform()\ntransform.SetMatrix(UsdGeom.Xformable(prim).ComputeLocalToWorldTransform(Usd.TimeCode.Default()))\n\n# get position and orientation\nposition = transform.GetTranslation()\nrotation = transform.GetRotation().GetQuat()\n"
-        }        
+            "title": "Materials",
+            "snippets": [
+                {
+                    "title": "Create MDL material",
+                    "description": "Create an MDL material",
+                    "snippet": "mtl_path = Sdf.Path(\"${1:/World/Looks/OmniPBR}\")\nmtl = UsdShade.Material.Define(stage, mtl_path)\nshader = UsdShade.Shader.Define(stage, mtl_path.AppendPath(\"Shader\"))\nshader.CreateImplementationSourceAttr(UsdShade.Tokens.sourceAsset)\n# MDL shaders should use \"mdl\" sourceType\nshader.SetSourceAsset(\"OmniPBR.mdl\", \"mdl\")\nshader.SetSourceAssetSubIdentifier(\"OmniPBR\", \"mdl\")\n# MDL materials should use \"mdl\" renderContext\nmtl.CreateSurfaceOutput(\"mdl\").ConnectToSource(shader.ConnectableAPI(), \"out\")\nmtl.CreateDisplacementOutput(\"mdl\").ConnectToSource(shader.ConnectableAPI(), \"out\")\nmtl.CreateVolumeOutput(\"mdl\").ConnectToSource(shader.ConnectableAPI(), \"out\")\n"
+                },
+                {
+                    "title": "Create UsdPreviewSurface material",
+                    "description": "Create a UsdPreviewSurface material",
+                    "snippet": "mtl_path = Sdf.Path(\"${1:/World/Looks/PreviewSurface}\")\nmtl = UsdShade.Material.Define(stage, mtl_path)\nshader = UsdShade.Shader.Define(stage, mtl_path.AppendPath(\"Shader\"))\nshader.CreateIdAttr(\"UsdPreviewSurface\")\nshader.CreateInput(\"diffuseColor\", Sdf.ValueTypeNames.Color3f).Set([1.0, 0.0, 0.0])\nshader.CreateInput(\"roughness\", Sdf.ValueTypeNames.Float).Set(0.5)\nshader.CreateInput(\"metallic\", Sdf.ValueTypeNames.Float).Set(0.0)\nmtl.CreateSurfaceOutput().ConnectToSource(shader.ConnectableAPI(), \"surface\")\n"
+                },
+                {
+                    "title": "Create UsdPreviewSurface material (with UsdUVTexture)",
+                    "description": "Create a UsdPreviewSurface material and a UsdUVTexture to read from a texture file and connect it to the first",
+                    "snippet": "mtl_path = Sdf.Path(\"${1:/World/Looks/PreviewSurface}\")\nmtl = UsdShade.Material.Define(stage, mtl_path)\nshader = UsdShade.Shader.Define(stage, mtl_path.AppendPath(\"Shader\"))\nshader.CreateIdAttr(\"UsdPreviewSurface\")\nshader.CreateInput(\"diffuseColor\", Sdf.ValueTypeNames.Color3f).Set((1.0, 0.0, 0.0))\nshader.CreateInput(\"roughness\", Sdf.ValueTypeNames.Float).Set(0.5)\nshader.CreateInput(\"metallic\", Sdf.ValueTypeNames.Float).Set(0.0)\n\ndiffuse_tx = UsdShade.Shader.Define(stage,mtl_path.AppendPath(\"DiffuseColorTx\"))\ndiffuse_tx.CreateIdAttr('UsdUVTexture')\ndiffuse_tx.CreateInput('file', Sdf.ValueTypeNames.Asset).Set(\"${2:path/to/texture.png}\")\ndiffuse_tx.CreateOutput('rgb', Sdf.ValueTypeNames.Float3)\nshader.CreateInput(\"diffuseColor\", Sdf.ValueTypeNames.Color3f).ConnectToSource(diffuse_tx.ConnectableAPI(), 'rgb')\nmtl.CreateSurfaceOutput().ConnectToSource(shader.ConnectableAPI(), \"surface\")\n"
+                }
+            ]
+        }
     ]
 }
