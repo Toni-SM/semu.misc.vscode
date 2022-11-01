@@ -88,7 +88,6 @@ class SnippetTreeViewProvider implements vscode.TreeDataProvider<Snippet> {
         this.snippets.push(this.buildSubtree("Kit", this.parseJSON("kit.json")));
         this.snippets.push(this.buildSubtree("Kit commands", this.parseJSON("kit-commands.json")));
         this.snippets.push(this.buildSubtree("USD", this.parseJSON("usd.json")));
-        this.snippets.push(this.buildSubtree("UI", this.parseJSON("ui.json")));
     }
 
     getTreeItem(element: Snippet): vscode.TreeItem {
