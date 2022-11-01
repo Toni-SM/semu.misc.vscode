@@ -2,15 +2,21 @@
     "resources": [
         {
             "internal": true,
-            "title": "Kit Programming Manual",
-            "description": "Kit Programming Manual",
+            "title": "Extensions",
+            "description": "Extensions",
+            "url": "https://docs.omniverse.nvidia.com/py/kit/docs/guide/get_started_extensions.html"
+        },
+        {
+            "internal": true,
+            "title": "Kit programming manual",
+            "description": "Kit programming manual",
             "url": "https://docs.omniverse.nvidia.com/py/kit/index.html"
         },
         {
             "internal": true,
-            "title": "Extensions",
-            "description": "Extensions",
-            "url": "https://docs.omniverse.nvidia.com/py/kit/docs/guide/get_started_extensions.html"
+            "title": "Kit Python snippets",
+            "description": "Kit Python snippets",
+            "url": "https://docs.omniverse.nvidia.com/prod_kit/prod_kit/python-snippets.html"
         },
         {
             "internal": true,
@@ -20,15 +26,33 @@
         },
         {
             "internal": true,
+            "title": "Omni::UI",
+            "description": "Omniverse's UI toolkit for creating beautiful and flexible graphical user interfaces",
+            "url": "https://docs.omniverse.nvidia.com/py/kit/source/extensions/omni.ui/docs/index.html"
+        },
+        {
+            "internal": true,
             "title": "SceneUI",
             "description": "SceneUI helps build great-looking 3d manipulators and 3d helpers",
             "url": "https://docs.omniverse.nvidia.com/py/kit/source/extensions/omni.ui.scene/docs/Overview.html"
         },
         {
             "internal": true,
-            "title": "Omni UI",
-            "description": "Omniverse's UI toolkit for creating beautiful and flexible graphical user interfaces",
-            "url": "https://docs.omniverse.nvidia.com/py/kit/source/extensions/omni.ui/docs/index.html"
+            "title": "USD API reference",
+            "description": "Universal Scene Description (USD) API reference",
+            "url": "https://graphics.pixar.com/usd/dev/api/index.html"
+        },
+        {
+            "internal": true,
+            "title": "USD data types",
+            "description": " USD basic data types",
+            "url": "https://docs.omniverse.nvidia.com/prod_usd/prod_usd/quick-start/usd-types.html"
+        },
+        {
+            "internal": true,
+            "title": "USD Python snippets",
+            "description": "Universal Scene Description (USD) Python snippets",
+            "url": "https://docs.omniverse.nvidia.com/prod_usd/prod_usd/python-snippets.html"
         }
     ]
 }
