@@ -67,6 +67,20 @@
         "command": "embedded-vscode-for-nvidia-omniverse.openResource",
         "title": "Open resource internally or externally",
         "category": "Embedded VS Code for NVIDIA Omniverse"
+      },
+      {
+        "command": "embedded-vscode-for-nvidia-omniverse.snippetLanguagePython",
+        "title": "Switch snippet language (C++)",
+        "category": "Embedded VS Code for NVIDIA Omniverse",
+        "description": "Set C++ as snippet language",
+        "icon": "images/view-action-snippets-python.svg"
+      },
+      {
+        "command": "embedded-vscode-for-nvidia-omniverse.snippetLanguageCpp",
+        "title": "Switch snippet language (Python)",
+        "category": "Embedded VS Code for NVIDIA Omniverse",
+        "description": "Set Python as snippet language",
+        "icon": "images/view-action-snippets-cpp.svg"
       }
     ],
     "configuration": {
@@ -122,6 +136,20 @@
         {
           "id": "embedded-vscode-for-nvidia-omniverse-views-resources",
           "name": "Resources"
+        }
+      ]
+    },
+    "menus": {
+      "view/title": [
+        {
+          "command": "embedded-vscode-for-nvidia-omniverse.snippetLanguagePython",
+          "when": "view =~ /embedded-vscode-for-nvidia-omniverse-views-snippets/ && embedded-vscode-for-nvidia-omniverse-snippet-python == true",
+          "group": "navigation@1"
+        },
+        {
+          "command": "embedded-vscode-for-nvidia-omniverse.snippetLanguageCpp",
+          "when": "view =~ /embedded-vscode-for-nvidia-omniverse-views-snippets/ && embedded-vscode-for-nvidia-omniverse-snippet-cpp == true",
+          "group": "navigation@1"
         }
       ]
     }
