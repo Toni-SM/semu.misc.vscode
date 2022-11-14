@@ -17,8 +17,8 @@ export class CommandTreeView {
 export class SnippetTreeView {
     private readonly snippetTreeViewProvider: SnippetTreeViewProvider
 
-    constructor() {
-        this.snippetTreeViewProvider = new SnippetTreeViewProvider()
+    constructor(snippetLanguage: string) {
+        this.snippetTreeViewProvider = new SnippetTreeViewProvider(snippetLanguage)
         vscode.window.createTreeView('embedded-vscode-for-nvidia-omniverse-views-snippets', 
                                      {treeDataProvider: this.snippetTreeViewProvider, showCollapseAll: true});
     }
@@ -84,10 +84,16 @@ class CommandTreeViewProvider implements vscode.TreeDataProvider<Command> {
 class SnippetTreeViewProvider implements vscode.TreeDataProvider<Snippet> {
     private snippets: Snippet[] = []
 
-    constructor() {
-        this.snippets.push(this.buildSubtree("Kit", this.parseJSON("kit.json")));
-        this.snippets.push(this.buildSubtree("Kit commands", this.parseJSON("kit-commands.json")));
-        this.snippets.push(this.buildSubtree("USD", this.parseJSON("usd.json")));
+    constructor(snippetLanguage: string) {
+        if(snippetLanguage == "python") {
+            this.snippets.push(this.buildSubtree("Kit", this.parseJSON("python-kit.json")));
+            this.snippets.push(this.buildSubtree("Kit commands", this.parseJSON("python-kit-commands.json")));
+            this.snippets.push(this.buildSubtree("USD", this.parseJSON("python-usd.json")));
+            this.snippets.push(this.buildSubtree("Isaac Sim", this.parseJSON("python-isaac-sim.json")));
+        }
+        else if(snippetLanguage == "cpp") {
+            this.snippets.push(this.buildSubtree("Kit", this.parseJSON("cpp-usd.json")));
+        }
     }
 
     getTreeItem(element: Snippet): vscode.TreeItem {
@@ -116,7 +122,7 @@ class SnippetTreeViewProvider implements vscode.TreeDataProvider<Snippet> {
         
         const parent = new Snippet(treeName, {command: ''});
         if (children.length > 0) {
-            parent.collapsibleState = vscode.TreeItemCollapsibleState.Collapsed
+            parent.collapsibleState = vscode.TreeItemCollapsibleState.Collapsed // Expanded
             parent.children = children
             children.forEach((c) => c.parent = parent)
         }
