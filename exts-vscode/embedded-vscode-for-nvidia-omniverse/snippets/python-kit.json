@@ -146,6 +146,51 @@
             ]
         },
         {
+            "title": "Python scripting component",
+            "snippets": [
+                {
+                    "title": "Behavior script",
+                    "description": "Class for developing per USD Prim behaviors",
+                    "snippet": "from omni.kit.scripting import BehaviorScript\n\n\nclass ${1:CustomBehaviorScript}(BehaviorScript):\n    def on_init(self):\n        print(f\"{__class__.__name__}.on_init() -> {self.prim_path}\")\n\n    def on_destroy(self):\n        print(f\"{__class__.__name__}.on_destroy() -> {self.prim_path}\")\n\n    def on_update(self, current_time: float, delta_time: float):\n        print(f\"{__class__.__name__}.on_update(current_time={current_time}, delta_time={delta_time}) -> {self.prim_path}\")\n"
+                },
+                {
+                    "title": "Get message bus event stream",
+                    "description": "Application message bus event stream",
+                    "snippet": "message_bus_event_stream = self.message_bus_event_stream()\n"
+                },
+                {
+                    "title": "Get prim path",
+                    "description": "Prim path that this script is assigned to",
+                    "snippet": "path = self.prim_path()\n"
+                },
+                {
+                    "title": "Get selection interface",
+                    "description": "Current USD context selection interface in the application",
+                    "snippet": "selection = self.selection()\n"
+                },
+                {
+                    "title": "Get settings",
+                    "description": "Current settings",
+                    "snippet": "settings = self.settings()\n"
+                },
+                {
+                    "title": "Get stage",
+                    "description": "Current USD stage that is opened/loaded",
+                    "snippet": "stage = self.stage()\n"
+                },
+                {
+                    "title": "Get timeline",
+                    "description": "Application timeline interface",
+                    "snippet": "timeline = self.timeline()\n"
+                },
+                {
+                    "title": "Get USD context",
+                    "description": "Current USD context",
+                    "snippet": "usd_context = self.usd_context()\n"
+                }
+            ]
+        },
+        {
             "title": "UI",
             "snippets": [
                 {
