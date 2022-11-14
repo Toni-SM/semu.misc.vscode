@@ -5,6 +5,9 @@ import * as dgram from 'dgram';
 import {CommandTreeView, SnippetTreeView, ResourceTreeView} from './extensionViews';
 
 
+let snippetTreeView: SnippetTreeView;
+
+
 function logCarb(ip: string, port: number, outputChannel: vscode.OutputChannel) {
 	let socket: dgram.Socket = dgram.createSocket('udp4');
 	socket.on('message', (msg, rinfo) => {
@@ -123,9 +126,12 @@ function getWebviewContent(resourceUrl: string) {
 // your extension is activated the very first time the command is executed
 export function activate(context: vscode.ExtensionContext) {
 	
-	// create/register TreeDataProvider
+	vscode.commands.executeCommand("setContext", "embedded-vscode-for-nvidia-omniverse-snippet-python", true);
+	vscode.commands.executeCommand("setContext", "embedded-vscode-for-nvidia-omniverse-snippet-cpp", false);
+	
+	// create TreeDataProvider
 	const commandTreeView = new CommandTreeView();
-	const snippetTreeView = new SnippetTreeView();
+	snippetTreeView = new SnippetTreeView("python");
 	const resourceTreeView = new ResourceTreeView();
 
 	// Get configuration
@@ -166,6 +172,19 @@ export function activate(context: vscode.ExtensionContext) {
 		executeCode(remoteSocketIp, remoteSocketPort, outputChannel, true);
 	});
 
+	// Snippets language
+	let disposable_snippet_language_python = vscode.commands.registerCommand('embedded-vscode-for-nvidia-omniverse.snippetLanguagePython', () => {
+		vscode.commands.executeCommand("setContext", "embedded-vscode-for-nvidia-omniverse-snippet-python", false);
+		vscode.commands.executeCommand("setContext", "embedded-vscode-for-nvidia-omniverse-snippet-cpp", true);
+		snippetTreeView = new SnippetTreeView("cpp");
+	});
+	
+	let disposable_snippet_language_cpp = vscode.commands.registerCommand('embedded-vscode-for-nvidia-omniverse.snippetLanguageCpp', () => {
+		vscode.commands.executeCommand("setContext", "embedded-vscode-for-nvidia-omniverse-snippet-python", true);
+		vscode.commands.executeCommand("setContext", "embedded-vscode-for-nvidia-omniverse-snippet-cpp", false);
+		snippetTreeView = new SnippetTreeView("python");
+	});
+
 	// Snippet
 	let disposable_insert_snippet = vscode.commands.registerCommand('embedded-vscode-for-nvidia-omniverse.insertSnippet', (args) => {
 		const editor = vscode.window.activeTextEditor;
@@ -201,6 +220,8 @@ export function activate(context: vscode.ExtensionContext) {
 	context.subscriptions.push(disposable_local_selected_text);
 	context.subscriptions.push(disposable_remote);
 	context.subscriptions.push(disposable_remote_selected_text);
+	context.subscriptions.push(disposable_snippet_language_python);
+	context.subscriptions.push(disposable_snippet_language_cpp);
 	context.subscriptions.push(disposable_insert_snippet);
 	context.subscriptions.push(disposable_open_resource);
 }
