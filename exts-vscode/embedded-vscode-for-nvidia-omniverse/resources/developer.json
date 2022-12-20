@@ -4,13 +4,13 @@
             "internal": true,
             "title": "Extensions",
             "description": "Extensions",
-            "url": "https://docs.omniverse.nvidia.com/py/kit/docs/guide/get_started_extensions.html"
+            "url": "https://docs.omniverse.nvidia.com/kit/docs/kit-manual/latest/guide/extensions_basic.html"
         },
         {
             "internal": true,
             "title": "Kit programming manual",
             "description": "Kit programming manual",
-            "url": "https://docs.omniverse.nvidia.com/py/kit/index.html"
+            "url": "https://docs.omniverse.nvidia.com/kit/docs/kit-manual/latest/guide/kit_overview.html"
         },
         {
             "internal": true,
@@ -22,19 +22,31 @@
             "internal": true,
             "title": "OmniGraph",
             "description": "OmniGraph framework",
-            "url": "https://docs.omniverse.nvidia.com/py/kit/source/extensions/omni.graph.core/docs/index.html"
+            "url": "https://docs.omniverse.nvidia.com/kit/docs/omni.graph.core/latest/index.html"
         },
         {
             "internal": true,
             "title": "Omni::UI",
             "description": "Omniverse's UI toolkit for creating beautiful and flexible graphical user interfaces",
-            "url": "https://docs.omniverse.nvidia.com/py/kit/source/extensions/omni.ui/docs/index.html"
+            "url": "https://docs.omniverse.nvidia.com/kit/docs/omni.ui/latest/index.html"
+        },
+        {
+            "internal": true,
+            "title": "PhysX 5 SDK",
+            "description": "NVIDIA PhysX SDK version 5",
+            "url": "https://nvidia-omniverse.github.io/PhysX/physx"
+        },
+        {
+            "internal": true,
+            "title": "Python scripting component",
+            "description": "Python scripting component",
+            "url": "https://docs.omniverse.nvidia.com/prod_extensions/prod_extensions/ext_python-scripting-component.html"
         },
         {
             "internal": true,
             "title": "SceneUI",
             "description": "SceneUI helps build great-looking 3d manipulators and 3d helpers",
-            "url": "https://docs.omniverse.nvidia.com/py/kit/source/extensions/omni.ui.scene/docs/Overview.html"
+            "url": "https://docs.omniverse.nvidia.com/kit/docs/omni.ui.scene/latest/index.html"
         },
         {
             "internal": true,
@@ -53,6 +65,12 @@
             "title": "USD Python snippets",
             "description": "Universal Scene Description (USD) Python snippets",
             "url": "https://docs.omniverse.nvidia.com/prod_usd/prod_usd/python-snippets.html"
+        },
+        {
+            "internal": true,
+            "title": "VS Code link",
+            "description": "VS Code link",
+            "url": "https://docs.omniverse.nvidia.com/prod_extensions/prod_extensions/ext_vs-code-link.html"
         }
     ]
 }
