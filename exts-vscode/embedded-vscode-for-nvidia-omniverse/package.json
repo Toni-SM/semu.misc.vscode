@@ -69,6 +69,13 @@
         "category": "Embedded VS Code for NVIDIA Omniverse"
       },
       {
+        "command": "embedded-vscode-for-nvidia-omniverse.expandAll",
+        "title": "Expand All",
+        "category": "Embedded VS Code for NVIDIA Omniverse",
+        "description": "Expand snippet tree",
+        "icon": "$(expand-all)"
+      },
+      {
         "command": "embedded-vscode-for-nvidia-omniverse.snippetLanguagePython",
         "title": "Switch snippet language (C++)",
         "category": "Embedded VS Code for NVIDIA Omniverse",
@@ -150,6 +157,11 @@
           "command": "embedded-vscode-for-nvidia-omniverse.snippetLanguageCpp",
           "when": "view =~ /embedded-vscode-for-nvidia-omniverse-views-snippets/ && embedded-vscode-for-nvidia-omniverse-snippet-cpp == true",
           "group": "navigation@1"
+        },
+        {
+          "command": "embedded-vscode-for-nvidia-omniverse.expandAll",
+          "when": "view =~ /embedded-vscode-for-nvidia-omniverse-views-snippets/",
+          "group": "navigation@2"
         }
       ]
     }

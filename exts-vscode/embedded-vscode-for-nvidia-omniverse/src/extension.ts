@@ -172,6 +172,11 @@ export function activate(context: vscode.ExtensionContext) {
 		executeCode(remoteSocketIp, remoteSocketPort, outputChannel, true);
 	});
 
+	// Snippets expand-all
+	let disposable_snippet_expand_all = vscode.commands.registerCommand('embedded-vscode-for-nvidia-omniverse.expandAll', () => {
+		snippetTreeView!.expandAll();
+	});
+
 	// Snippets language
 	let disposable_snippet_language_python = vscode.commands.registerCommand('embedded-vscode-for-nvidia-omniverse.snippetLanguagePython', () => {
 		vscode.commands.executeCommand("setContext", "embedded-vscode-for-nvidia-omniverse-snippet-python", false);
@@ -220,6 +225,7 @@ export function activate(context: vscode.ExtensionContext) {
 	context.subscriptions.push(disposable_local_selected_text);
 	context.subscriptions.push(disposable_remote);
 	context.subscriptions.push(disposable_remote_selected_text);
+	context.subscriptions.push(disposable_snippet_expand_all);
 	context.subscriptions.push(disposable_snippet_language_python);
 	context.subscriptions.push(disposable_snippet_language_cpp);
 	context.subscriptions.push(disposable_insert_snippet);

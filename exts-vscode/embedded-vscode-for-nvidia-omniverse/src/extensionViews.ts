@@ -15,12 +15,17 @@ export class CommandTreeView {
 
 
 export class SnippetTreeView {
-    private readonly snippetTreeViewProvider: SnippetTreeViewProvider
+    private snippetTreeViewProvider: SnippetTreeViewProvider;
+    private treeView: vscode.TreeView<Snippet>;
 
     constructor(snippetLanguage: string) {
-        this.snippetTreeViewProvider = new SnippetTreeViewProvider(snippetLanguage)
-        vscode.window.createTreeView('embedded-vscode-for-nvidia-omniverse-views-snippets', 
-                                     {treeDataProvider: this.snippetTreeViewProvider, showCollapseAll: true});
+        this.snippetTreeViewProvider = new SnippetTreeViewProvider(snippetLanguage, true)
+        this.treeView = vscode.window.createTreeView('embedded-vscode-for-nvidia-omniverse-views-snippets', 
+                                                     {treeDataProvider: this.snippetTreeViewProvider, showCollapseAll: true});
+    }
+
+    public expandAll(): void {
+        this.snippetTreeViewProvider.expandAll(this.treeView);
     }
 }
 
@@ -84,15 +89,15 @@ class CommandTreeViewProvider implements vscode.TreeDataProvider<Command> {
 class SnippetTreeViewProvider implements vscode.TreeDataProvider<Snippet> {
     private snippets: Snippet[] = []
 
-    constructor(snippetLanguage: string) {
+    constructor(snippetLanguage: string, collapsed: boolean) {
         if(snippetLanguage == "python") {
-            this.snippets.push(this.buildSubtree("Kit", this.parseJSON("python-kit.json")));
-            this.snippets.push(this.buildSubtree("Kit commands", this.parseJSON("python-kit-commands.json")));
-            this.snippets.push(this.buildSubtree("USD", this.parseJSON("python-usd.json")));
-            this.snippets.push(this.buildSubtree("Isaac Sim", this.parseJSON("python-isaac-sim.json")));
+            this.snippets.push(this.buildSubtree("Kit", this.parseJSON("python-kit.json"), collapsed));
+            this.snippets.push(this.buildSubtree("Kit commands", this.parseJSON("python-kit-commands.json"), collapsed));
+            this.snippets.push(this.buildSubtree("USD", this.parseJSON("python-usd.json"), collapsed));
+            this.snippets.push(this.buildSubtree("Isaac Sim", this.parseJSON("python-isaac-sim.json"), collapsed));
         }
         else if(snippetLanguage == "cpp") {
-            this.snippets.push(this.buildSubtree("Kit", this.parseJSON("cpp-usd.json")));
+            this.snippets.push(this.buildSubtree("Kit", this.parseJSON("cpp-usd.json"), collapsed));
         }
     }
 
@@ -110,19 +115,22 @@ class SnippetTreeViewProvider implements vscode.TreeDataProvider<Snippet> {
         return element.parent
     }
 
-    private buildSubtree(treeName: string, snippets: {title: string, snippets: [], url: string, snippet: string, description: string}[]): Snippet {
+    private buildSubtree(treeName: string, snippets: {title: string, snippets: [], url: string, snippet: string, description: string}[], collapsed: boolean): Snippet {
         let children: Snippet[] = [];
         
         for (var val of snippets) {
-            if( val.hasOwnProperty("snippets"))
-                children.push(this.buildSubtree(val.title, val.snippets));
+            if(val.hasOwnProperty("snippets"))
+                children.push(this.buildSubtree(val.title, val.snippets, collapsed));
             else
                 children.push(new Snippet(val.title, {command: 'embedded-vscode-for-nvidia-omniverse.insertSnippet', arguments: [val.snippet]}, val.description));
         }
         
         const parent = new Snippet(treeName, {command: ''});
         if (children.length > 0) {
-            parent.collapsibleState = vscode.TreeItemCollapsibleState.Collapsed // Expanded
+            if (collapsed)
+                parent.collapsibleState = vscode.TreeItemCollapsibleState.Collapsed
+            else
+                parent.collapsibleState = vscode.TreeItemCollapsibleState.Expanded
             parent.children = children
             children.forEach((c) => c.parent = parent)
         }
@@ -136,6 +144,20 @@ class SnippetTreeViewProvider implements vscode.TreeDataProvider<Snippet> {
             return rawSnippets.snippets;
         }
         return [];
+    }
+
+    private expandSnippet(treeView: vscode.TreeView<Snippet>, snippet: Snippet): void {
+        if (snippet.children.length > 0) {
+            treeView.reveal(snippet, {select: false, focus: false, expand: 3});
+            for (var child of snippet.children)
+                this.expandSnippet(treeView, child);
+        }
+    }
+
+    public expandAll(treeView: vscode.TreeView<Snippet>): void {
+        for (var snippet of this.snippets)
+            treeView.reveal(snippet, {select: false, focus: false, expand: 3});
+            // this.expandSnippet(treeView, snippet);
     }
 }
 
