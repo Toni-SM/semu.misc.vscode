@@ -9,14 +9,29 @@
 "snippet": "omni.kit.commands.execute(\"AddAnimCurves\",\n                          paths=None)  # list\n"
 },
 {
-"title": "AnimCurveKeyCopy",
+"title": "AnimCurveCommandBase",
 "description": "[omni.anim.curve.scripts.commands]",
-"snippet": "omni.kit.commands.execute(\"AnimCurveKeyCopy\",\n                          schemaKeys=schemaKeys,  # list\n                          timeOffset=0,  # float\n                          dstCurvePaths=None)  # list\n"
+"snippet": "omni.kit.commands.execute(\"AnimCurveCommandBase\",\n                          name=\"AnimCurveCommandBase\",  # str\n                          stage=None,  # typing.Union[pxr.Usd.Stage, NoneType]\n                          paths=None,  # typing.Union[list, NoneType]\n                          time=None)  # typing.Union[pxr.Usd.TimeCode, NoneType]\n"
 },
 {
-"title": "AnimDataCopy",
-"description": "[omni.anim.curve.scripts.commands]",
-"snippet": "omni.kit.commands.execute(\"AnimDataCopy\",\n                          listSchemaKeys=listSchemaKeys,  # list\n                          dstCurvePath=dstCurvePath)\n"
+"title": "AnimGraphUIRefreshPropertyWindowCommand",
+"description": "[omni.anim.graph.ui.scripts.command]",
+"snippet": "omni.kit.commands.execute(\"AnimGraphUIRefreshPropertyWindowCommand\")\n"
+},
+{
+"title": "AnimGraphUIReplaceRelationshipTargetCommand",
+"description": "[omni.anim.graph.ui.scripts.command]",
+"snippet": "omni.kit.commands.execute(\"AnimGraphUIReplaceRelationshipTargetCommand\",\n                          relationship=relationship,  # pxr.Usd.Relationship\n                          old_target=old_target,  # pxr.Sdf.Path\n                          new_target=new_target)  # pxr.Sdf.Path\n"
+},
+{
+"title": "AnimGraphUISetNodePositionCommand",
+"description": "[omni.anim.graph.ui.scripts.command]",
+"snippet": "omni.kit.commands.execute(\"AnimGraphUISetNodePositionCommand\",\n                          prim=prim,  # pxr.Usd.Prim\n                          position_attribute_name=position_attribute_name,  # str\n                          value=value)  # typing.Union[typing.Tuple[float, float], NoneType]\n"
+},
+{
+"title": "AnimGraphUISetRelationshipTargetsCommand",
+"description": "[omni.anim.graph.ui.scripts.command]",
+"snippet": "omni.kit.commands.execute(\"AnimGraphUISetRelationshipTargetsCommand\",\n                          relationship=relationship,  # pxr.Usd.Relationship\n                          targets=targets)  # typing.List[pxr.Sdf.Path]\n"
 },
 {
 "title": "ApplyAnimationGraphAPICommand",
@@ -39,11 +54,6 @@
 "snippet": "omni.kit.commands.execute(\"AssignAnimation\",\n                          skeleton_path=skeleton_path,\n                          animprim_path=animprim_path)\n"
 },
 {
-"title": "ChangeSelectionCurveCommand",
-"description": "[omni.anim.curve_editor.commands]",
-"snippet": "omni.kit.commands.execute(\"ChangeSelectionCurveCommand\",\n                          new_times=new_times,\n                          new_track_names=new_track_names,\n                          new_track_users=new_track_users,\n                          delete_times=delete_times,\n                          delete_track_names=delete_track_names,\n                          delete_track_users=delete_track_users,\n                          singleton_curve_editor_wp=singleton_curve_editor_wp,\n                          edit_scope=None)\n"
-},
-{
 "title": "ClearRetargetTagsCommand",
 "description": "[omni.anim.retarget.core.scripts.commands]",
 "snippet": "omni.kit.commands.execute(\"ClearRetargetTagsCommand\",\n                          skel_paths=skel_paths)  # list\n"
@@ -64,29 +74,19 @@
 "snippet": "omni.kit.commands.execute(\"CreateRetargetAnimationsCommand\",\n                          source_skeleton_path=source_skeleton_path,  # str\n                          target_skeleton_path=target_skeleton_path,  # str\n                          source_animation_paths=source_animation_paths,  # typing.List[str]\n                          target_animation_parent_path=target_animation_parent_path,  # str\n                          set_root_identity=set_root_identity)  # bool\n"
 },
 {
-"title": "DeleteTimeCurveCommand",
-"description": "[omni.anim.curve_editor.commands]",
-"snippet": "omni.kit.commands.execute(\"DeleteTimeCurveCommand\",\n                          prim_path=prim_path,  # str\n                          attr_name=attr_name,  # str\n                          tIn=tIn,  # float\n                          vIn=vIn,  # float\n                          tOut=tOut,  # float\n                          vOut=vOut,  # float\n                          value=value,  # float\n                          broken=broken,  # bool\n                          weighted=weighted,  # bool\n                          type=type,  # bool\n                          time=time,  # float\n                          edit_scope=None)\n"
+"title": "EditAnimCurveKeys",
+"description": "[omni.anim.curve.scripts.commands]\n\n Edit selected keyframes/tangents.\n\n @param\n selection_state: A KeySelectionState typed user defined buffer to hold the selection state.\n if None, which is the default, the selection state goes to a system global selection clipboard\n time: 1. A float value: only keys/tangents at this time will be considered.\n 2. None. Keeps time of keys/tangents not touched.\n 3. The default is None\n value: A float value of keys/tangents that you want to set to keys. Default is None, which means values are not touched.\n additive : A boolean flag to toggle whether to override times/values of the considered keys/tangents or\n add to them the specified ones by arguments time and value.\n The default value is False\n tangent_broken: A boolean flag which is the value of the tangent broken component of the keyframe\n The default is None, which means to keep the component untouched\n tangent_type: A string to set the tangent type component, possible values are\n \"auto\", \"smooth\", \"linear\", \"step\", \"fixed\".\n The default is None, which means to keep the component untouched\n tangent_weighted: A boolean flag which is the value of the weighted tangent component of the keyframe\n The default is None, which means to keep the component untouched\n",
+"snippet": "omni.kit.commands.execute(\"EditAnimCurveKeys\",\n                          selection_state=None,  # omni.anim.curve.scripts.keySelection.KeySelectionState\n                          time=None,\n                          value=None,\n                          additive=False,\n                          tangent_broken=None,  # bool\n                          tangent_type=None,  # str\n                          tangent_weighted=None)  # bool\n"
+},
+{
+"title": "ExtractAnimCurves",
+"description": "[omni.anim.curve.scripts.commands]\n\n Converts dense key data to curve data\n @param\n paths: 1. attributes' path, e.g. /World/Cube.xformOp:translate\n 2. prims' path, e.g. /World/Cube\n\n clear_dense_data:\n True: clear existing dense data, only curve data is kept\n False: keep dense data and create curve data\n\n recursive:\n If True, for prim every prim path in paths extract all curves recursively for children\n\n attribute_mask: Only attributes that contain this sting are processed\n\n source_frame_rate:\n Source frame rate (time samples per seconds), or zero to use the current frame rate\n\n start_time:\n Start time of the output curve (in seconds)\n\n sparse:\n Apply curve simplification to reduce the number of keys\n\n max_error_percent:\n Maximum allowed error for each removed key, as percentage of curve value range (approximate)\n\n compute_tangents:\n When 'sparse' is set, compute the tangents of the sparse curve from the dense samples\n\n @example\n ExtractAnimCurves(paths=[\"/World/Cube.xformOp:translate\", \"/World/Sphere.visibility\"]) # Extracts two attributes\n ExtractAnimCurves(paths=[\"/World\"], recursive=True) # Extracts all attributes on all prims under /World\n ExtractAnimCurves(paths=[\"/World/Cube.xformOp:translate|x\"]) # Error: components are not supported\n ExtractAnimCurves() # Extracts all curves of the selected prim",
+"snippet": "omni.kit.commands.execute(\"ExtractAnimCurves\",\n                          stage=None,  # pxr.Usd.Stage\n                          paths=None,  # list\n                          clear_dense_data=True,  # bool\n                          recursive=False,  # bool\n                          attribute_mask=None,\n                          source_frame_rate=0.0,  # float\n                          start_time=0.0,  # float\n                          sparse=False,  # bool\n                          max_error_percent=0.1,\n                          compute_tangents=False)\n"
 },
 {
 "title": "LoadRetargetPoseCommand",
 "description": "[omni.anim.retarget.core.scripts.commands]",
 "snippet": "omni.kit.commands.execute(\"LoadRetargetPoseCommand\",\n                          skel_paths=skel_paths)  # list\n"
-},
-{
-"title": "MoveAnimCurveKey",
-"description": "[omni.anim.curve.scripts.commands]\n\n Moves a list of keys from the source time to the destination time\n @param\n paths: curves' path, only move keys in these curves e.g. /World/Cube.xformOp:translate|x\n or prims' path, move keys in all curves of this prim e.g. /World/Cube\n or None, move keys in all curves of all the SELECTED prims\n The default value is None\n src_time: time in timeCode(frame) to get the keys\n dst_time: time in timeCode(frame) that the keys are moved to\n @return\n Return True if we successfully moved any keys and there is no errors\n Return False if no keys is moved or there are errors generated\n @example\n MoveAnimCurveKey(paths=[\"/World/Cube.xformOp:translate|x\", \"/World/Sphere.radius\"], src_time=20, dst_time=40)\n MoveAnimCurveKey(paths=[\"/World/Cube.size|x\"], src_time=20, dst_time=40)\n MoveAnimCurveKey(paths=[\"/World/Cube.xformOp:translate\"], src_time=20, dst_time=40)\n MoveAnimCurveKey(paths=[\"/World/Cube\"], src_time=20, dst_time=40)\n MoveAnimCurveKey(src_time=20, dst_time = 50)",
-"snippet": "omni.kit.commands.execute(\"MoveAnimCurveKey\",\n                          paths=None,  # list\n                          src_time=None,  # pxr.Usd.TimeCode\n                          dst_time=None)  # pxr.Usd.TimeCode\n"
-},
-{
-"title": "MoveControlCurveCommand",
-"description": "[omni.anim.curve_editor.commands]",
-"snippet": "omni.kit.commands.execute(\"MoveControlCurveCommand\",\n                          prim_path=prim_path,  # str\n                          attr_name=attr_name,  # str\n                          new_tIn=new_tIn,  # float\n                          new_vIn=new_vIn,  # float\n                          new_tOut=new_tOut,  # float\n                          new_vOut=new_vOut,  # float\n                          time=time,  # float\n                          edit_scope=None,\n                          old_tIn=0.0,\n                          old_vIn=0.0,\n                          old_tOut=0.0,\n                          old_vOut=0.0)\n"
-},
-{
-"title": "MoveTimeCurveCommand",
-"description": "[omni.anim.curve_editor.commands]",
-"snippet": "omni.kit.commands.execute(\"MoveTimeCurveCommand\",\n                          prim_path=prim_path,  # str\n                          attr_name=attr_name,  # str\n                          new_tIn=new_tIn,  # float\n                          new_vIn=new_vIn,  # float\n                          new_tOut=new_tOut,  # float\n                          new_vOut=new_vOut,  # float\n                          new_value=new_value,  # float\n                          new_time=new_time,  # float\n                          old_time=old_time,  # float\n                          unchanged_broken=unchanged_broken,  # bool\n                          unchanged_weighted=unchanged_weighted,  # bool\n                          unchanged_type=unchanged_type,  # bool\n                          edit_scope=None,\n                          old_tIn=0.0,\n                          old_vIn=0.0,\n                          old_tOut=0.0,\n                          old_vOut=0.0,\n                          old_value=0.0)\n"
 },
 {
 "title": "NewAttributeCurveCommand",
@@ -99,24 +99,24 @@
 "snippet": "omni.kit.commands.execute(\"NewTimelineNodeAttributeCurveCommand\",\n                          prim_path=prim_path,  # str\n                          attr_name=attr_name,  # str\n                          components_quantity=components_quantity)  # int\n"
 },
 {
-"title": "RefreshPropertyWindowCommand",
-"description": "[omni.anim.graph.ui.scripts.command]",
-"snippet": "omni.kit.commands.execute(\"RefreshPropertyWindowCommand\")\n"
+"title": "PasteAnimCurveKeys",
+"description": "[omni.anim.curve.scripts.commands]\n\n Paste the curvekey data in global clipboard to target paths\n @param\n paths: 1. curves' path, only Paste keys in these curves e.g. /World/Cube.xformOp:translate|x\n 2. prims' path, Paste keys in all curves of this prim e.g. /World/Cube\n 3. None, move keys in all curves of all the SELECTED prims\n The default value is None\n Don't allow prim path and curves path both exist in target list\n time: time code for the earliest key to start pasting.\n The default value is None which means the current system time\n\n @return\n Return True if we successfully Paste the curve without any errors\n Return False if no curve is Paste or there are errors generated\n\n @description\n The Paste command will paste key set from the global clipboard to the target paths.\n Depending on the clipboard content, the paste can have different behavior.\n The special case is when the clipboard has only one curve's key copied. It will be broadcast\n copy to all target paths' curves if they are curve paths. If the target paths are prim typed,\n we will paste the curve to every prim with the same curve name, if applicable. This is useful\n for the copy & paste key from the property window.\n If the clipboard contains multiple curves, but all from a single prim, we can have a prim level's\n broadcast if the target paths are all prim typed. We will paste curves from the clipboard's single prim\n to all target paths. This is useful for animation timeline's copy and paste keys to multiple selected prims.\n In a more general case, where the clipboard contains multiple curves and the target paths contains\n multiple curve pths, we iterate through both of them and paste the curves/keys sequentially.\n @example\n PasteAnimCurveKeys(paths=[\"/World/Cube.xformOp:translate|x\", \"/World/Sphere.radius\"]) #Paste two curves\n PasteAnimCurveKeys(paths=[\"/World/Cube.size|x\"]) #Paste the specified curve\n PasteAnimCurveKeys(paths=[\"/World/Cube.xformOp:translate\"]) #Paste three curves\n PasteAnimCurveKeys(paths=[\"/World/Cube\"]) #Paste all of its curves in this prim\n PasteAnimCurveKeys() #Paste all curves of the selected prim\n PassteAnimCurveKeys(paths=[\"/World/Cube.size|x], time=Usd.TimeCode(15)) #Paste the key starting from frame 15",
+"snippet": "omni.kit.commands.execute(\"PasteAnimCurveKeys\",\n                          stage=None,  # pxr.Usd.Stage\n                          paths=None,  # list\n                          time=None)  # pxr.Usd.TimeCode\n"
 },
 {
-"title": "RemoveAnimCurve",
-"description": "[omni.anim.curve.scripts.commands]\n\n Remove a list of curves specified by the paths\n @param\n paths: 1. curves' path, only move keys in these curves e.g. /World/Cube.xformOp:translate|x\n 2. prims' path, move keys in all curves of this prim e.g. /World/Cube\n 3. None, move keys in all curves of all the SELECTED prims\n The default value is None\n @return\n Return True if we successfully remove the curve without any errors\n Return False if no curve is removed or there are errors generated\n @example\n RemoveAnimCurve(paths=[\"/World/Cube.xformOp:translate|x\", \"/World/Sphere.radius\"]) #Remove two curves\n RemoveAnimCurve(paths=[\"/World/Cube.size|x\"]) #Remove the specified curve\n RemoveAnimCurve(paths=[\"/World/Cube.xformOp:translate\"]) #Remove three curves\n RemoveAnimCurve(paths=[\"/World/Cube\"]) #Remove all of its curves in this prim\n RemoveAnimCurve() #Remove all curves of the selected prim",
-"snippet": "omni.kit.commands.execute(\"RemoveAnimCurve\",\n                          paths=None)  # list\n"
-},
-{
-"title": "RemoveAnimCurveKey",
-"description": "[omni.anim.curve.scripts.commands]\n\n Remove a list of keys from specificed curves(names)\n @param\n paths: is a list of string-typed USD paths. Each path can be one of three types\n 1) curves names path, only remove keys in these curves e.g. /World/Cube.xformOp:translate|x\n 2) prims' path, remove keys from all animation curves of this prim e.g. /World/Cube\n 3) None, remove keys from all curves of all the SELECTED prims\n The default value is None\n stage: the USD stage of those USD paths resides in\n time: UsdTimeCode, usually equal to the frame number as the index of the key. None to use the current time\n @return\n Return True if we successfully remove any keys and there is no errors\n Return False if no keys is removed or there are errors generated\n @example\n RemoveAnimCurveKey(stage=stage, paths=[\"/World/Cube.xformOp:translate|x\", \"/World/Sphere.radius\"], time=Usd.TimeCode(20.0))\n RemoveAnimCurveKey(stage=stage, paths=[\"/World/Cube.size|x\"], time=Usd.TimeCode(20.0))\n RemoveAnimCurveKey(stage=stage, paths=[\"/World/Cube.xformOp:translate\"], time=Usd.TimeCode(20.0))\n RemoveAnimCurveKey(stage=stage, paths=[\"/World/Cube\"])\n RemoveAnimCurveKey(stage=stage, time=Usd.TimeCode(20.0))\n RemoveAnimCurveKey(stage=stage)",
-"snippet": "omni.kit.commands.execute(\"RemoveAnimCurveKey\",\n                          stage=stage,  # pxr.Usd.Stage\n                          paths=None,  # list\n                          time=None)  # pxr.Usd.TimeCode\n"
-},
-{
-"title": "RemoveAnimData",
+"title": "PasteAnimCurves",
 "description": "[omni.anim.curve.scripts.commands]",
-"snippet": "omni.kit.commands.execute(\"RemoveAnimData\",\n                          stage=stage,  # pxr.Usd.Stage\n                          paths=None)  # list\n"
+"snippet": "omni.kit.commands.execute(\"PasteAnimCurves\",\n                          listSchemaKeys=listSchemaKeys,  # list\n                          dstCurvePath=dstCurvePath)\n"
+},
+{
+"title": "RemoveAnimCurveKeys",
+"description": "[omni.anim.curve.scripts.commands]\n\n Remove a list of keys from specificed curves(names)\n @param\n paths: is a list of string-typed USD paths. Each path can be one of three types\n 1) curves names path, only remove keys in these curves e.g. /World/Cube.xformOp:translate|x\n 2) prims' path, remove keys from all animation curves of this prim e.g. /World/Cube\n 3) None, remove keys from all curves of all the SELECTED prims\n The default value is None\n stage: the USD stage of those USD paths resides in\n time: UsdTimeCode, usually equal to the frame number as the index of the key. None to use the current time\n @return\n Return True if we successfully remove any keys and there is no errors\n Return False if no keys is removed or there are errors generated\n @example\n RemoveAnimCurveKeys(stage=stage, paths=[\"/World/Cube.xformOp:translate|x\", \"/World/Sphere.radius\"], time=Usd.TimeCode(20.0))\n RemoveAnimCurveKeys(stage=stage, paths=[\"/World/Cube.size|x\"], time=Usd.TimeCode(20.0))\n RemoveAnimCurveKeys(stage=stage, paths=[\"/World/Cube.xformOp:translate\"], time=Usd.TimeCode(20.0))\n RemoveAnimCurveKeys(stage=stage, paths=[\"/World/Cube\"])\n RemoveAnimCurveKeys(stage=stage, time=Usd.TimeCode(20.0))\n RemoveAnimCurveKeys(stage=stage)",
+"snippet": "omni.kit.commands.execute(\"RemoveAnimCurveKeys\",\n                          stage=None,  # pxr.Usd.Stage\n                          paths=None,  # list\n                          time=None)  # pxr.Usd.TimeCode\n"
+},
+{
+"title": "RemoveAnimCurves",
+"description": "[omni.anim.curve.scripts.commands]\n\n Remove a list of curves specified by the paths\n @param\n paths: 1. curves' path, only move keys in these curves e.g. /World/Cube.xformOp:translate|x\n 2. prims' path, move keys in all curves of this prim e.g. /World/Cube\n 3. None, move keys in all curves of all the SELECTED prims\n The default value is None\n @return\n Return True if we successfully remove the curve without any errors\n Return False if no curve is removed or there are errors generated\n @example\n RemoveAnimCurves(paths=[\"/World/Cube.xformOp:translate|x\", \"/World/Sphere.radius\"]) #Remove two curves\n RemoveAnimCurves(paths=[\"/World/Cube.size|x\"]) #Remove the specified curve\n RemoveAnimCurves(paths=[\"/World/Cube.xformOp:translate\"]) #Remove three curves\n RemoveAnimCurves(paths=[\"/World/Cube\"]) #Remove all of its curves in this prim\n RemoveAnimCurves() #Remove all curves of the selected prim",
+"snippet": "omni.kit.commands.execute(\"RemoveAnimCurves\",\n                          paths=None)  # list\n"
 },
 {
 "title": "RemoveAnimationGraphAPICommand",
@@ -132,11 +132,6 @@
 "title": "RenameAnimationGraphVariableAttributeCommand",
 "description": "[omni.anim.graph.core.scripts.command]",
 "snippet": "omni.kit.commands.execute(\"RenameAnimationGraphVariableAttributeCommand\",\n                          prim=prim,  # pxr.Usd.Prim\n                          old_attr_name=old_attr_name,  # str\n                          new_attr_name=new_attr_name)  # str\n"
-},
-{
-"title": "ReplaceRelationshipTargetCommand",
-"description": "[omni.anim.graph.ui.scripts.command]",
-"snippet": "omni.kit.commands.execute(\"ReplaceRelationshipTargetCommand\",\n                          relationship=relationship,  # pxr.Usd.Relationship\n                          old_target=old_target,  # pxr.Sdf.Path\n                          new_target=new_target)  # pxr.Sdf.Path\n"
 },
 {
 "title": "RetargetOpenWindowCommand",
@@ -164,19 +159,19 @@
 "snippet": "omni.kit.commands.execute(\"SaveSkelPoseCommand\",\n                          save_target=save_target)\n"
 },
 {
-"title": "SelectionMoveTimeCurveCommand",
-"description": "[omni.anim.curve_editor.commands]",
-"snippet": "omni.kit.commands.execute(\"SelectionMoveTimeCurveCommand\",\n                          track_name=track_name,  # str\n                          track_user=track_user,  # str\n                          new_time=new_time,  # float\n                          old_time=old_time,  # float\n                          singleton_curve_editor_wp=singleton_curve_editor_wp,\n                          edit_scope=None)\n"
+"title": "SelectAnimCurveKeys",
+"description": "[omni.anim.curve.scripts.commands]\n\n Similar to how we work with the selection list for prims in Kit, we need similar capability in the context\n of animation keyframes. Keyframe (and their tangents) selection is application wide and all commands are\n aware of it. For example, users can select keys programmablely and then use the EditAnimCurveKey command\n to edit the selected keysframe(and their tangents). The selection can go to a global selection clipboard,\n or a user supplied buffer.\n\n @param\n paths: A list of path strings to specify the curves\n 1. Attribute Paths, only the keys/tangents from their animation curves will be selected.\n If the attributes is a vector, the paths element could be a channel-typed path,\n e.g. xformOp:translate|x,\n or a vector-typed path,\n e.g. xformOp:translate,\n which includes all three curves.\n 2. Prim path, keys/tangents from all animation curves associated with all attributes\n from these prims will be considered\n 3. None, All keys/tangents from all animation curves from selected prims in the stage will be considered\n 4. The default value is None\n operation: 1. \"replace\": replace the previous selection\n 2. \"add\": incremental selection\n 3. \u201cremove\u201d: remove the selection from the original list\n 4. \"clear\": clear all the selections from the clipboard or the user buffer\n The default value is \"replace\"\n indices: Can be an integer or list of integers identifying key indices in the considered\n animation curves (see argument path). The default is None.\n times: 1. A float value: only keys/tangents at this time will be considered.\n 2. A tuple2 of float: for example (10, 20)) - only keys/tangents within that range, including, will be considered.\n 3. Can be set to a list of tuple2 for multiple ranges.\n 4. None. the current animation time will be used\n 5. The default is None\n key: A boolean flag, select the key or not. The default is True\n in_tangent: A boolean flag, select the incoming tangent or not. The default is True\n out_tangent: A boolean flag, select the out going tangent or not. The default is True\n selection_state: A KeySelectionState typed user defined buffer to hold the selection state.\n if None, which is the default, the selection state goes to a system global selection clipboard",
+"snippet": "omni.kit.commands.execute(\"SelectAnimCurveKeys\",\n                          paths=None,  # typing.Union[str, typing.List[str]]\n                          operation=\"replace\",\n                          indices=None,  # typing.Union[int, typing.List[int]]\n                          times=None,  # typing.Union[float, typing.Tuple[float, float], typing.List[typing.Union[float, typing.Tuple[float, float]]]]\n                          key=True,  # bool\n                          in_tangent=True,  # bool\n                          out_tangent=True,  # bool\n                          selection_state=None)  # omni.anim.curve.scripts.keySelection.KeySelectionState\n"
 },
 {
-"title": "SetAnimCurveKey",
-"description": "[omni.anim.curve.scripts.commands]",
-"snippet": "omni.kit.commands.execute(\"SetAnimCurveKey\",\n                          paths=None,  # list\n                          time=None,  # pxr.Usd.TimeCode\n                          value=None,  # typing.Any\n                          preserveCurveShape=True,  # bool\n                          adjustExistingTangent=True,  # bool\n                          inTangentType=\"auto\",  # str\n                          outTangentType=\"auto\",  # str\n                          tangentBreakDown=False,  # bool\n                          convertTimeSamples=False)  # bool\n"
+"title": "SetAnimCurveInfinityType",
+"description": "[omni.anim.curve.scripts.commands]\n\n Set the Infinity loop type for the specified curves\n @param\n paths: 1. curves' path, only Paste keys in these curves e.g. /World/Cube.xformOp:translate|x\n 2. prims' path, Paste keys in all curves of this prim e.g. /World/Cube\n 3. None, move keys in all curves of all the SELECTED prims\n The default value is None\n is_post_infinity: 1. True: set the post infinity type, i.e. how a curve loops after the last key\n 2. False: set the pre infinity type, i.e. how a curve loops before the first key\n The default value is True\n infinity_type: \"constant\", \"cycle\", \"cycleRelative\", \"linear\", \"oscillate\"\n\n @return\n Return True if we successfully Paste the curve without any errors\n Return False if no curve is Paste or there are errors generated\n @example\n SetAnimCurveInfinityType(paths=[\"/World/Cube.xformOp:translate|x\", \"/World/Sphere.radius\"]) # Set post-inifnity for two curves to \"constant\"\n SetAnimCurveInfinityType(paths=[\"/World/Cube.size|x\"]) #Set post-infinity for the attribute size's animation curve as \"constant\"\n SetAnimCurveInfinityType(paths=[\"/World/Cube.xformOp:translate\"]) #Set three curves's post-inifity type for a vector set them as \"constant\"\n SetAnimCurveInfinityType(paths=[\"/World/Cube\"]) #Set all curves' post-infinity type for the Cube prim as \"constant\"\n SetAnimCurveInfinityType() #Set all curves' post-infinity type for the selected prim as \"constant\"\n SetAnimCurveInfinityType(paths=[\"/World/Sphere.visibility\"], is_post_infinity=False) # Set the pre-infinity type for the visibility attribute's curve as \"constant\"\n SetAnimCurveInfinityType(paths=[\"/World/Sphere.visibility\"], is_post_infinity=False, infinity_type=\"cycle\") # Set the pre-infinity type for the visibility attribute's curve as \"cylce\"\n",
+"snippet": "omni.kit.commands.execute(\"SetAnimCurveInfinityType\",\n                          paths=None,  # list\n                          is_post_infinity=True,  # bool\n                          infinity_type=\"constant\")  # str\n"
 },
 {
-"title": "SetAnimationGraphNodePositionCommand",
-"description": "[omni.anim.graph.ui.scripts.command]",
-"snippet": "omni.kit.commands.execute(\"SetAnimationGraphNodePositionCommand\",\n                          prim=prim,  # pxr.Usd.Prim\n                          position_attribute_name=position_attribute_name,  # str\n                          value=value)  # typing.Union[typing.Tuple[float, float], NoneType]\n"
+"title": "SetAnimCurveKeys",
+"description": "[omni.anim.curve.scripts.commands]\n\n Set keys to the given paths at the given time, with the given value.\n @param\n paths:\n A list of string-typed USD paths. Each path can be one of the three types:\n 1. Prims' path, set xformable attribute keys to the prims.\n 2. Curves' path, set keys to the curve(s)\n 3. None, set keys to the SELECTED prim(s).\n The default value is None.\n We allow a mixture of prims' paths and curves' paths.\n time:\n The time code to set keys at. Can be one of the three types:\n 1. A single element of type float, int, or Usd.TimeCode, specifing the time to set keys at.\n 2. A list of float, int, or Usd.TimeCode. See description for details.\n 3. None, will use the current time.\n The default value is None.\n value:\n The value to set keys with. Can be one of the three types:\n 1. A single scalar or vector.\n 2. A list of scalars or vectors. See description for details.\n 3. None, will use the default value read from USD.\n The default value is None. Must be None if prims' paths are provided.\n preserveCurveShape:\n Preserve the shape of the curve when add a new key between two exsiting keys, if possible. The default value is True.\n If True, `time` and `value` must be None or of length 1.\n If False, the tangent type of the new key will be Auto by default.\n Note that in order to keep the shape, the tangent and the weighted attribute of the two neighbouring keys may be changed.\n This parameter will be ignored silently, when:\n 1. it's impossible to preserve the shape. For example, the user specifies some time and value that don't stay on the curve.\n 2. either `inTangentType` or `outTangentType` is not None.\n inTangentType:\n A string to set the in tangent type of the key. Possible values are None, \"auto\", \"smooth\", \"linear\", \"step\", and \"fixed\".\n The default value is None. If not None, this command will override the tangent types of the target keys. `preserveCurveShape` will be ignored.\n outTangentType:\n A string to set the out tangent type of the key. Possible values are None, \"auto\", \"smooth\", \"linear\", \"step\", and \"fixed\".\n The default value is None. If not None, this command will override the tangent types of the target keys. `preserveCurveShape` will be ignored.\n tangentBreakDown:\n A bool value to indicate if the tangent of the key is broken. True for broken and False for unbroken.\n The default value is False.\n\n @return\n Return True if we successfully set the keys and there are no errors.\n Return False if no keys are added or there are errors.\n\n @description\n 1. If `time` is None or single-element, `value` must be None or single-element also. Vice versa.\n 2. If `time` is a list of elements, `value` must be a list of elements also. Vice versa.\n In addition, the lengths of `time` and `value` must be the same.\n The type of `value`s in the list must be the same.\n\n @example\n 1. SetAnimCurveKeys() # Set keys to the selected prim(s), at the current time, with the default value\n 2. SetAnimCurveKeys(paths=[\"/World/Cube\"]) # Set xformable attribute keys (current time, default value) to /World/Cube\n 3. SetAnimCurveKeys(paths=[\"/World/Cube.xformOp:scale|x\"])\n # Set a key (current time, default value) to the attribute /World/Cube.xformOp:scale|x\n 4. SetAnimCurveKeys(paths=[\"/World/Cube\", \"/World/Cube.xformOp:scale|x\"])\n # The same as executing both 2. and 3.\n 5. SetAnimCurveKeys(paths=[\"/World/Cube.xformOp:scale|x\"], value=2.0, time=Usd.TimeCode(50))\n # Set a key (50, 2.0) to the attribute /World/Cube.xformOp:scale|x\n 6. SetAnimCurveKeys(paths=[\"/World/Cube.xformOp:scale|x\", \"/World/Cube.xformOp:translate|x\"], value=[0.0, 3.14, 2.0], time=[0, 30, 60], preserveCurveShape=False)\n # Set keys (0, 0.0), (30, 3.14), and (60, 2.0) to the two given curves. preserveCurveShape must be set to `False`\n ",
+"snippet": "omni.kit.commands.execute(\"SetAnimCurveKeys\",\n                          paths=None,  # list\n                          time=None,  # typing.Union[float, int, pxr.Usd.TimeCode, list]\n                          value=None,  # typing.Any\n                          preserveCurveShape=True,  # bool\n                          inTangentType=None,  # typing.Union[str, NoneType]\n                          outTangentType=None,  # typing.Union[str, NoneType]\n                          tangentBreakDown=False)  # bool\n"
 },
 {
 "title": "SetAnimationGraphVariableAttributeTypeCommand",
@@ -192,11 +187,6 @@
 "title": "SetKeyframeSliderCommand",
 "description": "[omni.anim.window.timeline.scripts.keyframe_slider]",
 "snippet": "omni.kit.commands.execute(\"SetKeyframeSliderCommand\",\n                          slider=slider,  # omni.anim.window.timeline.scripts.keyframe_slider.KeyframeSlider\n                          start=start,  # int\n                          end=end)  # int\n"
-},
-{
-"title": "SetRelationshipTargetsCommand",
-"description": "[omni.anim.graph.ui.scripts.command]",
-"snippet": "omni.kit.commands.execute(\"SetRelationshipTargetsCommand\",\n                          relationship=relationship,  # pxr.Usd.Relationship\n                          targets=targets)  # typing.List[pxr.Sdf.Path]\n"
 },
 {
 "title": "SetSkeletonJointTagPairCommand",
@@ -219,19 +209,9 @@
 "snippet": "omni.kit.commands.execute(\"ShowKeyframeSliderCommand\",\n                          slider=slider,  # omni.anim.window.timeline.scripts.keyframe_slider.KeyframeSlider\n                          visible=visible)  # bool\n"
 },
 {
-"title": "TangentBrokenChangeCurveCommand",
-"description": "[omni.anim.curve_editor.commands]",
-"snippet": "omni.kit.commands.execute(\"TangentBrokenChangeCurveCommand\",\n                          prim_path=prim_path,  # str\n                          attr_name=attr_name,  # str\n                          new_tangent_broken=new_tangent_broken,  # bool\n                          time=time,  # float\n                          edit_scope=None,\n                          old_tangent_broken=False)\n"
-},
-{
-"title": "TangentTypeChangeCurveCommand",
-"description": "[omni.anim.curve_editor.commands]",
-"snippet": "omni.kit.commands.execute(\"TangentTypeChangeCurveCommand\",\n                          prim_path=prim_path,  # str\n                          attr_name=attr_name,  # str\n                          new_in_type=new_in_type,  # int\n                          new_out_type=new_out_type,  # int\n                          time=time,  # float\n                          edit_scope=None,\n                          old_in_type=0,\n                          old_out_type=0)\n"
-},
-{
-"title": "TangentWeightedChangeCurveCommand",
-"description": "[omni.anim.curve_editor.commands]",
-"snippet": "omni.kit.commands.execute(\"TangentWeightedChangeCurveCommand\",\n                          prim_path=prim_path,  # str\n                          attr_name=attr_name,  # str\n                          new_tangent_weighted=new_tangent_weighted,  # bool\n                          time=time,  # float\n                          edit_scope=None,\n                          old_tangent_weighted=False)\n"
+"title": "SimplifyAnimCurves",
+"description": "[omni.anim.curve.scripts.commands]\n\n Simplifies a curve by removing keys\n @param\n paths: 1. components' path, e.g. /World/Cube.xformOp:rotateXYZ|x\n 2. attributes' path, e.g. /World/Cube.xformOp:translate\n 3. prims' path, e.g. /World/Cube\n\n attribute_mask:\n Only attributes that contain this sting are processed\n\n max_error_percent:\n Maximum allowed error for each removed key, as percentage of curve value range (approximate)\n\n continuous_algorithm:\n Algorithm for to simplify curves with continuous data\n\n compute_tangents:\n True to compute tangents of the sparse curve from the input keys\n\n @example\n SimplifyAnimCurves(paths=[\"/World/Cube.xformOp:translate|x\", \"/World/Sphere.rotateXYZ|z\"]) # Simplifies two components\n SimplifyAnimCurves(paths=[\"/World/Cube.xformOp:translate\") # Simplifies all components\n SimplifyAnimCurves(paths=[\"/World/Cube\") # Simplifies all curves of a prim\n SimplifyAnimCurves() # Simplifies all curves of the selected prim\n SimplifyAnimCurves(max_error_percent=10) # Simplifies curves with approx. 10% allowed error",
+"snippet": "omni.kit.commands.execute(\"SimplifyAnimCurves\",\n                          stage=None,  # pxr.Usd.Stage\n                          paths=None,  # list\n                          max_error_percent=1,  # float\n                          attribute_mask=None,  # str\n                          continuous_algorithm=None,  # omni.anim.curve.scripts.simplication_utils.SimplificationAlgorithm\n                          compute_tangents=True)\n"
 }
 ]
 },
@@ -241,7 +221,7 @@
 {
 "title": "ParentPrimsCommand",
 "description": "[omni.command.usd.commands.parenting_commands]",
-"snippet": "omni.kit.commands.execute(\"ParentPrimsCommand\",\n                          parent_path=parent_path,  # str\n                          child_paths=child_paths,  # typing.List[str]\n                          on_move_fn=None)  # callable\n"
+"snippet": "omni.kit.commands.execute(\"ParentPrimsCommand\",\n                          parent_path=parent_path,  # str\n                          child_paths=child_paths,  # typing.List[str]\n                          on_move_fn=None,  # callable\n                          keep_world_transform=True)  # bool\n"
 },
 {
 "title": "SetPayLoadLoadSelectedPrimsCommand",
@@ -256,7 +236,7 @@
 {
 "title": "UnparentPrimsCommand",
 "description": "[omni.command.usd.commands.parenting_commands]",
-"snippet": "omni.kit.commands.execute(\"UnparentPrimsCommand\",\n                          paths=paths,  # typing.List[str]\n                          on_move_fn=None)  # callable\n"
+"snippet": "omni.kit.commands.execute(\"UnparentPrimsCommand\",\n                          paths=paths,  # typing.List[str]\n                          on_move_fn=None,  # callable\n                          keep_world_transform=True)  # bool\n"
 }
 ]
 },
@@ -319,34 +299,44 @@
 "title": "omni.flowusd",
 "snippets": [
 {
-"title": "FlowCreateBasicEffectCommand",
+"title": "FlowCreatePointCloudPresetCommand",
 "description": "[omni.flowusd.scripts.commands]",
-"snippet": "omni.kit.commands.execute(\"FlowCreateBasicEffectCommand\",\n                          path=path,  # str\n                          layer=layer)  # int\n"
+"snippet": "omni.kit.commands.execute(\"FlowCreatePointCloudPresetCommand\",\n                          paths=paths)  # str\n"
 },
 {
-"title": "FlowCreatePointCloudCommand",
+"title": "FlowCreatePresetsCommand",
 "description": "[omni.flowusd.scripts.commands]",
-"snippet": "omni.kit.commands.execute(\"FlowCreatePointCloudCommand\",\n                          path=path,  # str\n                          layer=layer)  # int\n"
-},
-{
-"title": "FlowCreatePresetCommand",
-"description": "[omni.flowusd.scripts.commands]",
-"snippet": "omni.kit.commands.execute(\"FlowCreatePresetCommand\",\n                          path=path,  # str\n                          layer=layer,  # str\n                          menu_item=menu_item,  # str\n                          emitter_only=emitter_only)  # bool\n"
-},
-{
-"title": "FlowCreatePresetMultipleCommand",
-"description": "[omni.flowusd.scripts.commands]",
-"snippet": "omni.kit.commands.execute(\"FlowCreatePresetMultipleCommand\",\n                          paths=paths,  # str\n                          layer=layer,  # str\n                          menu_item=menu_item)  # str\n"
+"snippet": "omni.kit.commands.execute(\"FlowCreatePresetsCommand\",\n                          preset_name=preset_name,  # str\n                          paths=paths,  # str\n                          create_copy=False,\n                          layer=0)\n"
 },
 {
 "title": "FlowCreatePrimCommand",
 "description": "[omni.flowusd.scripts.commands]",
-"snippet": "omni.kit.commands.execute(\"FlowCreatePrimCommand\",\n                          prim_path=prim_path,  # str\n                          type_name=type_name)  # str\n"
+"snippet": "omni.kit.commands.execute(\"FlowCreatePrimCommand\",\n                          prim_path=prim_path,  # str\n                          type_name=type_name,  # str\n                          stage=None)  # typing.Union[pxr.Usd.Stage, NoneType]\n"
 },
 {
-"title": "SetFlowRampValuesCommand",
+"title": "FlowCreateUsdPresetCommand",
+"description": "[omni.flowusd.scripts.commands]",
+"snippet": "omni.kit.commands.execute(\"FlowCreateUsdPresetCommand\",\n                          path=path,  # str\n                          layer=layer,  # int\n                          preset_name=preset_name,  # str\n                          url=url,  # str\n                          is_copy=is_copy,  # bool\n                          create_ref=create_ref,  # bool\n                          emitter_only=emitter_only)  # bool\n"
+},
+{
+"title": "FlowCreateUsdPresetMultipleCommand",
+"description": "[omni.flowusd.scripts.commands]",
+"snippet": "omni.kit.commands.execute(\"FlowCreateUsdPresetMultipleCommand\",\n                          paths=paths,  # list\n                          preset_name=preset_name,  # str\n                          url=url,  # str\n                          is_copy=is_copy,  # bool\n                          create_ref=create_ref,  # bool\n                          layer=0,\n                          emitter_only=False,\n                          is_global=False)\n"
+},
+{
+"title": "FlowSetRampValuesCommand",
 "description": "[omni.flowusd.scripts.ramp]",
-"snippet": "omni.kit.commands.execute(\"SetFlowRampValuesCommand\",\n                          ramps=ramps)\n"
+"snippet": "omni.kit.commands.execute(\"FlowSetRampValuesCommand\",\n                          ramps=ramps)\n"
+}
+]
+},
+{
+"title": "omni.genproc",
+"snippets": [
+{
+"title": "CreateGenProcEntityCommand",
+"description": "[omni.genproc.ui.scripts.commands]",
+"snippet": "omni.kit.commands.execute(\"CreateGenProcEntityCommand\",\n                          callback=callback)  # typing.Callable[[], typing.List[str]]\n"
 }
 ]
 },
@@ -355,8 +345,8 @@
 "snippets": [
 {
 "title": "ApplyOmniGraphAPICommand",
-"description": "[omni.graph.instancing.scripts.commands]",
-"snippet": "omni.kit.commands.execute(\"ApplyOmniGraphAPICommand\",\n                          layer=None,  # pxr.Sdf.Layer\n                          paths=[],  # typing.List[pxr.Sdf.Path]\n                          graph_path=Sdf.Path.emptyPath)  # pxr.Sdf.Path\n"
+"description": "[omni.graph.core._impl.instancing_commands]",
+"snippet": "omni.kit.commands.execute(\"ApplyOmniGraphAPICommand\",\n                          layer=None,  # pxr.Sdf.Layer\n                          paths=None,  # typing.Union[typing.List[pxr.Sdf.Path], NoneType]\n                          graph_path=Sdf.Path.emptyPath)  # pxr.Sdf.Path\n"
 },
 {
 "title": "ChangePipelineStageCommand",
@@ -385,13 +375,13 @@
 },
 {
 "title": "CreateGraphAsNodeCommand",
-"description": "[omni.graph.core._impl.topology_commands]\n\nCreate Graph As Node. Creates a new graph wrapped by a node.\n\nArgs:\n graph: The graph in which the new wrapper node should be created\n node_name: The name of the node\n graph_path: The path to the graph\n evaluator_name: The name of the evaluator to use for the graph\n is_global_graph: Whether this is a global graph (global level graphs have their own FC)\n backed_by_usd: Whether the constructs are to be backed by USD\n fc_backing_type: What kind of Flatcache backs this graph\n pipeline_stage: What pipeline stage does this graph occupy: simulation, prerender, or postrender\n",
-"snippet": "omni.kit.commands.execute(\"CreateGraphAsNodeCommand\",\n                          graph=graph,\n                          node_name=node_name,\n                          graph_path=graph_path,\n                          evaluator_name=evaluator_name,\n                          is_global_graph=is_global_graph,\n                          backed_by_usd=backed_by_usd,\n                          fc_backing_type=fc_backing_type,\n                          pipeline_stage=pipeline_stage)\n"
+"description": "[omni.graph.core._impl.topology_commands]\n\nCreate Graph As Node. Creates a new graph wrapped by a node.\n\nArgs:\n graph: The graph in which the new wrapper node should be created\n node_name: The name of the node\n graph_path: The path to the graph\n evaluator_name: The name of the evaluator to use for the graph\n is_global_graph: Whether this is a global graph (global level graphs have their own FC)\n backed_by_usd: Whether the constructs are to be backed by USD\n fc_backing_type: What kind of Flatcache backs this graph\n pipeline_stage: What pipeline stage does this graph occupy: simulation, prerender, or postrender\n evaluation_mode: What evaluation mode to use with this graph: Automatic, Standalone or Instanced",
+"snippet": "omni.kit.commands.execute(\"CreateGraphAsNodeCommand\",\n                          graph=graph,\n                          node_name=node_name,\n                          graph_path=graph_path,\n                          evaluator_name=evaluator_name,\n                          is_global_graph=is_global_graph,\n                          backed_by_usd=backed_by_usd,\n                          fc_backing_type=fc_backing_type,\n                          pipeline_stage=pipeline_stage,\n                          evaluation_mode=GraphEvaluationMode.GRAPH_EVALUATION_MODE_AUTOMATIC)\n"
 },
 {
 "title": "CreateNodeCommand",
-"description": "[omni.graph.core._impl.topology_commands]\n\nCreate Node. Creates a new compute node of a particular node type in OmniGraph\n\nArgs:\n graph: The graph in which the new compute node should be created\n node_path: The location in the USD stage to add the new compute node\n node_type: The name of the type of compute node to create\n create_usd: Whether to also create an USD prim on the stage for this node",
-"snippet": "omni.kit.commands.execute(\"CreateNodeCommand\",\n                          graph=graph,\n                          node_path=node_path,\n                          node_type=node_type,\n                          create_usd=create_usd)\n"
+"description": "[omni.graph.core._impl.topology_commands]\n\nCreate Node. Creates a new compute node of a particular node type in OmniGraph\n\nArgs:\n graph: The graph in which the new compute node should be created\n node_path: The location in the USD stage to add the new compute node\n node_type: The name of the type of compute node to create\n create_usd: Whether to also create an USD prim on the stage for this node\n\nRaises:\n og.OmniGraphError if a node already exists at the specified node path",
+"snippet": "omni.kit.commands.execute(\"CreateNodeCommand\",\n                          graph=graph,  # omni.graph.core._omni_graph_core.Graph\n                          node_path=node_path,  # str\n                          node_type=node_type,  # str\n                          create_usd=create_usd)  # bool\n"
 },
 {
 "title": "CreatePortCommand",
@@ -411,7 +401,7 @@
 {
 "title": "DeleteNodeCommand",
 "description": "[omni.graph.core._impl.topology_commands]\n\nDelete Node. Delete the specified node in the graph\n\nArgs:\n graph: The graph in which the new compute node should be created\n node_path: The location in the USD stage to add the new compute node\n modify_usd: Whether to also delete the USD prim on the stage for this node",
-"snippet": "omni.kit.commands.execute(\"DeleteNodeCommand\",\n                          graph=graph,\n                          node_path=node_path,\n                          modify_usd=modify_usd)\n"
+"snippet": "omni.kit.commands.execute(\"DeleteNodeCommand\",\n                          graph=graph,  # omni.graph.core._omni_graph_core.Graph\n                          node_path=node_path,  # str\n                          modify_usd=modify_usd)  # bool\n"
 },
 {
 "title": "DisableGraphCommand",
@@ -446,7 +436,7 @@
 {
 "title": "DisconnectAttrsCommand",
 "description": "[omni.graph.core._impl.topology_commands]\n\nDisconnect Attrs. Causes two attrs to be disconnected in OmniGraph\n\nArgs:\n src_attr: The source (upstream) attribute\n dest_attr: The destination (downstream) attribute\n modify_usd: Whether to modify the underlying usd stage with this connection",
-"snippet": "omni.kit.commands.execute(\"DisconnectAttrsCommand\",\n                          src_attr=src_attr,\n                          dest_attr=dest_attr,\n                          modify_usd=modify_usd)\n"
+"snippet": "omni.kit.commands.execute(\"DisconnectAttrsCommand\",\n                          src_attr=src_attr,  # typing.Union[str, pxr.Sdf.Path, omni.graph.core._omni_graph_core.Attribute, pxr.Usd.Attribute]\n                          dest_attr=dest_attr,  # typing.Union[str, pxr.Sdf.Path, omni.graph.core._omni_graph_core.Attribute, pxr.Usd.Attribute]\n                          modify_usd=modify_usd)  # bool\n"
 },
 {
 "title": "DisconnectPrimCommand",
@@ -485,8 +475,8 @@
 },
 {
 "title": "RemoveOmniGraphAPICommand",
-"description": "[omni.graph.instancing.scripts.commands]",
-"snippet": "omni.kit.commands.execute(\"RemoveOmniGraphAPICommand\",\n                          layer=None,  # pxr.Sdf.Layer\n                          paths=[])  # typing.List[pxr.Sdf.Path]\n"
+"description": "[omni.graph.core._impl.instancing_commands]",
+"snippet": "omni.kit.commands.execute(\"RemoveOmniGraphAPICommand\",\n                          layer=None,  # pxr.Sdf.Layer\n                          paths=None)  # typing.List[pxr.Sdf.Path]\n"
 },
 {
 "title": "RemoveVariableCommand",
@@ -504,9 +494,9 @@
 "snippet": "omni.kit.commands.execute(\"RenameSubgraphCommand\",\n                          graph=graph,  # omni.graph.core._omni_graph_core.Graph\n                          path=path,  # str\n                          new_path=new_path)  # str\n"
 },
 {
-"title": "RenamedClass.<locals>.RenamedClass",
+"title": "RenamedClass.<locals>._RenamedClass",
 "description": "[omni.graph.tools._impl.deprecate]",
-"snippet": "omni.kit.commands.execute(\"RenamedClass.<locals>.RenamedClass\",\n                          attribute_data=attribute_data,  # omni.graph.core._omni_graph_core.AttributeData\n                          value=value,  # typing.Union[typing.Any, omni.graph.core._impl.utils.TypedValue]\n                          graph=None,  # typing.Union[omni.graph.core._omni_graph_core.Graph, NoneType]\n                          on_gpu=False)  # bool\n"
+"snippet": "omni.kit.commands.execute(\"RenamedClass.<locals>._RenamedClass\",\n                          variable=variable,  # omni.graph.core._omni_graph_core.IVariable\n                          tooltip=tooltip)  # str\n"
 },
 {
 "title": "SetAttrCommand",
@@ -517,6 +507,11 @@
 "title": "SetAttrDataCommand",
 "description": "[omni.graph.core._impl.value_commands]\n\nSetAttrData. Sets the value of an attribute data\n\nArgs:\n attribute_data: The attribute data to set\n value: The value to be set\n graph: The graph to operate on (deprecated and unnecessary)\n on_gpu: If True then set the value in the GPU memory, otherwise CPU memory",
 "snippet": "omni.kit.commands.execute(\"SetAttrDataCommand\",\n                          attribute_data=attribute_data,  # omni.graph.core._omni_graph_core.AttributeData\n                          value=value,  # typing.Union[typing.Any, omni.graph.core._impl.utils.TypedValue]\n                          graph=None,  # typing.Union[omni.graph.core._omni_graph_core.Graph, NoneType]\n                          on_gpu=False)  # bool\n"
+},
+{
+"title": "SetEvaluationModeCommand",
+"description": "[omni.graph.core._impl.value_commands]\n\nSet Evaluation Mode. Change the evaluation mode of an existing graph.\n\nArgs:\n graph: The graph to change the evaluation mode on\n new_evaluation_mode: The new graph evaluation mode",
+"snippet": "omni.kit.commands.execute(\"SetEvaluationModeCommand\",\n                          graph=graph,  # omni.graph.core._omni_graph_core.Graph\n                          new_evaluation_mode=new_evaluation_mode)  # omni.graph.core._omni_graph_core.GraphEvaluationMode\n"
 },
 {
 "title": "SetVariableTooltipCommand",
@@ -540,7 +535,7 @@
 "snippets": [
 {
 "title": "CreateSurfaceGripper",
-"description": "[omni.isaac.surface_gripper.scripts.commands]\n\nCommands class to create a Utility to control .\n\nTypical usage example:\n\n.. code-block:: python\n\n result, prim = omni.kit.commands.execute(\n \"RangeSensorCreateGeneric\",\n path=\"/GenericSensor\",\n parent=None,\n min_range=0.4,\n max_range=100.0,\n draw_points=False,\n draw_lines=False,\n sampling_rate=60,\n )",
+"description": "[omni.isaac.surface_gripper.scripts.commands]\n\nCreates Action graph containing a Surface Gripper node, and all prims to facilitate its creation\n\nTypical usage example:\n\n.. code-block:: python\n\n result, prim = omni.kit.commands.execute(\n \"CreateSurfaceGripper\",\n prim_name=\"SurfaceGripperActionGraph\",\n conveyor_prim=\"/SurfaceGripperRigidBody\"\n )",
 "snippet": "omni.kit.commands.execute(\"CreateSurfaceGripper\",\n                          prim_name=\"SurfaceGripperActionGraph\",  # str\n                          surface_gripper_prim=None)\n"
 },
 {
@@ -550,23 +545,28 @@
 },
 {
 "title": "IsaacSensorCreateContactSensor",
-"description": "[omni.isaac.isaac_sensor.scripts.commands]",
+"description": "[omni.isaac.sensor.scripts.commands]",
 "snippet": "omni.kit.commands.execute(\"IsaacSensorCreateContactSensor\",\n                          path=\"/Contact_Sensor\",  # str\n                          parent=None,  # str\n                          visualize=False,  # bool\n                          min_threshold=0,  # float\n                          max_threshold=100000,  # float\n                          color=(1, 1, 1, 1),  # pxr.Gf.Vec4f\n                          radius=-1,  # float\n                          sensor_period=-1,  # float\n                          translation=(0, 0, 0))  # pxr.Gf.Vec3d\n"
 },
 {
 "title": "IsaacSensorCreateImuSensor",
-"description": "[omni.isaac.isaac_sensor.scripts.commands]",
+"description": "[omni.isaac.sensor.scripts.commands]",
 "snippet": "omni.kit.commands.execute(\"IsaacSensorCreateImuSensor\",\n                          path=\"/Imu_Sensor\",  # str\n                          parent=None,  # str\n                          visualize=False,  # bool\n                          sensor_period=-1,  # float\n                          translation=(0, 0, 0),  # pxr.Gf.Vec3d\n                          orientation=(1, 0, 0, 0))  # pxr.Gf.Quatd\n"
 },
 {
 "title": "IsaacSensorCreatePrim",
-"description": "[omni.isaac.isaac_sensor.scripts.commands]",
+"description": "[omni.isaac.sensor.scripts.commands]",
 "snippet": "omni.kit.commands.execute(\"IsaacSensorCreatePrim\",\n                          path=\"\",  # str\n                          parent=\"\",  # str\n                          visualize=False,  # bool\n                          translation=(0, 0, 0),  # pxr.Gf.Vec3d\n                          orientation=(1, 0, 0, 0),  # pxr.Gf.Quatd\n                          schema_type=omni.isaac.IsaacSensorSchema.IsaacBaseSensor)\n"
 },
 {
 "title": "IsaacSensorCreateRtxLidar",
-"description": "[omni.isaac.isaac_sensor.scripts.commands]",
+"description": "[omni.isaac.sensor.scripts.commands]",
 "snippet": "omni.kit.commands.execute(\"IsaacSensorCreateRtxLidar\",\n                          path=\"/RtxLidar\",  # str\n                          parent=None,  # str\n                          config=\"Example_Rotary\",  # str\n                          translation=(0, 0, 0),  # pxr.Gf.Vec3d\n                          orientation=(1, 0, 0, 0))  # pxr.Gf.Quatd\n"
+},
+{
+"title": "IsaacSensorCreateRtxRadar",
+"description": "[omni.isaac.sensor.scripts.commands]",
+"snippet": "omni.kit.commands.execute(\"IsaacSensorCreateRtxRadar\",\n                          path=\"/RtxRadar\",  # str\n                          parent=None,  # str\n                          config=\"Example\",  # str\n                          translation=(0, 0, 0),  # pxr.Gf.Vec3d\n                          orientation=(1, 0, 0, 0))  # pxr.Gf.Quatd\n"
 },
 {
 "title": "IsaacSimDestroyPrim",
@@ -590,8 +590,8 @@
 },
 {
 "title": "MJCFCreateAsset",
-"description": "[omni.isaac.mjcf.scripts.commands]\n\nThis command parses and imports a given mjcf file.\n\nArgs:\n arg0 (:obj:`str`): The absolute path the mjcf file\n\n arg1 (:obj:`omni.isaac.mjcf._mjcf.ImportConfig`): Import configuration\n\n arg2 (:obj:`str`): Path to the robot on the USD stage",
-"snippet": "omni.kit.commands.execute(\"MJCFCreateAsset\",\n                          mjcf_path=\"\",  # str\n                          import_config=<omni.isaac.mjcf._mjcf.ImportConfig object at 0x7f1fa5608d30>,\n                          prim_path=\"\")  # str\n"
+"description": "[omni.isaac.mjcf.scripts.commands]\n\nThis command parses and imports a given mjcf file.\n\nArgs:\n arg0 (:obj:`str`): The absolute path the mjcf file\n\n arg1 (:obj:`omni.isaac.mjcf._mjcf.ImportConfig`): Import configuration\n\n arg2 (:obj:`str`): Path to the robot on the USD stage\n\n arg3 (:obj:`str`): destination path for robot usd. Default is \"\" which will load the robot in-memory on the open stage.\n",
+"snippet": "omni.kit.commands.execute(\"MJCFCreateAsset\",\n                          mjcf_path=\"\",  # str\n                          import_config=<omni.isaac.mjcf._mjcf.ImportConfig object at 0x7f756551e1b0>,\n                          prim_path=\"\",  # str\n                          dest_path=\"\")  # str\n"
 },
 {
 "title": "MJCFCreateImportConfig",
@@ -636,12 +636,12 @@
 {
 "title": "URDFParseAndImportFile",
 "description": "[omni.isaac.urdf.scripts.commands]\n\nThis command parses and imports a given urdf and returns a UrdfRobot object\n\nArgs:\n arg0 (:obj:`str`): The absolute path to where the urdf file is\n\n arg1 (:obj:`omni.isaac.urdf._urdf.ImportConfig`): Import Configuration\n\n arg2 (:obj:`str`): destination path for robot usd. Default is \"\" which will load the robot in-memory on the open stage.\n\nReturns:\n :obj:`str`: Path to the robot on the USD stage.",
-"snippet": "omni.kit.commands.execute(\"URDFParseAndImportFile\",\n                          urdf_path=\"\",  # str\n                          import_config=<omni.isaac.urdf._urdf.ImportConfig object at 0x7f20d81845f0>,\n                          dest_path=\"\")  # str\n"
+"snippet": "omni.kit.commands.execute(\"URDFParseAndImportFile\",\n                          urdf_path=\"\",  # str\n                          import_config=<omni.isaac.urdf._urdf.ImportConfig object at 0x7f7501ece5f0>,\n                          dest_path=\"\")  # str\n"
 },
 {
 "title": "URDFParseFile",
 "description": "[omni.isaac.urdf.scripts.commands]\n\nThis command parses a given urdf and returns a UrdfRobot object\n\nArgs:\n arg0 (:obj:`str`): The absolute path to where the urdf file is\n\n arg1 (:obj:`omni.isaac.urdf._urdf.ImportConfig`): Import Configuration\n\nReturns:\n :obj:`omni.isaac.urdf._urdf.UrdfRobot`: Parsed URDF stored in an internal structure.",
-"snippet": "omni.kit.commands.execute(\"URDFParseFile\",\n                          urdf_path=\"\",  # str\n                          import_config=<omni.isaac.urdf._urdf.ImportConfig object at 0x7f20d81843f0>)  # omni.isaac.urdf._urdf.ImportConfig\n"
+"snippet": "omni.kit.commands.execute(\"URDFParseFile\",\n                          urdf_path=\"\",  # str\n                          import_config=<omni.isaac.urdf._urdf.ImportConfig object at 0x7f7501ece5b0>)  # omni.isaac.urdf._urdf.ImportConfig\n"
 }
 ]
 },
@@ -655,8 +655,8 @@
 },
 {
 "title": "AddItemToCollection",
-"description": "[omni.kit.widget.collection.commands]",
-"snippet": "omni.kit.commands.execute(\"AddItemToCollection\",\n                          path_to_add=path_to_add,  # str\n                          collection_path=collection_path)  # str\n"
+"description": "[omni.kit.core.collection.commands]",
+"snippet": "omni.kit.commands.execute(\"AddItemToCollection\",\n                          path_to_add=path_to_add,  # str\n                          collection_path=collection_path,  # str\n                          usd_context_name=\"\")  # str\n"
 },
 {
 "title": "AddSbsarReferenceAndBindCommand",
@@ -672,6 +672,11 @@
 "title": "ApplySbsarOverridesCommand",
 "description": "[omni.kit.property.sbsar.commands]\n\nApplySbsarOverrides. Applies current `inputs:sbsar:` USD attributes to the corresponding payload arguments\n\nArgs:\n stage: The USD Stage\n prim_paths: List of Material prim paths to process\n reset: When true, values will be reset to their default and applied",
 "snippet": "omni.kit.commands.execute(\"ApplySbsarOverridesCommand\",\n                          prim_paths=prim_paths,\n                          reset=False,\n                          usd_context_name=\"\")\n"
+},
+{
+"title": "ApplyScriptingAPICommand",
+"description": "[omni.kit.scripting.scripts.command]",
+"snippet": "omni.kit.commands.execute(\"ApplyScriptingAPICommand\",\n                          layer=None,  # pxr.Sdf.Layer\n                          paths=[])  # typing.List[pxr.Sdf.Path]\n"
 },
 {
 "title": "ApplySkelBindingAPICommand",
@@ -690,8 +695,8 @@
 },
 {
 "title": "BlockCollection",
-"description": "[omni.kit.widget.collection.commands]",
-"snippet": "omni.kit.commands.execute(\"BlockCollection\",\n                          collection_path=collection_path)  # str\n"
+"description": "[omni.kit.core.collection.commands]",
+"snippet": "omni.kit.commands.execute(\"BlockCollection\",\n                          collection_path=collection_path,  # str\n                          usd_context_name=\"\")  # str\n"
 },
 {
 "title": "ChangePrimVarCommand",
@@ -710,8 +715,8 @@
 },
 {
 "title": "ClearCollection",
-"description": "[omni.kit.widget.collection.commands]",
-"snippet": "omni.kit.commands.execute(\"ClearCollection\",\n                          collection_path=collection_path)  # str\n"
+"description": "[omni.kit.core.collection.commands]",
+"snippet": "omni.kit.commands.execute(\"ClearCollection\",\n                          collection_path=collection_path,  # str\n                          usd_context_name=\"\")  # str\n"
 },
 {
 "title": "Command",
@@ -750,8 +755,8 @@
 },
 {
 "title": "CreateCollection",
-"description": "[omni.kit.widget.collection.commands]",
-"snippet": "omni.kit.commands.execute(\"CreateCollection\",\n                          prim_path=prim_path,  # str\n                          collection_name=\"\")  # str\n"
+"description": "[omni.kit.core.collection.commands]",
+"snippet": "omni.kit.commands.execute(\"CreateCollection\",\n                          prim_path=prim_path,  # str\n                          collection_name=\"\",  # str\n                          usd_context_name=\"\")  # str\n"
 },
 {
 "title": "CreateCone",
@@ -794,6 +799,11 @@
 "snippet": "omni.kit.commands.execute(\"CreateLayerReferenceCommand\",\n                          layer_identifier=layer_identifier,  # str\n                          path_to=path_to,  # pxr.Sdf.Path\n                          asset_path=None,  # str\n                          prim_path=None,  # pxr.Sdf.Path\n                          usd_context=\"\")  # typing.Union[str, omni.usd._usd.UsdContext]\n"
 },
 {
+"title": "CreateMeasureToolEntityCommand",
+"description": "[omni.kit.tool.measure.scripts.common.commands]",
+"snippet": "omni.kit.commands.execute(\"CreateMeasureToolEntityCommand\",\n                          callback=callback)  # typing.Callable[[], typing.Tuple[typing.List[str], typing.Union[int, NoneType]]]\n"
+},
+{
 "title": "CreateMeshPrimCommand",
 "description": "[omni.kit.primitive.mesh.command]",
 "snippet": "omni.kit.commands.execute(\"CreateMeshPrimCommand\",\n                          prim_type=prim_type)  # str\n"
@@ -830,8 +840,8 @@
 },
 {
 "title": "DeleteCollection",
-"description": "[omni.kit.widget.collection.commands]",
-"snippet": "omni.kit.commands.execute(\"DeleteCollection\",\n                          collection_path=collection_path)  # str\n"
+"description": "[omni.kit.core.collection.commands]",
+"snippet": "omni.kit.commands.execute(\"DeleteCollection\",\n                          collection_path=collection_path,  # str\n                          usd_context_name=\"\")  # str\n"
 },
 {
 "title": "DuplicateCameraCommand",
@@ -840,8 +850,8 @@
 },
 {
 "title": "DuplicateCollection",
-"description": "[omni.kit.widget.collection.commands]\n\nDuplicate a collection under the same prim path\nwe just want to use the same logic as prim duplicate and add a numeric counter to the end",
-"snippet": "omni.kit.commands.execute(\"DuplicateCollection\",\n                          collection_path=collection_path,  # str\n                          new_collection_name=\"\")  # str\n"
+"description": "[omni.kit.core.collection.commands]\n\nDuplicate a collection under the same prim path\nwe just want to use the same logic as prim duplicate and add a numeric counter to the end",
+"snippet": "omni.kit.commands.execute(\"DuplicateCollection\",\n                          collection_path=collection_path,  # str\n                          new_collection_name=\"\",  # str\n                          usd_context_name=\"\")  # str\n"
 },
 {
 "title": "DuplicateFromActiveViewportCameraCommand",
@@ -860,8 +870,8 @@
 },
 {
 "title": "ExcludeItemFromCollection",
-"description": "[omni.kit.widget.collection.commands]\n\nAdd the item to the exclude list",
-"snippet": "omni.kit.commands.execute(\"ExcludeItemFromCollection\",\n                          prim_or_prop_path=prim_or_prop_path,  # str\n                          collection_path=collection_path)  # str\n"
+"description": "[omni.kit.core.collection.commands]\n\nAdd the item to the exclude list",
+"snippet": "omni.kit.commands.execute(\"ExcludeItemFromCollection\",\n                          prim_or_prop_path=prim_or_prop_path,  # str\n                          collection_path=collection_path,  # str\n                          usd_context_name=\"\")  # str\n"
 },
 {
 "title": "FlattenLayersCommand",
@@ -931,7 +941,7 @@
 {
 "title": "NewUsdShadeNodeCommand",
 "description": "[omni.kit.window.material_graph.usdshade_commands]",
-"snippet": "omni.kit.commands.execute(\"NewUsdShadeNodeCommand\",\n                          parent_path=parent_path,\n                          source_asset=source_asset,\n                          identifier=identifier,\n                          inputs=inputs,\n                          outputs=outputs,\n                          position=position,\n                          stage=None)\n"
+"snippet": "omni.kit.commands.execute(\"NewUsdShadeNodeCommand\",\n                          parent_path=parent_path,\n                          source_asset=source_asset,\n                          identifier=identifier,\n                          position=position,\n                          stage=None)\n"
 },
 {
 "title": "NewUsdShadeNodeGraphCommand",
@@ -944,14 +954,29 @@
 "snippet": "omni.kit.commands.execute(\"Redo\")\n"
 },
 {
+"title": "RefreshScriptingPropertyWindowCommand",
+"description": "[omni.kit.scripting.scripts.command]",
+"snippet": "omni.kit.commands.execute(\"RefreshScriptingPropertyWindowCommand\")\n"
+},
+{
 "title": "RemoveItemFromCollection",
-"description": "[omni.kit.widget.collection.commands]\n\nIf the item has been directly included in the collection, we can remove it from the includes list",
-"snippet": "omni.kit.commands.execute(\"RemoveItemFromCollection\",\n                          prim_or_prop_path=prim_or_prop_path,  # str\n                          collection_path=collection_path)  # str\n"
+"description": "[omni.kit.core.collection.commands]\n\nIf the item has been directly included in the collection, we can remove it from the includes list",
+"snippet": "omni.kit.commands.execute(\"RemoveItemFromCollection\",\n                          prim_or_prop_path=prim_or_prop_path,  # str\n                          collection_path=collection_path,  # str\n                          usd_context_name=\"\")  # str\n"
+},
+{
+"title": "RemoveMeasurementsCommand",
+"description": "[omni.kit.tool.measure.scripts.common.commands]\n\n Command that removes the measurement from OgnMeasureCore.\n Undo recreates the measurement as a new measurement from scratch.",
+"snippet": "omni.kit.commands.execute(\"RemoveMeasurementsCommand\",\n                          callback=callback)  # typing.Callable\n"
 },
 {
 "title": "RemovePrimSpecCommand",
 "description": "[omni.kit.usd.layers.impl.layer_commands]\n\nRemove Prim undoable.",
 "snippet": "omni.kit.commands.execute(\"RemovePrimSpecCommand\",\n                          layer_identifier=layer_identifier,  # str\n                          prim_spec_path=prim_spec_path,  # typing.Union[pxr.Sdf.Path, typing.List[pxr.Sdf.Path]]\n                          usd_context=\"\")  # typing.Union[str, omni.usd._usd.UsdContext]\n"
+},
+{
+"title": "RemoveScriptingAPICommand",
+"description": "[omni.kit.scripting.scripts.command]",
+"snippet": "omni.kit.commands.execute(\"RemoveScriptingAPICommand\",\n                          layer=None,  # pxr.Sdf.Layer\n                          paths=[])  # typing.List[pxr.Sdf.Path]\n"
 },
 {
 "title": "RemoveSublayerCommand",
@@ -970,8 +995,13 @@
 },
 {
 "title": "RenameCollection",
-"description": "[omni.kit.widget.collection.commands]\n\nRename a collection under the same prim",
-"snippet": "omni.kit.commands.execute(\"RenameCollection\",\n                          old_collection_path=old_collection_path,  # str\n                          new_collection_name=new_collection_name)  # str\n"
+"description": "[omni.kit.core.collection.commands]\n\nRename a collection under the same prim",
+"snippet": "omni.kit.commands.execute(\"RenameCollection\",\n                          old_collection_path=old_collection_path,  # str\n                          new_collection_name=new_collection_name,  # str\n                          usd_context_name=\"\")  # str\n"
+},
+{
+"title": "Repeat",
+"description": "[omni.kit.undo.undo]",
+"snippet": "omni.kit.commands.execute(\"Repeat\")\n"
 },
 {
 "title": "ReplaceSublayerCommand",
@@ -1020,8 +1050,8 @@
 },
 {
 "title": "SelectPrimsInCollection",
-"description": "[omni.kit.widget.collection.commands]",
-"snippet": "omni.kit.commands.execute(\"SelectPrimsInCollection\",\n                          collection_path=\"\")  # str\n"
+"description": "[omni.kit.core.collection.commands]",
+"snippet": "omni.kit.commands.execute(\"SelectPrimsInCollection\",\n                          collection_path=\"\",  # str\n                          usd_context_name=\"\")  # str\n"
 },
 {
 "title": "SelectSimilarCommand",
@@ -1094,11 +1124,6 @@
 "snippet": "omni.kit.commands.execute(\"SequencerSetNameChildrenOrder\",\n                          parent_path=parent_path,  # str\n                          children_order=children_order,  # typing.List[str]\n                          previous_order=None)  # typing.Union[typing.List[str], NoneType]\n"
 },
 {
-"title": "SequencerSetRelationship",
-"description": "[omni.kit.sequencer.core.scripts.sequencer_commands]",
-"snippet": "omni.kit.commands.execute(\"SequencerSetRelationship\",\n                          relationship=relationship,  # pxr.Usd.Relationship\n                          target=target)  # pxr.Sdf.Path\n"
-},
-{
 "title": "SequencerSetTargetCommand",
 "description": "[omni.kit.sequencer.core.scripts.sequencer_commands]\n\nSet the prim target of a prim relationship.",
 "snippet": "omni.kit.commands.execute(\"SequencerSetTargetCommand\",\n                          prim_path=prim_path,  # str\n                          target_prim=target_prim,  # str\n                          relationship_name=relationship_name)  # str\n"
@@ -1135,8 +1160,8 @@
 },
 {
 "title": "SetCollectionExpansionRule",
-"description": "[omni.kit.widget.collection.commands]",
-"snippet": "omni.kit.commands.execute(\"SetCollectionExpansionRule\",\n                          collection_path=collection_path,  # str\n                          expansion_rule=expansion_rule)  # str\n"
+"description": "[omni.kit.core.collection.commands]",
+"snippet": "omni.kit.commands.execute(\"SetCollectionExpansionRule\",\n                          collection_path=collection_path,  # str\n                          expansion_rule=expansion_rule,  # str\n                          usd_context_name=\"\")  # str\n"
 },
 {
 "title": "SetEditTargetCommand",
@@ -1147,6 +1172,11 @@
 "title": "SetLayerMutenessCommand",
 "description": "[omni.kit.usd.layers.impl.layer_commands]\n\nSet Layer's muteness undoable.",
 "snippet": "omni.kit.commands.execute(\"SetLayerMutenessCommand\",\n                          layer_identifier=layer_identifier,  # str\n                          muted=muted,  # bool\n                          usd_context=\"\")  # typing.Union[str, omni.usd._usd.UsdContext]\n"
+},
+{
+"title": "SetLightingMenuModeCommand",
+"description": "[omni.kit.viewport.menubar.lighting.commands]\n\nSet the current lighting rig\n\nArgs:\n lighting_mode: (str) The lgihting mode to set to\n usd_context_name: (str) The UsdContext to target",
+"snippet": "omni.kit.commands.execute(\"SetLightingMenuModeCommand\",\n                          lighting_mode=lighting_mode,  # str\n                          usd_context_name=\"\")  # str\n"
 },
 {
 "title": "SetViewportCameraCommand",
@@ -1215,12 +1245,12 @@
 },
 {
 "title": "UsdUINodeGraphNodeSetCommand",
-"description": "[omni.kit.graph.usd.commands.commands]\n\nSet prim UsdUI position\n\nArgs:\n prim_path (str): Prim path.\n value: Value to change to.\n prev: Value to undo to.",
+"description": "[omni.kit.graph.usd.commands.commands]\n\nSet UsdUINodeGraphNode attribute value.\n\nArgs:\n attribute (str): Name of the UsdUINodeGraphNode attribute to set.\n prim_path (Sdf.Path): Prim path.\n value: Value to change to.\n prev: Value to undo to.\n stage (Usd.Stage): Stage on which to perform the action.",
 "snippet": "omni.kit.commands.execute(\"UsdUINodeGraphNodeSetCommand\",\n                          attribute=attribute,  # str\n                          prim_path=prim_path,  # pxr.Sdf.Path\n                          value=value,\n                          prev=prev,\n                          stage=None)  # pxr.Usd.Stage\n"
 },
 {
 "title": "UsdUIRemovePositionCommand",
-"description": "[omni.kit.graph.usd.commands.commands]\n\nRemove position attribute.\n\nArgs:\n prim_path (str): Prim path.",
+"description": "[omni.kit.graph.usd.commands.commands]\n\nRemove UsdUI position attribute from prim.\n\nArgs:\n prim_path (Sdf.Path): Prim path.\n stage (Usd.Stage): Stage on which to perform the action.",
 "snippet": "omni.kit.commands.execute(\"UsdUIRemovePositionCommand\",\n                          prim_path=prim_path,  # pxr.Sdf.Path\n                          stage=None)  # pxr.Usd.Stage\n"
 }
 ]
@@ -1335,8 +1365,8 @@
 },
 {
 "title": "AddDiffuseParticlesCommand",
-"description": "[omni.physxcommands]\n\nWrapper for omni.physx.utils.add_physx_diffuse_particles. Adds a\nPhysxSchema.PhysxDiffuseParticlesAPI to a particle system.\n\nAPI params, see schema doc\n stage\n path\n enabled\n max_diffuse_particles\n threshold\n lifetime\n air_drag\n bubble_drag\n buoyancy\n kinetic_energy_weight\n pressure_weight\n divergence_weight\n collision_decay\n use_accurate_velocity",
-"snippet": "omni.kit.commands.execute(\"AddDiffuseParticlesCommand\",\n                          stage=stage,\n                          path=path,\n                          enabled=None,\n                          max_diffuse_particles=None,\n                          threshold=None,\n                          lifetime=None,\n                          air_drag=None,\n                          bubble_drag=None,\n                          buoyancy=None,\n                          kinetic_energy_weight=None,\n                          pressure_weight=None,\n                          divergence_weight=None,\n                          collision_decay=None,\n                          use_accurate_velocity=None)\n"
+"description": "[omni.physxcommands]\n\nWrapper for omni.physx.utils.add_physx_diffuse_particles. Adds a\nPhysxSchema.PhysxDiffuseParticlesAPI to a primitive with PhysxSchema.PhysxParticleSetAPI.\n\nAPI params, see schema doc\n stage\n path\n enabled\n max_diffuse_particle_multiplier\n threshold\n lifetime\n air_drag\n bubble_drag\n buoyancy\n kinetic_energy_weight\n pressure_weight\n divergence_weight\n collision_decay\n use_accurate_velocity",
+"snippet": "omni.kit.commands.execute(\"AddDiffuseParticlesCommand\",\n                          stage=stage,\n                          path=path,\n                          enabled=None,\n                          max_diffuse_particle_multiplier=None,\n                          threshold=None,\n                          lifetime=None,\n                          air_drag=None,\n                          bubble_drag=None,\n                          buoyancy=None,\n                          kinetic_energy_weight=None,\n                          pressure_weight=None,\n                          divergence_weight=None,\n                          collision_decay=None,\n                          use_accurate_velocity=None)\n"
 },
 {
 "title": "AddDistancePhysicsJointComponentCommand",
@@ -1500,7 +1530,7 @@
 },
 {
 "title": "RemoveParticleSamplingCommand",
-"description": "[omni.physxcommands]\n\nRemoves particle sampling API from a mesh.\nWill not remove the particle prim that was generated using the sampler.\n\nArgs:\n stage: the stage with the particles\n prim: the USD prim this command is executed on",
+"description": "[omni.physxcommands]\n\nRemoves particle sampling API from a mesh.\nWill remove the particle prim that was generated using the sampler.\n\nArgs:\n stage: the stage with the particles\n prim: the USD prim this command is executed on",
 "snippet": "omni.kit.commands.execute(\"RemoveParticleSamplingCommand\",\n                          stage=stage,\n                          prim=prim)\n"
 },
 {
@@ -1581,8 +1611,43 @@
 ]
 },
 {
+"title": "omni.physxsupportui",
+"snippets": [
+{
+"title": "CreateCollidersCommand",
+"description": "[omni.physxsupportui.scripts.action_bar]",
+"snippet": "omni.kit.commands.execute(\"CreateCollidersCommand\",\n                          stage=stage,\n                          prim_paths=prim_paths)\n"
+}
+]
+},
+{
+"title": "omni.physxui",
+"snippets": [
+{
+"title": "ClearPhysicsComponentsCommand",
+"description": "[omni.physxui.scripts.commands]",
+"snippet": "omni.kit.commands.execute(\"ClearPhysicsComponentsCommand\",\n                          stage=stage,\n                          prim_paths=prim_paths)\n"
+}
+]
+},
+{
 "title": "omni.physxvehicle",
 "snippets": [
+{
+"title": "PhysXVehicleAddArrayEntryCommand",
+"description": "[omni.physxvehicle.scripts.commands]",
+"snippet": "omni.kit.commands.execute(\"PhysXVehicleAddArrayEntryCommand\",\n                          arrayAttributePath=arrayAttributePath,\n                          entry=entry)\n"
+},
+{
+"title": "PhysXVehicleChangeArrayEntryCommand",
+"description": "[omni.physxvehicle.scripts.commands]",
+"snippet": "omni.kit.commands.execute(\"PhysXVehicleChangeArrayEntryCommand\",\n                          arrayAttributePath=arrayAttributePath,\n                          entryIndex=entryIndex,\n                          value=value,\n                          oldValue=None,\n                          fillValue=None,\n                          minFillSize=None)\n"
+},
+{
+"title": "PhysXVehicleCommandResponseChangeEntryCommand",
+"description": "[omni.physxvehicle.scripts.commands]",
+"snippet": "omni.kit.commands.execute(\"PhysXVehicleCommandResponseChangeEntryCommand\",\n                          valueArrayPath=valueArrayPath,\n                          indexArrayPath=indexArrayPath,\n                          entryIndex=entryIndex,\n                          valueEntry=valueEntry,\n                          oldValueEntry=oldValueEntry,\n                          indexEntry=indexEntry,\n                          fillValue=fillValue,\n                          maxIndexCount=maxIndexCount)\n"
+},
 {
 "title": "PhysXVehicleControllerEnableAutoReverseCommand",
 "description": "[omni.physxvehicle.scripts.commands]",
@@ -1599,9 +1664,39 @@
 "snippet": "omni.kit.commands.execute(\"PhysXVehicleControllerEnableMouseCommand\",\n                          primPath=primPath,\n                          enabled=enabled)\n"
 },
 {
+"title": "PhysXVehicleControllerSetSteeringFilterTimeCommand",
+"description": "[omni.physxvehicle.scripts.commands]",
+"snippet": "omni.kit.commands.execute(\"PhysXVehicleControllerSetSteeringFilterTimeCommand\",\n                          primPath=primPath,\n                          timeConstant=timeConstant)\n"
+},
+{
+"title": "PhysXVehicleControllerSetSteeringSensitivityCommand",
+"description": "[omni.physxvehicle.scripts.commands]",
+"snippet": "omni.kit.commands.execute(\"PhysXVehicleControllerSetSteeringSensitivityCommand\",\n                          primPath=primPath,\n                          sensitivity=sensitivity)\n"
+},
+{
+"title": "PhysXVehicleDifferentialChangeEntryCommand",
+"description": "[omni.physxvehicle.scripts.commands]",
+"snippet": "omni.kit.commands.execute(\"PhysXVehicleDifferentialChangeEntryCommand\",\n                          valueArrayPaths=valueArrayPaths,\n                          valueArrayPathIndex=valueArrayPathIndex,\n                          indexArrayPath=indexArrayPath,\n                          entryIndex=entryIndex,\n                          valueEntry=valueEntry,\n                          oldValueEntry=oldValueEntry,\n                          indexEntry=indexEntry)\n"
+},
+{
+"title": "PhysXVehicleRemoveArrayEntryCommand",
+"description": "[omni.physxvehicle.scripts.commands]",
+"snippet": "omni.kit.commands.execute(\"PhysXVehicleRemoveArrayEntryCommand\",\n                          arrayAttributePath=arrayAttributePath,\n                          entryIndex=entryIndex,\n                          oldValue=None)\n"
+},
+{
+"title": "PhysXVehicleSetArrayEntryCommand",
+"description": "[omni.physxvehicle.scripts.commands]",
+"snippet": "omni.kit.commands.execute(\"PhysXVehicleSetArrayEntryCommand\",\n                          arrayAttributePath=arrayAttributePath,\n                          entries=entries)\n"
+},
+{
 "title": "PhysXVehicleSetRelationshipCommand",
 "description": "[omni.physxvehicle.scripts.commands]",
 "snippet": "omni.kit.commands.execute(\"PhysXVehicleSetRelationshipCommand\",\n                          relationshipPath=relationshipPath,\n                          targetPath=targetPath)\n"
+},
+{
+"title": "PhysXVehicleSuspensionFrameTransformsAutocomputeCommand",
+"description": "[omni.physxvehicle.scripts.commands]",
+"snippet": "omni.kit.commands.execute(\"PhysXVehicleSuspensionFrameTransformsAutocomputeCommand\",\n                          primPath=primPath)\n"
 },
 {
 "title": "PhysXVehicleTireFrictionTableAddCommand",
@@ -1645,33 +1740,53 @@
 },
 {
 "title": "ZeroGravityClearAllCommand",
-"description": "[omni.physxzerogravity.scripts.extension]",
+"description": "[omni.physxzerogravity.scripts.extension]\n\n Clears all zerogravity markup.\n\n Parameters:\n None.\n\n Returns:\n None.",
 "snippet": "omni.kit.commands.execute(\"ZeroGravityClearAllCommand\")\n"
 },
 {
 "title": "ZeroGravityClearSelectedCommand",
-"description": "[omni.physxzerogravity.scripts.extension]",
+"description": "[omni.physxzerogravity.scripts.extension]\n\n Clear zerogravity markup from the selected prim.\n\n Parameters:\n None.\n\n Returns:\n None.",
 "snippet": "omni.kit.commands.execute(\"ZeroGravityClearSelectedCommand\")\n"
 },
 {
+"title": "ZeroGravityMarkSweepItemsDynamicCommand",
+"description": "[omni.physxzerogravity.scripts.extension]\n\n Sets whether to use dynamic markers for zerogravity automatic sweep mode.\n\n Parameters:\n use_dynamic_markers_for_swept_items:\n If set to true, prims nearby to the selection will be marked as dynamic. Otherwise as static.\n\n Returns:\n None.",
+"snippet": "omni.kit.commands.execute(\"ZeroGravityMarkSweepItemsDynamicCommand\",\n                          use_dynamic_markers_for_swept_items=use_dynamic_markers_for_swept_items)\n"
+},
+{
+"title": "ZeroGravityRestoreAllTransformsCommand",
+"description": "[omni.physxzerogravity.scripts.extension]\n\n Restores all original transforms undoing zerogravity applied transforms.\n\n Parameters:\n None.\n\n Returns:\n None.",
+"snippet": "omni.kit.commands.execute(\"ZeroGravityRestoreAllTransformsCommand\")\n"
+},
+{
 "title": "ZeroGravitySetDroppingCommand",
-"description": "[omni.physxzerogravity.scripts.extension]",
+"description": "[omni.physxzerogravity.scripts.extension]\n\n Enables or disables dropping mode for selected zerogravity dynamic marked prims.\n\n Parameters:\n dropping:\n If set to true, selected zerogravity dynamic markup assets will start falling down.\n Set to false, disables zerogravity dropping mode.\n\n Returns:\n None.",
 "snippet": "omni.kit.commands.execute(\"ZeroGravitySetDroppingCommand\",\n                          dropping=dropping)\n"
 },
 {
 "title": "ZeroGravitySetEnabledCommand",
-"description": "[omni.physxzerogravity.scripts.extension]",
+"description": "[omni.physxzerogravity.scripts.extension]\n\n Enables zero gravity mode and allows physically correct placement of objects in the scene.\n\n Parameters:\n enabled:\n If set to true, enables zerogravity, otherwise it disables it.\n\n Returns:\n None.",
 "snippet": "omni.kit.commands.execute(\"ZeroGravitySetEnabledCommand\",\n                          enabled=enabled)\n"
 },
 {
 "title": "ZeroGravitySetSelectedDynamicCommand",
-"description": "[omni.physxzerogravity.scripts.extension]",
+"description": "[omni.physxzerogravity.scripts.extension]\n\n Applies dynamic zerogravity markup to the selected prim.\n\n Parameters:\n None.\n\n Returns:\n None.",
 "snippet": "omni.kit.commands.execute(\"ZeroGravitySetSelectedDynamicCommand\")\n"
 },
 {
 "title": "ZeroGravitySetSelectedStaticCommand",
-"description": "[omni.physxzerogravity.scripts.extension]",
+"description": "[omni.physxzerogravity.scripts.extension]\n\n Applies static zerogravity markup to the selected prim.\n\n Parameters:\n None.\n\n Returns:\n None.",
 "snippet": "omni.kit.commands.execute(\"ZeroGravitySetSelectedStaticCommand\")\n"
+},
+{
+"title": "ZeroGravitySetSweepModeCommand",
+"description": "[omni.physxzerogravity.scripts.extension]\n\n Enables or disables automatic sweeping mode for zerogravity prims and automatically marks prims around the\n selected prims as static or dynamic.\n\n Parameters:\n sweep_mode:\n If set to true, enables sweep mode. Otherwise disables it.\n\n Returns:\n None.",
+"snippet": "omni.kit.commands.execute(\"ZeroGravitySetSweepModeCommand\",\n                          sweep_mode=sweep_mode)\n"
+},
+{
+"title": "ZeroGravitySweepAreaVisualizeCommand",
+"description": "[omni.physxzerogravity.scripts.extension]\n\n Show or hide a sweep area bounding box visualization.\n\n Parameters:\n visualize_aabb:\n If set to true, a bounding box for the current sweep area will be shown in the viewport.\n\n Returns:\n None.",
+"snippet": "omni.kit.commands.execute(\"ZeroGravitySweepAreaVisualizeCommand\",\n                          visualize_aabb=visualize_aabb)\n"
 }
 ]
 },
@@ -1711,6 +1826,61 @@
 ]
 },
 {
+"title": "omni.scene",
+"snippets": [
+{
+"title": "SceneOptimizerComputeExtents",
+"description": "[omni.scene.optimizer.core.scripts.commands]",
+"snippet": "omni.kit.commands.execute(\"SceneOptimizerComputeExtents\")\n"
+},
+{
+"title": "SceneOptimizerDeduplicateGeometry",
+"description": "[omni.scene.optimizer.core.scripts.commands]",
+"snippet": "omni.kit.commands.execute(\"SceneOptimizerDeduplicateGeometry\")\n"
+},
+{
+"title": "SceneOptimizerJsonParser",
+"description": "[omni.scene.optimizer.core.scripts.commands]",
+"snippet": "omni.kit.commands.execute(\"SceneOptimizerJsonParser\")\n"
+},
+{
+"title": "SceneOptimizerMerge",
+"description": "[omni.scene.optimizer.core.scripts.commands]",
+"snippet": "omni.kit.commands.execute(\"SceneOptimizerMerge\")\n"
+},
+{
+"title": "SceneOptimizerOptimizeMaterials",
+"description": "[omni.scene.optimizer.core.scripts.commands]",
+"snippet": "omni.kit.commands.execute(\"SceneOptimizerOptimizeMaterials\")\n"
+},
+{
+"title": "SceneOptimizerOptimizeSkelRoots",
+"description": "[omni.scene.optimizer.core.scripts.commands]",
+"snippet": "omni.kit.commands.execute(\"SceneOptimizerOptimizeSkelRoots\")\n"
+},
+{
+"title": "SceneOptimizerPivot",
+"description": "[omni.scene.optimizer.core.scripts.commands]",
+"snippet": "omni.kit.commands.execute(\"SceneOptimizerPivot\")\n"
+},
+{
+"title": "SceneOptimizerPrintStats",
+"description": "[omni.scene.optimizer.core.scripts.commands]",
+"snippet": "omni.kit.commands.execute(\"SceneOptimizerPrintStats\")\n"
+},
+{
+"title": "SceneOptimizerProcessPointClouds",
+"description": "[omni.scene.optimizer.core.scripts.commands]",
+"snippet": "omni.kit.commands.execute(\"SceneOptimizerProcessPointClouds\")\n"
+},
+{
+"title": "SceneOptimizerPruneLeaves",
+"description": "[omni.scene.optimizer.core.scripts.commands]",
+"snippet": "omni.kit.commands.execute(\"SceneOptimizerPruneLeaves\")\n"
+}
+]
+},
+{
 "title": "omni.tools",
 "snippets": [
 {
@@ -1744,6 +1914,11 @@
 "snippet": "omni.kit.commands.execute(\"CreateInstanceSelectCommand\",\n                          path_from=path_from)  # str\n"
 },
 {
+"title": "DistributeToolDistributeTranslateOnAxisCommand",
+"description": "[omni.tools.distribute.commands]\n\nDistribute a list of Prims on the X/Y/Z world axis - undoable/redoable.\n\nCan be used outside of the Distribute Tool extension.\n\nRequired Args:\n prim_paths (List[str]): A list of prim paths of prims to distribute.\n axis (omni.tools.distribute.constants.DistributionAxis): World axis to distribute prims on. Also supports int value (0 = X, 1 = Y, 2 = Z).\n\nOptional Args:\n distribute_between (omni.tools.distribute.constants.DistributeBetweenType): Determines if the distribution occurs between any two Prims with the min/max Translate value on the given distribution Axis, or the Endpoints passed via argument.\n distribute_using (omni.tools.distribute.constants.CenterType): Determines if the distribution occurs using the Prims' current Bounding Box center or Pivot/Mesh origin.\n endpoint_a_prim_path (str): The Prim path for Endpoint A. Will be ignored if distribute_between is Axis Min/Max.\n endpoint_b_prim_path (str): The Prim path for Endpoint B. Will be ignored if distribute_between is Axis Min/Max.\n context (str): Specify the USD context.\n skip_hidden_prims (bool): If True, Prims in the distribution list with their visibility turned off will be ignored.",
+"snippet": "omni.kit.commands.execute(\"DistributeToolDistributeTranslateOnAxisCommand\",\n                          prim_paths=prim_paths,  # typing.List\n                          axis=axis,  # omni.tools.distribute.constants.DistributionAxis\n                          distribute_between=DistributeBetweenType.AXIS_MIN_MAX,  # omni.tools.distribute.constants.DistributeBetweenType\n                          distribute_using=CenterType.BBOX_CENTER,  # omni.tools.distribute.constants.DistributeBetweenType\n                          endpoint_a_prim_path=None,  # str\n                          endpoint_b_prim_path=None,  # str\n                          context=\"\",  # str\n                          skip_hidden_prims=False)  # bool\n"
+},
+{
 "title": "FixTransformOpOrderWithPivotCommand",
 "description": "[omni.tools.pivot.pivot_tool_commands]\n\nPivot Tool - internal command",
 "snippet": "omni.kit.commands.execute(\"FixTransformOpOrderWithPivotCommand\",\n                          prim_path=prim_path,  # str\n                          prev_xform_order=prev_xform_order,  # list\n                          context=\"\")  # str\n"
@@ -1755,8 +1930,8 @@
 },
 {
 "title": "PivotToolAddPivotCommand",
-"description": "[omni.tools.pivot.pivot_tool_commands]\n\nPivot Tool: Add Pivot to supported Xformable Prims. Prims need to have a valid full XformOp stack..\n\nArgs:\n prim_paths (List[str]): Prim paths of Prims to add PivotOp to.\n\n context (str): Optional context",
-"snippet": "omni.kit.commands.execute(\"PivotToolAddPivotCommand\",\n                          prim_paths=prim_paths,\n                          context=\"\")\n"
+"description": "[omni.tools.pivot.pivot_tool_commands]\n\nPivot Tool: Add Pivot to supported Xformable Prims. Prims need to have a valid full XformOp stack..\n\nArgs:\n prim_paths (List[str]): Prim paths of Prims to add PivotOp to.\n\n center_pivot (bool): Optional - Centers the added pivot at the bounding box center\n\n context (str): Optional - USD context",
+"snippet": "omni.kit.commands.execute(\"PivotToolAddPivotCommand\",\n                          prim_paths=prim_paths,  # typing.List[str]\n                          center_pivot=True,  # bool\n                          context=\"\")  # str\n"
 },
 {
 "title": "PivotToolRemovePivotCommand",
@@ -1792,6 +1967,11 @@
 "title": "PivotToolUpdatePivotCommand",
 "description": "[omni.tools.pivot.pivot_tool_commands]\n\nPivot Tool: Update Pivot on Xformable Prims with PivotOp.\nPrims need to have a valid full XformOp stack..\n\nArgs:\n prim_paths (List[str]): Prim paths of Prims to update PivotOp on.\n\n new_pivot_position (Gf.Vec3d): New Pivot position to set all Pivots to.\n\n use_normalized_position (bool): Position values are normalized and relative to each Prim's bounding box.\n\n maintain_position (bool): Modify TranslateOp to avoid drift.\n\n bbox_includes_child_prims (bool): Bounding box is extended to include Xformable child Prims.\n\n auto_enable_pivots (bool): Automatically enable any disabled PivotOps.\n\n context (str): Optional context",
 "snippet": "omni.kit.commands.execute(\"PivotToolUpdatePivotCommand\",\n                          prim_paths=prim_paths,  # list\n                          new_pivot_position=new_pivot_position,  # pxr.Gf.Vec3d\n                          use_normalized_position=True,  # bool\n                          maintain_position=True,  # bool\n                          bbox_includes_child_prims=True,  # bool\n                          auto_enable_pivots=True,  # bool\n                          context=\"\")  # str\n"
+},
+{
+"title": "RandomizeMaterialsCommand",
+"description": "[omni.tools.randomizer.extension]\n\nRandomly assign materials to the provided prims - undoable/redoable.\n\nCan be used outside of the Randomizer Tool extension.\n\nRequired Args:\n target_prims (list): The list of prims to operate on. Expects prims, not paths. (Usd.Prim)\n material_list (list): The list of material paths to randomly assign from. Expects a list of paths, not prims. (Sdf.Path or str)\n\nOptional Args:\n replace_material_list (list): A list of material paths to replace with materials from the material_list on the target_prims. Expects a list of paths, not prims.\n shared_material_replacement (bool): Replace repeated occurrences of the same material with the same random material. If false, use a new random material for each replace occurrence. Only used when providing a replace materials list.\n include_children (bool): Include all valid child prims of the provided target_prims in material randomization/replace calculations.\n seed (int): The random seed to use for this operation. If none is given one will be generated.\n usd_context_name (str): The USD context where this command should be used - allows for this command to be used by multiple USD contexts simultaneously.",
+"snippet": "omni.kit.commands.execute(\"RandomizeMaterialsCommand\",\n                          target_prims=target_prims,  # typing.List[pxr.Usd.Prim]\n                          material_list=material_list,  # typing.List[str]\n                          replace_material_list=[],  # typing.List[str]\n                          shared_material_replacement=True,  # bool\n                          include_children=False,  # bool\n                          seed=None,  # int\n                          usd_context_name=\"\")  # str\n"
 },
 {
 "title": "RandomizeSelectionCommand",
@@ -1840,8 +2020,8 @@
 },
 {
 "title": "BindMaterialCommand",
-"description": "[omni.usd.commands.usd_commands]\n\nBind material undoable.\n\nArgs:\n prim_path (str or list): Path(s) to prim or collection\n material_path (str): Path to material to bind.\n strength (float): Strength.",
-"snippet": "omni.kit.commands.execute(\"BindMaterialCommand\",\n                          prim_path=prim_path,  # typing.Union[str, list]\n                          material_path=material_path,  # str\n                          strength=None)\n"
+"description": "[omni.usd.commands.usd_commands]\n\nBind material undoable.\n\nArgs:\n prim_path (str or list): Path(s) to prim or collection\n material_path (str): Path to material to bind.\n strength (float): Strength.\n stage (Usd.Stage): Stage to operate. Optional.\n context_name (str): The usd context to operate. Optional.",
+"snippet": "omni.kit.commands.execute(\"BindMaterialCommand\",\n                          prim_path=prim_path,  # typing.Union[str, list]\n                          material_path=material_path,  # str\n                          strength=None,\n                          stage=None,  # typing.Union[pxr.Usd.Stage, NoneType]\n                          context_name=None)  # typing.Union[str, NoneType]\n"
 },
 {
 "title": "ChangeAttributesColorSpaceCommand",
@@ -1850,18 +2030,23 @@
 },
 {
 "title": "ChangeMetadataCommand",
-"description": "[omni.usd.commands.usd_commands]\n\nChange object metadata undoable.\n\nArgs:\n object_paths (List[str]): Object paths, can be attribute or prim.\n key: Key of metadata to change.\n value: Value of metadata to change to.",
-"snippet": "omni.kit.commands.execute(\"ChangeMetadataCommand\",\n                          object_paths=object_paths,  # typing.List[str]\n                          key=key,  # typing.Any\n                          value=value)  # typing.Any\n"
+"description": "[omni.usd.commands.usd_commands]\n\nChange object metadata undoable.\n\nArgs:\n object_paths (List[str]): Object paths, can be attribute or prim.\n key: Key of metadata to change.\n value: Value of metadata to change to.\n usd_context_name (str): Name of the usd context to work on. Leave to \"\" to use default USD context.",
+"snippet": "omni.kit.commands.execute(\"ChangeMetadataCommand\",\n                          object_paths=object_paths,  # typing.List[str]\n                          key=key,  # typing.Any\n                          value=value,  # typing.Any\n                          usd_context_name=\"\")  # str\n"
 },
 {
 "title": "ChangeMetadataInPrimsCommand",
-"description": "[omni.usd.commands.usd_commands]\n\nChange prim metadata undoable.\n\nArgs:\n prim_paths (List[str]): Prim paths.\n key: Key of metadata to change.\n value: Value of metadata to change to.",
-"snippet": "omni.kit.commands.execute(\"ChangeMetadataInPrimsCommand\",\n                          prim_paths=prim_paths,  # typing.List[str]\n                          key=key,  # typing.Any\n                          value=value)  # typing.Any\n"
+"description": "[omni.usd.commands.usd_commands]\n\nChange prim metadata undoable.\n\nArgs:\n prim_paths (List[str]): Prim paths.\n key: Key of metadata to change.\n value: Value of metadata to change to.\n usd_context_name (str): Name of the usd context to work on. Leave to \"\" to use default USD context.",
+"snippet": "omni.kit.commands.execute(\"ChangeMetadataInPrimsCommand\",\n                          prim_paths=prim_paths,  # typing.List[str]\n                          key=key,  # typing.Any\n                          value=value,  # typing.Any\n                          usd_context_name=\"\")  # str\n"
 },
 {
 "title": "ChangePropertyCommand",
 "description": "[omni.usd.commands.usd_commands]\n\nChange prim property undoable.\n\nArgs:\n prop_path (str): Prim property path.\n value (Any): Value to change to.\n prev (Any): Value to undo to.\n timecode (Usd.TimeCode): The timecode to set property value to.\n type_to_create_if_not_exist (Sdf.ValueTypeName): If not None AND property does not already exist, a new property will be created with given type and value.\n target_layer (sdf.Layer): Target layer to write value to. Leave to None to use current stage's EditTarget.\n usd_context_name (str): Name of the usd context to work on. Leave to \"\" to use default USD context.\n is_custom (bool): If the property is created, specifiy if it is a 'custom' property (not part of the Schema).\n variability (Sdf.Variability): If the property is created, specify the variability.",
 "snippet": "omni.kit.commands.execute(\"ChangePropertyCommand\",\n                          prop_path=prop_path,  # str\n                          value=value,  # typing.Any\n                          prev=prev,  # typing.Any\n                          timecode=DEFAULT,\n                          type_to_create_if_not_exist=None,  # pxr.Sdf.ValueTypeNames\n                          target_layer=None,  # pxr.Sdf.Layer\n                          usd_context_name=\"\",  # str\n                          is_custom=False,  # bool\n                          variability=Sdf.VariabilityVarying)  # pxr.Sdf.Variability\n"
+},
+{
+"title": "ClearCurvesSplitsOverridesCommand",
+"description": "[omni.usd.commands.usd_commands]\n\nClear Curves Splits Overrides .\n",
+"snippet": "omni.kit.commands.execute(\"ClearCurvesSplitsOverridesCommand\")\n"
 },
 {
 "title": "ClearRefinementOverridesCommand",
@@ -1880,8 +2065,8 @@
 },
 {
 "title": "CreateAudioPrimFromAssetPathCommand",
-"description": "[omni.usd.commands.usd_commands]\n\nCreate reference undoable.\n\nIt creates a new Audio prim.\n\nArgs:\n usd_context (omni.usd.UsdContext): UsdContext this command to run on.\n path_to (Sdf.Path): Path to create a new prim.\n asset_path (str): The asset it's necessary to add to references.",
-"snippet": "omni.kit.commands.execute(\"CreateAudioPrimFromAssetPathCommand\",\n                          usd_context=usd_context,  # omni.usd._usd.UsdContext\n                          path_to=path_to,  # pxr.Sdf.Path\n                          asset_path=asset_path)  # str\n"
+"description": "[omni.usd.commands.usd_commands]\n\nCreate reference undoable.\n\nIt creates a new Audio prim.\n\nArgs:\n usd_context (omni.usd.UsdContext): UsdContext this command to run on.\n path_to (Sdf.Path): Path to create a new prim.\n asset_path (str): The asset it's necessary to add to references.\n select_prim (bool): = True, Whether to select the newly created UsdPrim or not.",
+"snippet": "omni.kit.commands.execute(\"CreateAudioPrimFromAssetPathCommand\",\n                          usd_context=usd_context,  # omni.usd._usd.UsdContext\n                          path_to=path_to,  # pxr.Sdf.Path\n                          asset_path=asset_path,  # str\n                          select_prim=True)  # bool\n"
 },
 {
 "title": "CreateDefaultXformOnPrimCommand",
@@ -1900,13 +2085,13 @@
 },
 {
 "title": "CreateMdlMaterialPrimCommand",
-"description": "[omni.usd.commands.usd_commands]\n\nCreate Mdl Material undoable.\n\nArgs:\n mtl_url (str):\n mtl_name (str):\n mtl_path (str):\n select_new_prim (bool):",
-"snippet": "omni.kit.commands.execute(\"CreateMdlMaterialPrimCommand\",\n                          mtl_url=mtl_url,  # str\n                          mtl_name=mtl_name,  # str\n                          mtl_path=mtl_path,  # str\n                          select_new_prim=False)  # bool\n"
+"description": "[omni.usd.commands.usd_commands]\n\nCreate Mdl Material undoable.\n\nArgs:\n mtl_url (str):\n mtl_name (str):\n mtl_path (str):\n select_new_prim (bool):\n stage (Usd.Stage): Stage to operate. Optional.\n context_name (str): The usd context to operate. Optional.",
+"snippet": "omni.kit.commands.execute(\"CreateMdlMaterialPrimCommand\",\n                          mtl_url=mtl_url,  # str\n                          mtl_name=mtl_name,  # str\n                          mtl_path=mtl_path,  # str\n                          select_new_prim=False,  # bool\n                          stage=None,  # typing.Union[pxr.Usd.Stage, NoneType]\n                          context_name=None)  # typing.Union[str, NoneType]\n"
 },
 {
 "title": "CreatePayloadCommand",
-"description": "[omni.usd.commands.usd_commands]\n\nCreate payload undoable.\n\nIt creates a new prim and adds the asset and path as payloads.\n\nArgs:\n usd_context (omni.usd.UsdContext): UsdContext this command to run on.\n path_to (Sdf.Path): Path to create a new prim.\n asset_path (str): The asset it's necessary to add to payloads.\n prim_path (Sdf.Path): The prim in asset to payload.\n instanceable (bool): Whether to set the prim instanceable. It works together with `/persistent/app/stage/instanceableOnCreatingReference` setting.",
-"snippet": "omni.kit.commands.execute(\"CreatePayloadCommand\",\n                          usd_context=usd_context,  # omni.usd._usd.UsdContext\n                          path_to=path_to,  # pxr.Sdf.Path\n                          asset_path=None,  # str\n                          prim_path=None,  # pxr.Sdf.Path\n                          instanceable=True)  # bool\n"
+"description": "[omni.usd.commands.usd_commands]\n\nCreate payload undoable.\n\nIt creates a new prim and adds the asset and path as payloads.\n\nArgs:\n usd_context (omni.usd.UsdContext): UsdContext this command to run on.\n path_to (Sdf.Path): Path to create a new prim.\n asset_path (str): The asset it's necessary to add to payloads.\n prim_path (Sdf.Path): The prim in asset to payload.\n instanceable (bool): Whether to set the prim instanceable. It works together with `/persistent/app/stage/instanceableOnCreatingReference` setting.\n select_prim (bool): = True, Whether to select the newly created UsdPrim or not.",
+"snippet": "omni.kit.commands.execute(\"CreatePayloadCommand\",\n                          usd_context=usd_context,  # omni.usd._usd.UsdContext\n                          path_to=path_to,  # pxr.Sdf.Path\n                          asset_path=None,  # str\n                          prim_path=None,  # pxr.Sdf.Path\n                          instanceable=True,  # bool\n                          select_prim=True)  # bool\n"
 },
 {
 "title": "CreatePreviewSurfaceMaterialPrimCommand",
@@ -1925,8 +2110,8 @@
 },
 {
 "title": "CreatePrimCommandBase",
-"description": "[omni.usd.commands.usd_commands]\n\nBase class to create a prim (and remove when undo)\n\nArgs:\n usd_context (omni.usd.UsdContext): UsdContext this command to run on.\n path_to (Sdf.Path): Path to create a new prim.\n asset_path (str): The asset it's necessary to add to references.",
-"snippet": "omni.kit.commands.execute(\"CreatePrimCommandBase\",\n                          usd_context=usd_context,  # omni.usd._usd.UsdContext\n                          path_to=path_to,  # pxr.Sdf.Path\n                          asset_path=asset_path)  # str\n"
+"description": "[omni.usd.commands.usd_commands]\n\nBase class to create a prim (and remove when undo)\n\nArgs:\n usd_context (omni.usd.UsdContext): UsdContext this command to run on.\n path_to (Sdf.Path): Path to create a new prim.\n asset_path (str): The asset it's necessary to add to references.\n select_prim (bool): = True, Whether to select the newly created UsdPrim or not.",
+"snippet": "omni.kit.commands.execute(\"CreatePrimCommandBase\",\n                          usd_context=usd_context,  # omni.usd._usd.UsdContext\n                          path_to=path_to,  # pxr.Sdf.Path\n                          asset_path=asset_path,  # str\n                          select_prim=True)  # bool\n"
 },
 {
 "title": "CreatePrimWithDefaultXformCommand",
@@ -1940,8 +2125,8 @@
 },
 {
 "title": "CreateReferenceCommand",
-"description": "[omni.usd.commands.usd_commands]\n\nCreate reference undoable.\n\nIt creates a new prim and adds the asset and path as references.\n\nArgs:\n usd_context (omni.usd.UsdContext): UsdContext this command to run on.\n path_to (Sdf.Path): Path to create a new prim.\n asset_path (str): The asset it's necessary to add to references.\n prim_path (Sdf.Path): The prim in asset to reference.\n instanceable (bool): Whether to set the prim instanceable. It works together with `/persistent/app/stage/instanceableOnCreatingReference` setting.",
-"snippet": "omni.kit.commands.execute(\"CreateReferenceCommand\",\n                          usd_context=usd_context,  # omni.usd._usd.UsdContext\n                          path_to=path_to,  # pxr.Sdf.Path\n                          asset_path=None,  # str\n                          prim_path=None,  # pxr.Sdf.Path\n                          instanceable=True)  # bool\n"
+"description": "[omni.usd.commands.usd_commands]\n\nCreate reference undoable.\n\nIt creates a new prim and adds the asset and path as references.\n\nArgs:\n usd_context (omni.usd.UsdContext): UsdContext this command to run on.\n path_to (Sdf.Path): Path to create a new prim.\n asset_path (str): The asset it's necessary to add to references.\n prim_path (Sdf.Path): The prim in asset to reference.\n instanceable (bool): Whether to set the prim instanceable. It works together with `/persistent/app/stage/instanceableOnCreatingReference` setting.\n select_prim (bool): = True, Whether to select the newly created UsdPrim or not.",
+"snippet": "omni.kit.commands.execute(\"CreateReferenceCommand\",\n                          usd_context=usd_context,  # omni.usd._usd.UsdContext\n                          path_to=path_to,  # pxr.Sdf.Path\n                          asset_path=None,  # str\n                          prim_path=None,  # pxr.Sdf.Path\n                          instanceable=True,  # bool\n                          select_prim=True)  # bool\n"
 },
 {
 "title": "CreateUsdAttributeCommand",
@@ -1955,8 +2140,8 @@
 },
 {
 "title": "DeletePrimsCommand",
-"description": "[omni.usd.commands.usd_commands]\n\nDelete primitives undoable.\n\nArgs:\n paths (List[str]): Paths to prims to delete.\n\n destructive: If it's false, the delete will only happen in the current target, and follows:\n 1. If the prim spec is a def, it will remove the prim spec.\n 2. If the prim spec is a over, it will only deactivate this prim.\n 3. If the prim spec is not existed, it will create over prim and deactivate it.\n 4. If there is an overridden in a stronger layer, it will report errors.\n\n If it's true, it will remove all prim specs in all local layers.\n\n By default, it's True and means the delete operation is destructive for back-compatibility.",
-"snippet": "omni.kit.commands.execute(\"DeletePrimsCommand\",\n                          paths=paths,  # typing.List[typing.Union[str, pxr.Sdf.Path]]\n                          destructive=True)\n"
+"description": "[omni.usd.commands.usd_commands]\n\nDelete primitives undoable.\n\nArgs:\n paths (List[str]): Paths to prims to delete.\n\n destructive: If it's false, the delete will only happen in the current target, and follows:\n 1. If the prim spec is a def, it will remove the prim spec.\n 2. If the prim spec is a over, it will only deactivate this prim.\n 3. If the prim spec is not existed, it will create over prim and deactivate it.\n 4. If there is an overridden in a stronger layer, it will report errors.\n\n If it's true, it will remove all prim specs in all local layers.\n\n By default, it's True and means the delete operation is destructive for back-compatibility.\n\n stage (Usd.Stage): Stage to operate. Optional.\n context_name (str): The usd context to operate. Optional.",
+"snippet": "omni.kit.commands.execute(\"DeletePrimsCommand\",\n                          paths=paths,  # typing.List[typing.Union[str, pxr.Sdf.Path]]\n                          destructive=True,\n                          stage=None,  # typing.Union[pxr.Usd.Stage, NoneType]\n                          context_name=None)  # typing.Union[str, NoneType]\n"
 },
 {
 "title": "FramePrimsCommand",
@@ -1965,18 +2150,8 @@
 },
 {
 "title": "GroupPrimsCommand",
-"description": "[omni.usd.commands.usd_commands]\n\nGroup primitive undoable.\n\nArgs:\n prim_paths (List[str]): Prim paths that will be grouped.\n stage (Usd.Stage): Stage to operate. Optional.\n context_name (str): The usd context to operate. Optional.\n destructive (bool): If it's true, it will group all prims and remove original prims, which\n may edit other layers that are not edit target currently. \n If it's false, all changes will made only to the current edit target without\n touching other layers. By default, it's true for back compatibility.",
+"description": "[omni.usd.commands.usd_commands]\n\nGroup primitive undoable.\n\nArgs:\n prim_paths (List[str]): Prim paths that will be grouped.\n stage (Usd.Stage): Stage to operate. Optional.\n context_name (str): The usd context to operate. Optional.\n destructive (bool): If it's true, it will group all prims and remove original prims, which\n may edit other layers that are not edit target currently.\n If it's false, all changes will made only to the current edit target without\n touching other layers. By default, it's true for back compatibility.",
 "snippet": "omni.kit.commands.execute(\"GroupPrimsCommand\",\n                          prim_paths=prim_paths,  # typing.List[typing.Union[str, pxr.Sdf.Path]]\n                          stage=None,  # typing.Union[pxr.Usd.Stage, NoneType]\n                          context_name=None,  # typing.Union[str, NoneType]\n                          destructive=True)\n"
-},
-{
-"title": "LinkSpecsCommand",
-"description": "[omni.usd.commands.usd_commands]",
-"snippet": "omni.kit.commands.execute(\"LinkSpecsCommand\",\n                          usd_context=usd_context,\n                          spec_paths=spec_paths,  # typing.Union[str, typing.List[str]]\n                          layer_identifiers=layer_identifiers,  # typing.Union[str, typing.List[str]]\n                          additive=True,\n                          hierarchy=False)\n"
-},
-{
-"title": "LockSpecsCommand",
-"description": "[omni.usd.commands.usd_commands]",
-"snippet": "omni.kit.commands.execute(\"LockSpecsCommand\",\n                          usd_context=usd_context,\n                          spec_paths=spec_paths,  # typing.Union[str, typing.List[str]]\n                          hierarchy=False)\n"
 },
 {
 "title": "MovePrimCommand",
@@ -2049,9 +2224,19 @@
 "snippet": "omni.kit.commands.execute(\"SetMaterialStrengthCommand\",\n                          rel=rel,\n                          strength=strength)\n"
 },
 {
+"title": "SetRelationshipTargetsCommand",
+"description": "[omni.usd.commands.usd_commands]\n\nSet target(s) to a relationship",
+"snippet": "omni.kit.commands.execute(\"SetRelationshipTargetsCommand\",\n                          relationship=relationship,  # pxr.Usd.Relationship\n                          targets=targets)  # typing.List[pxr.Sdf.Path]\n"
+},
+{
 "title": "ToggleVisibilitySelectedPrimsCommand",
 "description": "[omni.usd.commands.usd_commands]\n\nToggles the visiblity of the selected primitives undoable.\n\nArgs:\n selected_paths (List[str]): Old selected prim paths.",
 "snippet": "omni.kit.commands.execute(\"ToggleVisibilitySelectedPrimsCommand\",\n                          selected_paths=selected_paths)  # typing.List[str]\n"
+},
+{
+"title": "TransformMultiPrimsSRTCpp",
+"description": "[omni.usd]",
+"snippet": "omni.kit.commands.execute(\"TransformMultiPrimsSRTCpp\")\n"
 },
 {
 "title": "TransformPrimCommand",
@@ -2062,6 +2247,11 @@
 "title": "TransformPrimSRTCommand",
 "description": "[omni.usd.commands.usd_commands]\n\nTransform primitive undoable.\n\nArgs:\n path (str): Prim path.\n new_translation (Gf.Vec3d): New local translation.\n new_rotation_euler (Gf.Vec3d): New local rotation euler angles (in degree).\n new_scale (Gf.Vec3d): New scale.\n new_rotation_order (Gf.Vec3i): New rotation order (e.g. (0, 1, 2) means XYZ). Set to None to stay the same.\n old_translation (Gf.Vec3d): Old local translation. Leave to None to use current value.\n old_rotation_euler (Gf.Vec3d): Old local rotation euler angles. Leave to None to use current value.\n old_rotation_order (Gf.Vec3i): Old local rotation order. Leave to None to use current value.\n old_scale (Gf.Vec3d): Old scale. Leave to None to use current value.\n time_code (Usd.TimeCode): TimeCode to set transform to.\n had_transform_at_key (bool): If there's key for transfrom.\n usd_context_name (str): Usd context name to run the command on.",
 "snippet": "omni.kit.commands.execute(\"TransformPrimSRTCommand\",\n                          path=path,  # str\n                          new_translation=None,  # pxr.Gf.Vec3d\n                          new_rotation_euler=None,  # pxr.Gf.Vec3d\n                          new_scale=None,  # pxr.Gf.Vec3d\n                          new_rotation_order=None,  # pxr.Gf.Vec3i\n                          old_translation=None,  # pxr.Gf.Vec3d\n                          old_rotation_euler=None,  # pxr.Gf.Vec3d\n                          old_rotation_order=None,  # pxr.Gf.Vec3i\n                          old_scale=None,  # pxr.Gf.Vec3d\n                          time_code=DEFAULT,  # pxr.Usd.TimeCode\n                          had_transform_at_key=False,  # bool\n                          usd_context_name=\"\")  # str\n"
+},
+{
+"title": "TransformPrimSRTCpp",
+"description": "[omni.usd]",
+"snippet": "omni.kit.commands.execute(\"TransformPrimSRTCpp\")\n"
 },
 {
 "title": "TransformPrimsCommand",
@@ -2077,16 +2267,6 @@
 "title": "UnhideAllPrimsCommand",
 "description": "[omni.usd.commands.usd_commands]",
 "snippet": "omni.kit.commands.execute(\"UnhideAllPrimsCommand\")\n"
-},
-{
-"title": "UnlinkSpecsCommand",
-"description": "[omni.usd.commands.usd_commands]",
-"snippet": "omni.kit.commands.execute(\"UnlinkSpecsCommand\",\n                          usd_context=usd_context,\n                          spec_paths=spec_paths,  # typing.Union[str, typing.List[str]]\n                          layer_identifiers=layer_identifiers,  # typing.Union[str, typing.List[str]]\n                          hierarchy=False)\n"
-},
-{
-"title": "UnlockSpecsCommand",
-"description": "[omni.usd.commands.usd_commands]",
-"snippet": "omni.kit.commands.execute(\"UnlockSpecsCommand\",\n                          usd_context=usd_context,\n                          spec_paths=spec_paths,  # typing.Union[str, typing.List[str]]\n                          hierarchy=False)\n"
 }
 ]
 }
