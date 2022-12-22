@@ -1,8 +1,8 @@
 {
   "name": "embedded-vscode-for-nvidia-omniverse",
   "displayName": "Embedded VS Code for NVIDIA Omniverse",
-  "description": "Run python code embedded in the current NVIDIA Omniverse application scope",
-  "version": "0.1.0",
+  "description": "Run python code embedded in the current NVIDIA Omniverse application scope, exploit code snippets, and access NVIDIA Omniverse resources and documentation without leaving the editor",
+  "version": "0.2.0",
   "publisher": "Toni-SM",
   "repository": "https://github.com/Toni-SM/semu.misc.vscode",
   "icon": "images/icon.png",
