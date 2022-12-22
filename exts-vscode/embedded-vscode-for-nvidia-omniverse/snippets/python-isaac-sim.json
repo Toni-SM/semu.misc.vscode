@@ -59,6 +59,11 @@
             "title": "Core",
             "snippets": [
                 {
+                    "title": "Common imports",
+                    "description": "Common import statements (delete unnecessary)",
+                    "snippet": "from omni.isaac.core.articulations import Articulation, ArticulationGripper, ArticulationSubset, ArticulationView\nfrom omni.isaac.core.controllers import ArticulationController, BaseController, BaseGripperController\nfrom omni.isaac.core.loggers import DataLogger\nfrom omni.isaac.core.materials import OmniGlass, OmniPBR, ParticleMaterial, ParticleMaterialView, PhysicsMaterial, PreviewSurface, VisualMaterial\nfrom omni.isaac.core.objects import DynamicCapsule, DynamicCone, DynamicCuboid, DynamicCylinder, DynamicSphere\nfrom omni.isaac.core.objects import FixedCapsule, FixedCone, FixedCuboid, FixedCylinder, FixedSphere, GroundPlane\nfrom omni.isaac.core.objects import VisualCapsule, VisualCone, VisualCuboid, VisualCylinder, VisualSphere\nfrom omni.isaac.core.physics_context import PhysicsContext\nfrom omni.isaac.core.prims import BaseSensor, ClothPrim, GeometryPrim, ParticleSystem, RigidPrim, XFormPrim\nfrom omni.isaac.core.prims import ClothPrimView, GeometryPrimView, ParticleSystemView, RigidContactView, RigidPrimView, XFormPrimView\nfrom omni.isaac.core.robots import Robot, RobotView\nfrom omni.isaac.core.scenes import Scene, SceneRegistry\nfrom omni.isaac.core.simulation_context import SimulationContext\nfrom omni.isaac.core.world import World\nfrom omni.isaac.core.tasks import BaseTask, FollowTarget, PickPlace, Stacking\n"
+                },
+                {
                 "title": "Articulations",
                 "snippets": [
                 {
@@ -8928,6 +8933,11 @@
         {
             "title": "Core utils",
             "snippets": [
+                {
+                    "title": "Common imports",
+                    "description": "Common import statements (delete unnecessary)",
+                    "snippet": "import omni.isaac.core.utils.bounds as bounds_utils\nimport omni.isaac.core.utils.carb as carb_utils\nimport omni.isaac.core.utils.collisions as collisions_utils\nimport omni.isaac.core.utils.constants as constants_utils\nimport omni.isaac.core.utils.distance_metrics as distance_metrics_utils\nimport omni.isaac.core.utils.extensions as extensions_utils\nimport omni.isaac.core.utils.math as math_utils\nimport omni.isaac.core.utils.mesh as mesh_utils\nimport omni.isaac.core.utils.nucleus as nucleus_utils\nimport omni.isaac.core.utils.numpy as numpy_utils\nimport omni.isaac.core.utils.physics as physics_utils\nimport omni.isaac.core.utils.prims as prims_utils\nimport omni.isaac.core.utils.random as random_utils\nimport omni.isaac.core.utils.render_product as render_product_utils\nimport omni.isaac.core.utils.rotations as rotations_utils\nimport omni.isaac.core.utils.semantics as semantics_utils\nimport omni.isaac.core.utils.stage as stage_utils\nimport omni.isaac.core.utils.string as string_utils\nimport omni.isaac.core.utils.transformations as transformations_utils\nimport omni.isaac.core.utils.torch as torch_utils\nimport omni.isaac.core.utils.types as types_utils\nimport omni.isaac.core.utils.viewports as viewports_utils\nimport omni.isaac.core.utils.xforms as xforms_utils\n"
+                },
                 {
                 "title": "Bounds",
                 "snippets": [
