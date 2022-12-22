@@ -169,6 +169,7 @@ class ResourceTreeViewProvider implements vscode.TreeDataProvider<Resource> {
         this.resources.push(this.buildSubtree("Developer", this.parseJSON("developer.json")));
         this.resources.push(this.buildSubtree("Documentation", this.parseJSON("documentation.json")));
         this.resources.push(this.buildSubtree("Forum (external)", this.parseJSON("forums.json")));
+        this.resources.push(this.buildSubtree("Isaac Sim: Extensions API", this.parseJSON("isaac-sim_extensions.json")));
     }
 
     getTreeItem(element: Resource): vscode.TreeItem {

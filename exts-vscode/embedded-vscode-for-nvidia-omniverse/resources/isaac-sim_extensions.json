@@ -1,0 +1,28 @@
+{
+    "resources": [
+        {
+            "internal": true,
+            "title": "Extensions API (homepage)",
+            "description": "Isaac Sim: Extensions API",
+            "url": "https://docs.omniverse.nvidia.com/py/isaacsim/index.html"
+        },
+        {
+            "internal": true,
+            "title": "Core",
+            "description": "Core [omni.isaac.core]",
+            "url": "https://docs.omniverse.nvidia.com/py/isaacsim/source/extensions/omni.isaac.core/docs/index.html"
+        },
+        {
+            "internal": true,
+            "title": "Dynamic Control",
+            "description": "The Dynamic Control extension provides a set of utilities to control physics objects. It provides opaque handles for different physics objects that remain valid between PhysX scene resets, which occur whenever play or stop is pressed",
+            "url": "https://docs.omniverse.nvidia.com/py/isaacsim/source/extensions/omni.isaac.dynamic_control/docs/index.html"
+        },
+        {
+            "internal": true,
+            "title": "Simulation Application",
+            "description": "This extension provides convenience functions when running in pure python mode",
+            "url": "https://docs.omniverse.nvidia.com/py/isaacsim/source/extensions/omni.isaac.kit/docs/index.html"
+        }
+    ]
+}

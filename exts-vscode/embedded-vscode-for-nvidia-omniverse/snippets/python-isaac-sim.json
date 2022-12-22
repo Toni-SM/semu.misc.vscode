@@ -1,7 +1,7 @@
 {
     "snippets": [
         {
-            "title": "Standalone python",
+            "title": "Simulation Application",
             "snippets": [
                 {
                     "title": "Argument parser",
@@ -9,7 +9,7 @@
                     "snippet": "import argparse\n\nparser = argparse.ArgumentParser()\nparser.add_argument(\"--headless\", default=False, action=\"store_true\", help=\"Run stage headless\")\nparser.add_argument(\"--test\", default=False, action=\"store_true\", help=\"Run in test mode\")\n\nargs, unknown = parser.parse_known_args()  # get argument using `args`: e.g. args.headless\n"
                 },
                 {
-                    "title": "Simulation App template",
+                    "title": "SimulationApp template",
                     "description": "Helper class to launch Omniverse Toolkit",
                     "snippet": "from omni.isaac.kit import SimulationApp\n\n\nconfig = {\"headless\": False,\n          \"renderer\": \"RayTracedLighting\"}\n\n# Any Omniverse level imports must occur after the class is instantiated. \n# APIs are provided by the extension/runtime plugin system, \n# it must be loaded before they will be available to import.\nsimulation_app = SimulationApp(config)\n\nfor i in range(100):\n    simulation_app.update()\n\nsimulation_app.close()  # cleanup application\n"
                 },
