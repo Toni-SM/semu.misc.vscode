@@ -77,16 +77,16 @@
       },
       {
         "command": "embedded-vscode-for-nvidia-omniverse.snippetLanguagePython",
-        "title": "Switch snippet language (C++)",
+        "title": "Python",
         "category": "Embedded VS Code for NVIDIA Omniverse",
-        "description": "Set C++ as snippet language",
+        "description": "Snippets language (Python)",
         "icon": "images/view-action-snippets-python.svg"
       },
       {
         "command": "embedded-vscode-for-nvidia-omniverse.snippetLanguageCpp",
-        "title": "Switch snippet language (Python)",
+        "title": "C++",
         "category": "Embedded VS Code for NVIDIA Omniverse",
-        "description": "Set Python as snippet language",
+        "description": "Snippets language (C++)",
         "icon": "images/view-action-snippets-cpp.svg"
       }
     ],
