@@ -149,44 +149,64 @@
             "title": "Python scripting component",
             "snippets": [
                 {
-                    "title": "Behavior script",
+                    "title": "Behavior script template",
                     "description": "Class for developing per USD Prim behaviors",
-                    "snippet": "from omni.kit.scripting import BehaviorScript\n\n\nclass ${1:CustomBehaviorScript}(BehaviorScript):\n    def on_init(self):\n        print(f\"{__class__.__name__}.on_init() -> {self.prim_path}\")\n\n    def on_destroy(self):\n        print(f\"{__class__.__name__}.on_destroy() -> {self.prim_path}\")\n\n    def on_update(self, current_time: float, delta_time: float):\n        print(f\"{__class__.__name__}.on_update(current_time={current_time}, delta_time={delta_time}) -> {self.prim_path}\")\n"
+                    "snippet": "from omni.kit.scripting import BehaviorScript\n\n\nclass ${1:CustomBehaviorScript}(BehaviorScript):\n    def on_init(self):\n        print(f\"{__class__.__name__}.on_init()->{self.prim_path}\")\n\n    def on_destroy(self):\n        print(f\"{__class__.__name__}.on_destroy()->{self.prim_path}\")\n\n    def on_play(self):\n        print(f\"{__class__.__name__}.on_play()->{self.prim_path}\")\n\n    def on_pause(self):\n        print(f\"{__class__.__name__}.on_pause()->{self.prim_path}\")\n\n    def on_stop(self):\n        print(f\"{__class__.__name__}.on_stop()->{self.prim_path}\")\n\n    def on_update(self, current_time: float, delta_time: float):\n        print(f\"{__class__.__name__}.on_update(current_time={current_time}, delta_time={delta_time})->{self.prim_path}\")\n"
                 },
                 {
-                    "title": "Get message bus event stream",
+                    "title": "Default application window",
+                    "description": "Default application window",
+                    "snippet": "self.default_app_window"
+                },
+                {
+                    "title": "Input interface",
+                    "description": "Application input interface",
+                    "snippet": "self.input"
+                },
+                {
+                    "title": "Kit application interface",
+                    "description": "Kit application interface",
+                    "snippet": "self.app"
+                },
+                {
+                    "title": "Message bus event stream",
                     "description": "Application message bus event stream",
-                    "snippet": "message_bus_event_stream = self.message_bus_event_stream()\n"
+                    "snippet": "self.message_bus_event_stream"
                 },
                 {
-                    "title": "Get prim path",
+                    "title": "Prim",
+                    "description": "Prim that this script is assigned to",
+                    "snippet": "self.prim"
+                },
+                {
+                    "title": "Prim path",
                     "description": "Prim path that this script is assigned to",
-                    "snippet": "path = self.prim_path()\n"
+                    "snippet": "self.prim_path"
                 },
                 {
-                    "title": "Get selection interface",
+                    "title": "Selection interface",
                     "description": "Current USD context selection interface in the application",
-                    "snippet": "selection = self.selection()\n"
+                    "snippet": "self.selection"
                 },
                 {
-                    "title": "Get settings",
+                    "title": "Settings",
                     "description": "Current settings",
-                    "snippet": "settings = self.settings()\n"
+                    "snippet": "self.settings"
                 },
                 {
-                    "title": "Get stage",
+                    "title": "Stage",
                     "description": "Current USD stage that is opened/loaded",
-                    "snippet": "stage = self.stage()\n"
+                    "snippet": "self.stage"
                 },
                 {
-                    "title": "Get timeline",
+                    "title": "Timeline",
                     "description": "Application timeline interface",
-                    "snippet": "timeline = self.timeline()\n"
+                    "snippet": "self.timeline"
                 },
                 {
-                    "title": "Get USD context",
+                    "title": "USD context",
                     "description": "Current USD context",
-                    "snippet": "usd_context = self.usd_context()\n"
+                    "snippet": "self.usd_context"
                 }
             ]
         },
