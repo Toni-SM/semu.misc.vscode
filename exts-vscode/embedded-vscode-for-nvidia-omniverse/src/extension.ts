@@ -179,12 +179,14 @@ export function activate(context: vscode.ExtensionContext) {
 
 	// Snippets language
 	let disposable_snippet_language_python = vscode.commands.registerCommand('embedded-vscode-for-nvidia-omniverse.snippetLanguagePython', () => {
+		return;
 		vscode.commands.executeCommand("setContext", "embedded-vscode-for-nvidia-omniverse-snippet-python", false);
 		vscode.commands.executeCommand("setContext", "embedded-vscode-for-nvidia-omniverse-snippet-cpp", true);
 		snippetTreeView = new SnippetTreeView("cpp");
 	});
 	
 	let disposable_snippet_language_cpp = vscode.commands.registerCommand('embedded-vscode-for-nvidia-omniverse.snippetLanguageCpp', () => {
+		return;
 		vscode.commands.executeCommand("setContext", "embedded-vscode-for-nvidia-omniverse-snippet-python", true);
 		vscode.commands.executeCommand("setContext", "embedded-vscode-for-nvidia-omniverse-snippet-cpp", false);
 		snippetTreeView = new SnippetTreeView("python");
