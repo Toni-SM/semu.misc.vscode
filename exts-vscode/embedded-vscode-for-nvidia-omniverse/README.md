@@ -18,7 +18,7 @@ This extension is the pair of the [*Embedded VS Code for NVIDIA Omniverse*](http
 
 ![preview2](https://raw.githubusercontent.com/Toni-SM/semu.misc.vscode/main/exts/semu.misc.vscode/data/vscode_ext2.png)
 
-## Available commands
+## Main commands
 
 ### Local execution
 
@@ -52,7 +52,16 @@ This extension contributes the following settings:
 
 - The kit commands snippets (with their parameters, default values and annotations) are automatically generated from the list of commands available from Create, Code and Isaac Sim on Linux. Some commands may not be available in some Omniverse applications
 
+- The expand-all button in the Snippets view container only reveal 3 levels (limited by VS Code)
+
 ## Release Notes
+
+###  0.2.0
+
+- Update snippets
+- Update resource links
+- Add expand-all button in the Snippets view container
+- Add Isaac Sim snippets and resource links
 
 ###  0.1.0
 
