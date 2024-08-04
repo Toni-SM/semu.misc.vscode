@@ -4,7 +4,7 @@
 
 <mark><strong>This extension is deprecated in favor of [Isaac Sim VS Code Edition](https://marketplace.visualstudio.com/items?itemName=NVIDIA.isaacsim-vscode-edition)</strong></mark>
 
-> See more details in [Isaac Sim docs](https://docs.omniverse.nvidia.com/isaacsim/latest/advanced_tutorials/tutorial_advanced_code_editors.html#isaac-sim-app-tutorial-advanced-code-editors-jupyter).
+> See more details in [Isaac Sim docs](https://docs.omniverse.nvidia.com/isaacsim/latest/advanced_tutorials/tutorial_advanced_code_editors.html#vs-code).
 
 <hr>
 
