@@ -4,6 +4,8 @@
 
 <mark><strong>This extension is deprecated in favor of [Isaac Sim VS Code Edition](https://marketplace.visualstudio.com/items?itemName=NVIDIA.isaacsim-vscode-edition)</strong></mark>
 
+> See more details in [Isaac Sim docs](https://docs.omniverse.nvidia.com/isaacsim/latest/advanced_tutorials/tutorial_advanced_code_editors.html#isaac-sim-app-tutorial-advanced-code-editors-jupyter).
+
 <hr>
 
 > This extension can be described as the [VS Code](https://code.visualstudio.com/) version of Omniverse's [Script Editor](https://docs.omniverse.nvidia.com/prod_extensions/prod_extensions/ext_script-editor.html). It allows to execute Python code, embedded in the current NVIDIA Omniverse application scope, from the VS Code editor and displays the results in the OUTPUT panel (under *Embedded VS Code for NVIDIA Omniverse*) of the VS Code editor
